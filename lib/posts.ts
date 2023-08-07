@@ -17,16 +17,17 @@ export async function getPostByName(
   fileName: string
 ): Promise<BlogPost | undefined> {
   //fileName += "interests/";
-  console.log("fileName: ", fileName);
+
   const res = await fetch(
     `https://raw.githubusercontent.com/ykn9080/personal-contents/main/${fileName}`,
     {
       headers: {
         Accept: "application/vnd.github+json",
-        //Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
-        Authorization: "Bearer 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",
+        Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+        //Authorization: "Bearer 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",
         "X-GitHub-Api-Version": "2022-11-28",
       },
+      next: { revalidate: 3600 },
     }
   );
 
@@ -84,10 +85,11 @@ export async function getPostsMeta(): Promise<Meta[] | undefined> {
     {
       headers: {
         Accept: "application/vnd.github+json",
-        // Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
-        Authorization: "Bearer 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",
+        Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+        //Authorization: "Bearer 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",
         "X-GitHub-Api-Version": "2022-11-28",
       },
+      next: { revalidate: 3600 },
     }
   );
 

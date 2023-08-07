@@ -23,7 +23,6 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params: { postId } }: Props) {
-  console.log("postId", postId);
   const post = await getPostByName(`${postId}.mdx`); //deduped!
 
   if (!post) {
@@ -38,7 +37,6 @@ export async function generateMetadata({ params: { postId } }: Props) {
 }
 
 export default async function Post({ params: { postId } }: Props) {
-  console.log("postId", postId);
   const post = await getPostByName(`${postId}.mdx`); //deduped!
 
   if (!post) notFound();
