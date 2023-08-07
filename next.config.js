@@ -6,13 +6,23 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'raw.githubusercontent.com',
-        port: '',
-        pathname: '/gitdagray/test-blogposts/main/images/**',
+        protocol: "https",
+        hostname: "raw.githubusercontent.com",
+        port: "",
+        pathname: "/gitdagray/test-blogposts/main/images/**",
+      },
+      {
+        protocol: "https",
+        hostname: "raw.githubusercontent.com",
+        port: "",
+        pathname: "/ykn9080/personal-contents/main/images/**",
       },
     ],
   },
-}
+  // i18n: {
+  //   locales: ["en", "kr"],
+  //   defaultLocale: "kr",
+  // },
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

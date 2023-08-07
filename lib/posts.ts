@@ -2,8 +2,8 @@ import { compileMDX } from "next-mdx-remote/rsc";
 import rehypeAutolinkHeadings from "rehype-autolink-headings/lib";
 import rehypeHighlight from "rehype-highlight/lib";
 import rehypeSlug from "rehype-slug";
-import Video from "@/app/components/Video";
-import CustomImage from "@/app/components/CustomImage";
+import Video from "@/app/[lang]/components/Video";
+import CustomImage from "@/app/[lang]/components/CustomImage";
 
 type Filetree = {
   tree: [
@@ -41,6 +41,9 @@ export async function getPostByName(
     title: string;
     date: string;
     tags: string[];
+    language: string;
+    featureImage: string;
+    excerpt: string;
   }>({
     source: rawMDX,
     components: {
@@ -72,6 +75,9 @@ export async function getPostByName(
       title: frontmatter.title,
       date: frontmatter.date,
       tags: frontmatter.tags,
+      language: frontmatter.language,
+      featureImage: frontmatter.featureImage,
+      excerpt: frontmatter.excerpt,
     },
     content,
   };
@@ -92,7 +98,6 @@ export async function getPostsMeta(): Promise<Meta[] | undefined> {
       next: { revalidate: 3600 },
     }
   );
-
   if (!res.ok) return undefined;
 
   const repoFiletree: Filetree = await res.json();
