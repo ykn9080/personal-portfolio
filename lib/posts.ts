@@ -42,6 +42,7 @@ export async function getPostByName(
     title: string;
     date: string;
     tags: string[];
+    type: string;
     language: string;
     featureImage: string;
     excerpt: string;
@@ -76,6 +77,7 @@ export async function getPostByName(
       title: frontmatter.title,
       date: frontmatter.date,
       tags: frontmatter.tags,
+      type: frontmatter.type,
       language: frontmatter.language,
       featureImage: frontmatter.featureImage,
       excerpt: frontmatter.excerpt,

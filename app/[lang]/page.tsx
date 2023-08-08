@@ -1,13 +1,10 @@
 import Posts from "./components/Posts";
 import MyProfilePic from "./components/MyProfilePic";
-//import { useRouter } from "next/router";
+import { Locale } from "@/i18n.config";
 
 export const revalidate = 80000;
 
-export default function Home() {
-  //const router = useRouter();
-  //console.log(router.query);
-
+export default function Home({ params }: { params: { lang: Locale } }) {
   return (
     <div className="mx-auto">
       <MyProfilePic />
@@ -18,7 +15,9 @@ export default function Home() {
         </span>
       </p>
       {/* @ts-expect-error Server Component */}
-      <Posts />
+      <Posts params={params} part="work" />
+      {/* @ts-expect-error Server Component */}
+      <Posts params={params} part="interest" />
     </div>
   );
 }

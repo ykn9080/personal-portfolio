@@ -38,7 +38,7 @@ export async function generateMetadata({ params }: Props) {
 
 export default async function Post({ params: { postId } }: Props) {
   const post = await getPostByName(`${postId}.mdx`); //deduped!
-  console.log(post);
+
   if (!post) notFound();
 
   const { meta, content } = post;

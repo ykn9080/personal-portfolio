@@ -7,7 +7,7 @@ export default async function About({
   params: { lang: Locale };
 }) {
   const { page } = await getDictionary(lang);
-  console.log("prop...", page);
+
   return (
     <section className="py-24">
       <div className="container">

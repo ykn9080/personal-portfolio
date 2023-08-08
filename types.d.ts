@@ -3,6 +3,7 @@ type Meta = {
   title: string;
   date: string;
   tags: string[];
+  type: string;
   language: string;
   featureImage: string;
   excerpt: string;
