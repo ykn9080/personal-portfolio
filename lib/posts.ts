@@ -4,6 +4,7 @@ import rehypeHighlight from "rehype-highlight/lib";
 import rehypeSlug from "rehype-slug";
 import Video from "@/app/[lang]/components/Video";
 import CustomImage from "@/app/[lang]/components/CustomImage";
+import { Locale } from "@/i18n.config";
 
 type Filetree = {
   tree: [
@@ -104,7 +105,7 @@ export async function getPostsMeta(): Promise<Meta[] | undefined> {
 
   const filesArray = repoFiletree.tree
     .map((obj) => obj.path)
-    .filter((path) => path.endsWith(".mdx"));
+    .filter((path) => path.endsWith(`.mdx`));
 
   const posts: Meta[] = [];
 
