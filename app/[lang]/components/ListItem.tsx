@@ -19,7 +19,7 @@ export default function ListItem({ post }: Props) {
         href={`/posts/${id}`}
       >
         {title}
-        <Image src={featureImage} alt={title} width={300} height={400} />
+        <Image src={featureImage} alt={title} width={800} height={300} />
         <p className="text-sm mt-1">{formattedDate}</p>
         <p className="text-sm mt-1">{excerpt}</p>
       </Link>
