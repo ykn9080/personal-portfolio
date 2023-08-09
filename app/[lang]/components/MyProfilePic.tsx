@@ -12,7 +12,7 @@ export default function MyProfilePic() {
         priority={true}
       /> */}
       <Image
-        src="https://raw.githubusercontent.com/ykn9080/personal-contents/main/images/yknam1.jpg"
+        src="/next.svg"
         alt="mypic"
         width={800}
         height={200}
