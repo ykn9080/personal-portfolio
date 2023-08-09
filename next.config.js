@@ -7,6 +7,12 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
+        hostname: "cdn.ipregistry.co",
+        port: "",
+        pathname: "/flags/noto/**",
+      },
+      {
+        protocol: "https",
         hostname: "raw.githubusercontent.com",
         port: "",
         pathname: "/gitdagray/test-blogposts/main/images/**",

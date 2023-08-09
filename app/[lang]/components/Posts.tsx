@@ -17,7 +17,9 @@ export default async function Posts({
 
   return (
     <section className="mt-6 mx-auto max-w-2xl">
-      <h2 className="text-4xl font-bold dark:text-white/90">{part}</h2>
+      <h2 className="text-4xl font-bold text-black dark:text-white/90 mb-10 mt-10">
+        {part}
+      </h2>
       <div className="bodycontent">
         {posts.map((post) => {
           if (post.id.endsWith(params.lang) && post.type === part)

@@ -1,9 +1,9 @@
-import "./globals.css";
-import Navbar from "./components/Navbar";
 import type { Metadata } from "next";
 import { Locale, i18n } from "@/i18n.config";
 import Providers from "@/app/[lang]/providers";
 import { Inter } from "next/font/google";
+import Link from "next/link";
+import Sidebar from "@/app/[lang]/components/Sidebar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,14 +24,17 @@ export default function RootLayout({
   params: { lang: Locale };
 }) {
   return (
-    <html lang={params.lang}>
-      <body className={inter.className}>
-        <Providers>
-          {/* @ts-expect-error async server component */}
-          <Navbar lang={params.lang} />
-          <main>{children}</main>
-        </Providers>
-      </body>
-    </html>
+    // <section>
+    //   {/* Include shared UI here e.g. a header or sidebar */}
+    //   <nav>hihihi</nav>
+
+    //   {children}
+    // </section>
+    <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
+      <div className="col-span-3">{children}</div>
+      <div className="p-3">
+        <Sidebar />
+      </div>
+    </div>
   );
 }

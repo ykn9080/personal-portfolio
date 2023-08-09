@@ -3,7 +3,6 @@ import { getPostsMeta, getPostByName } from "@/lib/posts";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import "highlight.js/styles/github-dark.css";
-import Image from "next/image";
 
 export const revalidate = 80000;
 
@@ -54,28 +53,18 @@ export default async function Post({ params: { postId } }: Props) {
 
   return (
     <>
-      <div className="work">
-        <section>
-          <article className="gridtwo">
-            <p>{meta.excerpt}</p>
-            {/* <GatsbyImage
-                  className="interestimg"
-                  fluid={featureImage.childImageSharp.fluid}
-                /> */}
-            {/* <Image
-              className="interestimg"
-              src={meta.featureImage}
-              alt={meta.title}
-            /> */}
-          </article>
-          {/* <article>
-                {videoSourceURL && (
-                  <Video videoSrcURL={videoSourceURL} videoTitle={videoTitle} />
-                )}
-              </article> */}
-          <article className="text-black dark:text-white">{content}</article>
-        </section>
-      </div>
+      <h2 className="text-3xl mt-4 mb-0 text-black dark:text-white">
+        {meta.title}
+      </h2>
+      {/* <p className="mt-0 text-sm">{pubDate}</p> */}
+      <article className="text-black dark:text-white">{content}</article>
+      {/* <section>
+        <h3>Related:</h3>
+        <div className="flex flex-row gap-4">{tags}</div>
+      </section> */}
+      <p className="mb-10">
+        <Link href="/">← Back to home</Link>
+      </p>
     </>
   );
 }

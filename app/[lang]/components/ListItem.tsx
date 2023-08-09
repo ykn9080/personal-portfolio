@@ -13,15 +13,15 @@ export default function ListItem({ post }: Props) {
   const lang = id.split(".")?.[1];
 
   return (
-    <div className="ImgContainer">
+    <div className="ImgContainer1">
       <Link
-        className="underline hover:text-black/70 dark:hover:text-white"
+        className="underline hover:text-black/170 dark:hover:text-grey dark:text-white"
         href={`/posts/${id}`}
       >
-        {title}
+        <p className="text-xl mb-2 mt-2">{title}</p>
         <Image src={featureImage} alt={title} width={300} height={400} />
         <p className="text-sm mt-1">{formattedDate}</p>
-        <p className="text-sm mt-1">{excerpt}</p>
+        {/* <p className="text-sm mt-1">{excerpt}</p> */}
       </Link>
     </div>
   );

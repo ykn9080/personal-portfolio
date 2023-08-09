@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
+import Image from "next/image";
 import { i18n } from "@/i18n.config";
 
 export default function LocaleSwitcher() {
@@ -40,9 +40,23 @@ export default function LocaleSwitcher() {
           <li key={locale}>
             <Link
               href={redirectedPathName(locale)}
-              className="rounded-md border bg-black px-3 py-2 text-white"
+              className="px-5 pt-5 hover:mt-8"
             >
-              {locale}
+              {locale === "ko" ? (
+                <Image
+                  alt="Korean"
+                  width={30}
+                  height={10}
+                  src="https://cdn.ipregistry.co/flags/noto/kr.png"
+                />
+              ) : (
+                <Image
+                  alt="United States"
+                  width={30}
+                  height={10}
+                  src="https://cdn.ipregistry.co/flags/noto/us.png"
+                />
+              )}
             </Link>
           </li>
         );
