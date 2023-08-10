@@ -36,6 +36,7 @@ export function middleware(request: NextRequest) {
     );
   }
 }
+//export const config = { matcher: "/((?!.*\\.|api\\/).*)" };
 
 export const config = {
   // Matcher ignoring `/_next/` and `/api/`

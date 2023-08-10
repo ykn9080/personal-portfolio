@@ -33,34 +33,34 @@ export default function LocaleSwitcher() {
 
     return segments;
   };
+  let language = "ko";
+  let items = pathName.split("/");
+  if (items.length > 0) language = items[1];
+
   return (
-    <ul className="flex gap-x-3">
-      {i18n.locales.map((locale) => {
-        return (
-          <li key={locale}>
-            <Link
-              href={redirectedPathName(locale)}
-              className="px-5 pt-5 hover:mt-8"
-            >
-              {locale === "ko" ? (
-                <Image
-                  alt="Korean"
-                  width={30}
-                  height={10}
-                  src="https://cdn.ipregistry.co/flags/noto/kr.png"
-                />
-              ) : (
-                <Image
-                  alt="United States"
-                  width={30}
-                  height={10}
-                  src="https://cdn.ipregistry.co/flags/noto/us.png"
-                />
-              )}
-            </Link>
-          </li>
-        );
-      })}
-    </ul>
+    <div className="flex gap-x-1">
+      <Link
+        href={redirectedPathName("ko")}
+        className="mr-2 transition-colors hover:bg-slate-500"
+      >
+        <Image
+          alt="Korean"
+          width={language === "ko" ? 32 : 25}
+          height={10}
+          src="https://cdn.ipregistry.co/flags/noto/kr.png"
+        />
+      </Link>
+      <Link
+        href={redirectedPathName("en")}
+        className="transition-colors hover:bg-slate-500"
+      >
+        <Image
+          alt="United States"
+          width={language === "en" ? 32 : 25}
+          height={30}
+          src="https://cdn.ipregistry.co/flags/noto/us.png"
+        />
+      </Link>
+    </div>
   );
 }

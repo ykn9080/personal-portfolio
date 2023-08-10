@@ -24,12 +24,6 @@ export default function RootLayout({
   params: { lang: Locale };
 }) {
   return (
-    // <section>
-    //   {/* Include shared UI here e.g. a header or sidebar */}
-    //   <nav>hihihi</nav>
-
-    //   {children}
-    // </section>
     <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
       <div className="col-span-3">{children}</div>
       <div className="p-3">

@@ -58,21 +58,8 @@ export default async function Post({ params: { postId } }: Props) {
         <section>
           <article className="gridtwo">
             <p>{meta.excerpt}</p>
-            {/* <GatsbyImage
-                  className="interestimg"
-                  fluid={featureImage.childImageSharp.fluid}
-                /> */}
-            {/* <Image
-              className="interestimg"
-              src={meta.featureImage}
-              alt={meta.title}
-            /> */}
           </article>
-          {/* <article>
-                {videoSourceURL && (
-                  <Video videoSrcURL={videoSourceURL} videoTitle={videoTitle} />
-                )}
-              </article> */}
+
           <article className="text-black dark:text-white">{content}</article>
         </section>
       </div>
