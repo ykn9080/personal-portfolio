@@ -26,7 +26,7 @@ export default async function Posts({
             return <ListItem key={post.id} post={post} />;
         })}
       </div> */}
-      <div className="gap-2 columns-2xs">
+      <div className="gap-4 columns-3xs">
         {posts.map((post) => {
           if (post.id.endsWith(params.lang) && post.type === part)
             return <ListItem key={post.id} post={post} />;

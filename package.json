@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@formatjs/intl-localematcher": "^0.4.0",
+    "@reduxjs/toolkit": "^1.9.5",
     "@types/node": "18.15.5",
     "@types/react": "18.0.28",
     "@types/react-dom": "18.0.11",
@@ -26,6 +27,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.8.0",
+    "react-redux": "^8.1.2",
     "redux": "^4.2.1",
     "redux-devtools-extension": "^2.13.9",
     "rehype-autolink-headings": "^6.1.1",

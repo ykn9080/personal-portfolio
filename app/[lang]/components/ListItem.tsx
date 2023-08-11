@@ -5,40 +5,47 @@ import getFormattedDate from "@/lib/getFormattedDate";
 type Props = {
   post: Meta;
 };
-
+export function generateStaticParams({ post }: Props) {
+  return [
+    { category: "a", product: "1" },
+    { category: "b", product: "2" },
+    { category: "c", product: "3" },
+  ];
+}
 export default function ListItem({ post }: Props) {
-  const { id, title, date, featureImage, excerpt } = post;
+  const { id, title, date, featureImage, excerpt, type } = post;
   const formattedDate = getFormattedDate(date);
 
   const lang = id.split(".")?.[1];
-
+  console.log("sadffasdfasdfsasdf", type);
   return (
     <>
       <Link
-        className="underline hover:text-black/170 dark:hover:text-grey dark:text-white"
-        href={`/posts/${id}`}
+        className=" hover:text-black/170 dark:hover:text-grey dark:text-white"
+        href={{
+          pathname: `/posts/${id}`,
+          query: {
+            type, // should be `title` not `id`
+          },
+        }}
       >
-        <div className="mt-5 mx-auto px-2">
-          <div className="text-gray-700 text-center bg-gray-300 px-5 py-5 m-2 rounded">
-            <div className="mt-4 lg:mt-0 lg:ml-6">
-              <div className="uppercase tracking-wide text-sm text-indigo-600 font-bold">
-                {title}
-              </div>
-              {/* 
-                  <p className="block mt-1 text-lg leading-tight font-semibold text-gray-900 hover:underline">
-                    {formattedDate}
-                  </p> */}
-            </div>
+        <div className="w-full max-w-xs overflow-hidden border-2 block border-indigo-500/50 bg-white rounded-lg shadow-lg dark:bg-gray-800 mb-4">
+          <Image
+            src={featureImage}
+            className="rounded-lg lg:w-64"
+            alt={title}
+            layout="responsive"
+            width={250}
+            height={100}
+          />
 
-            <div className="lg:items-center">
-              <Image
-                src={featureImage}
-                className="rounded-lg lg:w-64"
-                alt={title}
-                width={300}
-                height={100}
-              />
-            </div>
+          <div className="py-5 text-center">
+            <p className="block text-xl font-bold text-gray-800 dark:text-white">
+              {title}
+            </p>
+            <span className="px-2 text-sm truncate md:text-ellipsis text-gray-700 dark:text-gray-200">
+              {excerpt}
+            </span>
           </div>
         </div>
       </Link>

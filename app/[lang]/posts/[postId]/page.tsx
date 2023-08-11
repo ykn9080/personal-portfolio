@@ -10,6 +10,8 @@ export const revalidate = 80000;
 type Props = {
   params: {
     postId: string;
+    type: string;
+    lang: string;
   };
 };
 
@@ -20,11 +22,13 @@ export async function generateStaticParams() {
 
   return posts.map((post) => ({
     postId: post.id,
+    type: post.type,
   }));
 }
 
 export async function generateMetadata({ params }: Props) {
   const { postId } = params;
+
   const post = await getPostByName(`${postId}.mdx`); //deduped!
   if (!post) {
     return {
@@ -37,7 +41,7 @@ export async function generateMetadata({ params }: Props) {
   };
 }
 
-export default async function Post({ params: { postId } }: Props) {
+export default async function Post({ params: { postId, type } }: Props) {
   const post = await getPostByName(`${postId}.mdx`); //deduped!
 
   if (!post) notFound();
