@@ -1,4 +1,5 @@
 /** @type {import('next').NextConfig} */
+
 const nextConfig = {
   experimental: {
     appDir: true,
@@ -27,10 +28,6 @@ const nextConfig = {
       },
     ],
   },
-  // i18n: {
-  //   locales: ["en", "kr"],
-  //   defaultLocale: "kr",
-  // },
 };
 
 module.exports = nextConfig;

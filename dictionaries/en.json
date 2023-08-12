@@ -9,8 +9,25 @@
       "description": "Internationalization in NextJs 13 App router"
     },
     "about": {
-      "title": "About Us",
-      "description": "This is the about page"
+      "title": "About Me",
+      "description": "Fullstack javascript developer",
+      "fullstack": "FullStack Developer",
+      "meanstack": "MEAN stack, Docker",
+      "mypositioning": "Fullstack web developer",
+      "index-introduce": "Web and mobile changes rapidly, and new knowledge to acquire seems to increase exponentially. It has become more important to select essential technologies among numerous fields.^ My interest is to easily modularize and reuse CI/CD technology related to MERN stack, npm module or docker-compose, etc.",
+      "index-head": "A sample that isolates reusable modules from the project output. It is a mixture of npm published and cloned from github.",
+      "work-head": "Work Portfolio",
+      "work-sub": "Project & Modules I've created",
+      "interest-head": "My Interest",
+      "interest-sub": "What I am usually using or interested",
+      "index-interest": "All technologies necessary for MERN stack development. Development-related technologies such as Documentation, S3 file server, and DevOps-related technologies such as Docker and CI/CD",
+      "about-head": "About me",
+      "about-sub": "FullStack javascript programmer",
+      "about-body": "Hi, this is Young Nam, over 10 year experienced freelance web and mobile programmer.^My skill is focused on MERN statck, good at Nodejs, React, MongoDB, Mysql. Also DevOps related fileds - Docker , CI/CD, and git etc..^I graduaged from computer science, Korea National Open University. I can communicate in English and Korean.^I prefer working part-time, or on a project basis.",
+      "about-me": "About me",
+      "about-me-content": "As a 10 year fullstack developer,  I cover site planning, web/mobile development and DevOps. Everyday I enjoy coding and learning new knowledge.",
+      "address": "#1st YangjiKumho Apt, Bundangku, Kyungkido, Korea",
+      "phone": "+82.10.3728.7923"
     }
   }
 }

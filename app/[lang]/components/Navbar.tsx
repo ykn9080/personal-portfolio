@@ -7,50 +7,40 @@ import { ThemeButton } from "@/app/[lang]/components/ThemeButton";
 
 export default async function Navbar({ lang }: { lang: Locale }) {
   const { navigation } = await getDictionary(lang);
-  console.log(navigation);
+
   return (
-    <nav className="bg-slate-600 p-4 sticky top-0 drop-shadow-xl z-10">
-      <div className="md:px-6 prose prose-xl mx-auto flex justify-between flex-col sm:flex-row">
-        <h1 className="text-3xl font-bold text-white grid place-content-center mb-2 md:mb-0">
-          <Link
-            href="/"
-            className="text-white/90 no-underline hover:text-white"
+    <nav className="flex items-center justify-between flex-wrap bg-gray-800 p-6">
+      <div className="flex items-center flex-shrink-0 text-white mr-6">
+        <Link href="/" className="font-bold text-xl">
+          Youngki Nam Blog
+        </Link>
+      </div>
+
+      <div className="w-full block flex-grow sm:flex sm:items-center sm:w-auto">
+        <div className="text-sm sm:flex-grow">
+          <a
+            href="#"
+            className="block mt-4 sm:inline-block sm:mt-0 text-teal-200 hover:text-white mr-4"
           >
-            Youngki Nam
+            Your Business
+          </a>
+          <a
+            href="#"
+            className="block mt-4 sm:inline-block sm:mt-0 text-teal-200 hover:text-white mr-4"
+          >
+            Networking
+          </a>
+          <Link
+            href="/about"
+            className="block mt-4 sm:inline-block sm:mt-0 text-teal-200 hover:text-white"
+          >
+            {navigation.about}
           </Link>
-        </h1>
-        <div className="flex flex-row justify-center  align-middle gap-4">
-          <h4 className="font-bold grid place-content-center">
-            <Link href={`/${lang}`}>{navigation.home}</Link>
-          </h4>
-          <h4 className="font-bold grid place-content-center">
-            <Link href={`/${lang}/about`}>{navigation.about}</Link>
-          </h4>
+        </div>
+        <div className="inline-block  mr-2 leading-none">
           <LocaleSwitcher />
-          {/* <Link
-            className="text-white/90 hover:text-black"
-            href="https://www.youtube.com/@DaveGrayTeachesCode"
-          >
-            <FaYoutube />
-          </Link>
-          <Link
-            className="text-white/90 hover:text-white"
-            href="https://courses.davegray.codes/"
-          >
-            <FaLaptop />
-          </Link>
-          <Link
-            className="text-white/90 hover:text-white"
-            href="https://github.com/gitdagray"
-          >
-            <FaGithub />
-          </Link>
-          <Link
-            className="text-white/90 hover:text-white"
-            href="https://twitter.com/yesdavidgray"
-          >
-            <FaTwitter />
-          </Link> */}
+        </div>
+        <div className="inline-block ">
           <ThemeButton />
         </div>
       </div>

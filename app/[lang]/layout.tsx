@@ -2,7 +2,9 @@ import "./globals.css";
 import Navbar from "./components/Navbar";
 import type { Metadata } from "next";
 import { Locale, i18n } from "@/i18n.config";
-import Providers from "@/app/[lang]/providers";
+import ThemeProviders from "@/app/[lang]/themeProvider";
+import { ReduxProviders } from "./reduxProvider";
+
 import { Inter } from "next/font/google";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -26,11 +28,13 @@ export default function RootLayout({
   return (
     <html lang={params.lang}>
       <body className={inter.className}>
-        <Providers>
-          {/* @ts-expect-error async server component */}
-          <Navbar lang={params.lang} />
-          <main>{children}</main>
-        </Providers>
+        <ReduxProviders>
+          <ThemeProviders>
+            {/* @ts-expect-error async server component */}
+            <Navbar lang={params.lang} />
+            <main>{children}</main>
+          </ThemeProviders>
+        </ReduxProviders>
       </body>
     </html>
   );
