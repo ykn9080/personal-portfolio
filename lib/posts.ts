@@ -30,13 +30,15 @@ export async function getPostListSameTypeByName(
     .filter((path) => path.endsWith(`.mdx`));
 
   const posts: Meta[] = [];
+  const curpost = await getPostByName(`${fileName}.mdx`);
 
   for (const file of filesArray) {
     const post = await getPostByName(file);
 
     if (post) {
       const { meta } = post;
-      posts.push(meta);
+      if (meta.type === curpost?.meta.type && meta.language === "en")
+        posts.push(meta);
     }
   }
 

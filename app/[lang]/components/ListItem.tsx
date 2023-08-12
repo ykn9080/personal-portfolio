@@ -4,30 +4,17 @@ import getFormattedDate from "@/lib/getFormattedDate";
 
 type Props = {
   post: Meta;
+  lang: string;
 };
-export function generateStaticParams({ post }: Props) {
-  return [
-    { category: "a", product: "1" },
-    { category: "b", product: "2" },
-    { category: "c", product: "3" },
-  ];
-}
-export default function ListItem({ post }: Props) {
+export default function ListItem({ post, lang }: Props) {
   const { id, title, date, featureImage, excerpt, type } = post;
   const formattedDate = getFormattedDate(date);
 
-  const lang = id.split(".")?.[1];
-  console.log("sadffasdfasdfsasdf", type);
   return (
     <>
       <Link
         className=" hover:text-black/170 dark:hover:text-grey dark:text-white"
-        href={{
-          pathname: `/posts/${id}`,
-          query: {
-            type, // should be `title` not `id`
-          },
-        }}
+        href={`${lang}/posts/${id}`}
       >
         <div className="w-full max-w-xs overflow-hidden border-2 block border-indigo-500/50 bg-white rounded-lg shadow-lg dark:bg-gray-800 mb-4">
           <Image

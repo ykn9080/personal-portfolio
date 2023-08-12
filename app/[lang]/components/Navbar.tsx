@@ -11,7 +11,7 @@ export default async function Navbar({ lang }: { lang: Locale }) {
   return (
     <nav className="flex items-center justify-between flex-wrap bg-gray-800 p-6">
       <div className="flex items-center flex-shrink-0 text-white mr-6">
-        <Link href="/" className="font-bold text-xl">
+        <Link href={`/${lang}`} className="font-bold text-xl">
           Youngki Nam Blog
         </Link>
       </div>
@@ -31,7 +31,7 @@ export default async function Navbar({ lang }: { lang: Locale }) {
             Networking
           </a>
           <Link
-            href="/about"
+            href={`/${lang}/about`}
             className="block mt-4 sm:inline-block sm:mt-0 text-teal-200 hover:text-white"
           >
             {navigation.about}

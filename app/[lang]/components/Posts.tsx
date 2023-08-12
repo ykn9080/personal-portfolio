@@ -29,7 +29,7 @@ export default async function Posts({
       <div className="gap-4 columns-3xs">
         {posts.map((post) => {
           if (post.id.endsWith(params.lang) && post.type === part)
-            return <ListItem key={post.id} post={post} />;
+            return <ListItem key={post.id} post={post} lang={params.lang} />;
         })}
       </div>
     </section>

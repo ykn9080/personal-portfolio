@@ -1,9 +1,8 @@
 import getFormattedDate from "@/lib/getFormattedDate";
 import { getPostsMeta, getPostByName } from "@/lib/posts";
 import { notFound } from "next/navigation";
-import Link from "next/link";
 import "highlight.js/styles/github-dark.css";
-import Image from "next/image";
+import Sidebar from "@/app/[lang]/components/Sidebar";
 
 export const revalidate = 80000;
 
@@ -41,7 +40,7 @@ export async function generateMetadata({ params }: Props) {
   };
 }
 
-export default async function Post({ params: { postId, type } }: Props) {
+export default async function Post({ params: { postId, lang } }: Props) {
   const post = await getPostByName(`${postId}.mdx`); //deduped!
 
   if (!post) notFound();
@@ -57,16 +56,19 @@ export default async function Post({ params: { postId, type } }: Props) {
   // ));
 
   return (
-    <>
-      <div className="work">
+    <div className="grid grid-cols-1 sm:grid-cols-4 gap-3 p-3 ml-3">
+      <div className="col-span-3">
         <section>
-          <article className="gridtwo">
-            <p>{meta.excerpt}</p>
-          </article>
-
+          <div className="text-2xl text-black dark:text-white my-5">
+            {meta.title}
+          </div>
           <article className="text-black dark:text-white">{content}</article>
         </section>
       </div>
-    </>
+      <div className="p-3">
+        {/* @ts-expect-error Server Component */}
+        <Sidebar postId={postId} lang={lang} meta={meta} />
+      </div>
+    </div>
   );
 }
