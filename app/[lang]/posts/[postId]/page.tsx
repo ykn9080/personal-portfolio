@@ -1,8 +1,10 @@
 import getFormattedDate from "@/lib/getFormattedDate";
 import { getPostsMeta, getPostByName } from "@/lib/posts";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import "highlight.js/styles/github-dark.css";
 import Sidebar from "@/app/[lang]/components/Sidebar";
+import Video from "@/app/[lang]/components/Video";
 
 export const revalidate = 80000;
 
@@ -54,7 +56,6 @@ export default async function Post({ params: { postId, lang } }: Props) {
   //     {tag}
   //   </Link>
   // ));
-
   return (
     <div className="grid grid-cols-1 sm:grid-cols-4 gap-3 p-3 ml-3">
       <div className="col-span-3">
@@ -62,6 +63,28 @@ export default async function Post({ params: { postId, lang } }: Props) {
           <div className="text-2xl text-black dark:text-white my-5">
             {meta.title}
           </div>
+          <article className="gridtwo">
+            {" "}
+            <Image
+              src={meta.featureImage}
+              width={400}
+              height={100}
+              alt="featureImage"
+              className="float-right ml-10"
+            />
+            <p>{meta.excerpt}</p>
+          </article>
+          <div className="clear-both" />
+          <article className="my-10 w-full">
+            {meta.videoSourceURL && (
+              <iframe
+                src={meta.videoSourceURL}
+                allowFullScreen
+                width="100%"
+                height="400"
+              />
+            )}
+          </article>
           <article className="text-black dark:text-white">{content}</article>
         </section>
       </div>

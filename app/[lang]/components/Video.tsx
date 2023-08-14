@@ -1,15 +1,23 @@
-type Props = {
-    id: string
-}
+import React from "react";
+const Video = (meta: Meta) => {
+  const urls = meta.videoSourceURL.split(";");
+  const titles = meta.videoTitle.split(";");
 
-export default function Video({ id }: Props) {
+  return urls.map((url, i) => {
     return (
-        <div className="aspect-w-16 aspect-h-9">
-            <iframe
-                src={`https://www.youtube.com/embed/${id}`}
-                title="YouTube video player"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            />
+      <div id={`showyoutube_${i}`} className="video">
+        <div>
+          <h5>{titles[i]}</h5>
         </div>
+        <iframe
+          src={url}
+          title={titles[i]}
+          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+          frameBorder="1"
+          allowFullScreen
+        />
+      </div>
     );
-}
+  });
+};
+export default Video;

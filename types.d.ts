@@ -7,6 +7,12 @@ type Meta = {
   language: string;
   featureImage: string;
   excerpt: string;
+  embeddedImagesRemote: string;
+  videoSourceURL: string;
+  videoTitle: string;
+  github: string;
+  npmorg: string;
+  demo: string;
 };
 
 type BlogPost = {

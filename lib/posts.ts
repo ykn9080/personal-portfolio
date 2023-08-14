@@ -29,14 +29,16 @@ export async function getPostListSameTypeByName(
     .map((obj) => obj.path)
     .filter((path) => path.endsWith(`.mdx`));
 
-  const posts: Meta[] = [];
+  let posts: Meta[] = [];
   const curpost = await getPostByName(`${fileName}.mdx`);
 
   for (const file of filesArray) {
+    console.log(file);
     const post = await getPostByName(file);
 
     if (post) {
       const { meta } = post;
+
       if (meta.type === curpost?.meta.type && meta.language === "en")
         posts.push(meta);
     }
@@ -77,6 +79,12 @@ export async function getPostByName(
     language: string;
     featureImage: string;
     excerpt: string;
+    embeddedImagesRemote: string;
+    videoSourceURL: string;
+    videoTitle: string;
+    github: string;
+    npmorg: string;
+    demo: string;
   }>({
     source: rawMDX,
     components: {
@@ -112,6 +120,12 @@ export async function getPostByName(
       language: frontmatter.language,
       featureImage: frontmatter.featureImage,
       excerpt: frontmatter.excerpt,
+      embeddedImagesRemote: frontmatter.embeddedImagesRemote,
+      videoSourceURL: frontmatter.videoSourceURL,
+      videoTitle: frontmatter.videoTitle,
+      github: frontmatter.github,
+      npmorg: frontmatter.npmorg,
+      demo: frontmatter.demo,
     },
     content,
   };
