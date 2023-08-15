@@ -7,7 +7,8 @@ import CustomImage from "@/app/[lang]/components/CustomImage";
 import { Locale } from "@/i18n.config";
 
 export async function getPostListSameTypeByName(
-  fileName: string
+  fileName: string,
+  lang: Locale
 ): Promise<Meta[] | undefined> {
   const res = await fetch(
     "https://api.github.com/repos/ykn9080/personal-contents/git/trees/main?recursive=1",
@@ -38,8 +39,10 @@ export async function getPostListSameTypeByName(
 
     if (post) {
       const { meta } = post;
-
-      if (meta.type === curpost?.meta.type && meta.language === "en")
+      console.log(lang);
+      let language = meta.language;
+      if (language === "ko") language = "kr";
+      if (meta.type === curpost?.meta.type && language === lang)
         posts.push(meta);
     }
   }

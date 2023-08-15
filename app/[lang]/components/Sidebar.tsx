@@ -22,7 +22,7 @@ const sideItems = [
   { title: "demo", url: "demo" },
 ];
 export default async function Sidebar({ postId, lang, meta }: Props) {
-  const posts = await getPostListSameTypeByName(postId);
+  const posts = await getPostListSameTypeByName(postId,lang);
 
   if (!posts) {
     return <p className="mt-10 text-center">Sorry, no posts available.</p>;
