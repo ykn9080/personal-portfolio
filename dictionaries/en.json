@@ -1,12 +1,27 @@
 {
   "navigation": {
     "home": "Home",
-    "about": "About"
+    "about": "About",
+    "work": "Work",
+    "interest": "Interest"
   },
   "page": {
     "home": {
       "title": "Welcome to NextJs i18n",
-      "description": "Internationalization in NextJs 13 App router"
+      "description": "Internationalization in NextJs 13 App router",
+
+      "index-head": "A sample that isolates reusable modules from the project output. It is a mixture of npm published and cloned from github.",
+      "index-interest": "All technologies necessary for MERN stack development. Development-related technologies such as Documentation, S3 file server, and DevOps-related technologies such as Docker and CI/CD",
+
+      "index-introduce": "Web and mobile changes rapidly, and new knowledge to acquire seems to increase exponentially. It has become more important to select essential technologies among numerous fields.^ My interest is to easily modularize and reuse CI/CD technology related to MERN stack, npm module or docker-compose, etc."
+    },
+    "work": {
+      "head": "Work Portfolio",
+      "sub": "Project & Modules I've created"
+    },
+    "interest": {
+      "head": "My Interest",
+      "sub": "What I am usually using or interested"
     },
     "about": {
       "title": "About Me",
@@ -14,13 +29,7 @@
       "fullstack": "FullStack Developer",
       "meanstack": "MEAN stack, Docker",
       "mypositioning": "Fullstack web developer",
-      "index-introduce": "Web and mobile changes rapidly, and new knowledge to acquire seems to increase exponentially. It has become more important to select essential technologies among numerous fields.^ My interest is to easily modularize and reuse CI/CD technology related to MERN stack, npm module or docker-compose, etc.",
-      "index-head": "A sample that isolates reusable modules from the project output. It is a mixture of npm published and cloned from github.",
-      "work-head": "Work Portfolio",
-      "work-sub": "Project & Modules I've created",
-      "interest-head": "My Interest",
-      "interest-sub": "What I am usually using or interested",
-      "index-interest": "All technologies necessary for MERN stack development. Development-related technologies such as Documentation, S3 file server, and DevOps-related technologies such as Docker and CI/CD",
+
       "about-head": "About me",
       "about-sub": "FullStack javascript programmer",
       "about-body": "Hi, this is Young Nam, over 10 year experienced freelance web and mobile programmer.^My skill is focused on MERN statck, good at Nodejs, React, MongoDB, Mysql. Also DevOps related fileds - Docker , CI/CD, and git etc..^I graduaged from computer science, Korea National Open University. I can communicate in English and Korean.^I prefer working part-time, or on a project basis.",

@@ -39,7 +39,7 @@ export async function getPostListSameTypeByName(
     if (post) {
       const { meta } = post;
       let language = meta.language;
-      console.log(meta.title,meta.type, curpost?.meta.type, language, lang);
+
       if (language === "kr") language = "ko";
       if (meta.type === curpost?.meta.type && language === lang)
         posts.push(meta);
@@ -90,7 +90,6 @@ export async function getPostByName(
   }>({
     source: rawMDX,
     components: {
-      Video,
       CustomImage,
     },
     options: {

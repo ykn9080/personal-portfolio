@@ -26,6 +26,11 @@ const nextConfig = {
         port: "",
         pathname: "/ykn9080/personal-contents/main/images/**",
       },
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+        port: "",
+      },
     ],
   },
 };

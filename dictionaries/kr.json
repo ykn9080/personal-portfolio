@@ -1,27 +1,33 @@
 {
   "navigation": {
     "home": "홈",
+    "work": "작업산출물",
+    "interest": "관심영역",
     "about": "개인소개"
   },
   "page": {
     "home": {
       "title": "Willkommen bei NextJs i18n",
-      "description": "Internationalisierung im NextJs 13 App-Router"
+      "description": "Internationalisierung im NextJs 13 App-Router",
+      "index-introduce": "web개발분야는 빠르게 변화하고 있고, 새롭게 습득할 지식도 기하급수적으로 늘어나는 것같다. 수많은 분야중 필수적인 기술을 취사선택하는 것이 더욱 중요한 일이 되었다.^ 나의 관심분야는 MERN stack과 관련된 CI/CD기술과 npm module이나 docker-compose 등 쉽게 모듈화하여 재사용하는 것이다.",
+      "index-head": "프로젝트의 산출물 중 재활용할만한 모듈을 isolation한 샘플. npm publish한 것과 github에서 clone해서 사용하는 것이 섞여 있음.",
+
+      "index-interest": " MERN stack개발에 필요한 제반 기술들. Documentation, S3 file server 등 개발관련 기술과 Docker, CI/CD 등 DevOps관련 기술들"
+    },
+    "work": {
+      "head": "작업 산출물",
+      "sub": "프로젝트 산출물를 기초로 재사용가능하도록 모듈화한 포트폴리오임."
+    },
+    "interest": {
+      "head": "관심분야",
+      "sub": "주로 사용하는 툴이나 작업스킬모음집- \n MERN 스택 작업시 필요한 툴이나 도커와 깃액션과 같은 Deploy시 필요한 내용임"
     },
     "about": {
       "title": "개인소개",
       "description": "저는 풀스택 자바 스크립트 개발자입니다.",
-
       "fullstack": "FullStack Developer",
       "meanstack": "MEAN stack, Docker",
       "mypositioning": "풀스택 웹개발자",
-      "index-introduce": "web개발분야는 빠르게 변화하고 있고, 새롭게 습득할 지식도 기하급수적으로 늘어나는 것같다. 수많은 분야중 필수적인 기술을 취사선택하는 것이 더욱 중요한 일이 되었다.^ 나의 관심분야는 MERN stack과 관련된 CI/CD기술과 npm module이나 docker-compose 등 쉽게 모듈화하여 재사용하는 것이다.",
-      "index-head": "프로젝트의 산출물 중 재활용할만한 모듈을 isolation한 샘플. npm publish한 것과 github에서 clone해서 사용하는 것이 섞여 있음.",
-      "work-head": "작업 산출물",
-      "work-sub": "프로젝트 산출물를 기초로 재사용가능하도록 모듈화한 포트폴리오임.",
-      "interest-head": "관심분야",
-      "interest-sub": "주로 사용하는 툴이나 작업스킬모음집- \n MERN 스택 작업시 필요한 툴이나 도커와 깃액션과 같은 Deploy시 필요한 내용임",
-      "index-interest": " MERN stack개발에 필요한 제반 기술들. Documentation, S3 file server 등 개발관련 기술과 Docker, CI/CD 등 DevOps관련 기술들",
       "about-head": "자기소개",
       "about-sub": "풀스택 자바스크립트 개발자",
       "about-body": "MERN statck을 기반으로한 Web, Mobile 프리랜서개발자입니다.^개발경력은 10년 정도되었고, 데이터기반한 분석용 Frontend개발에 특화되어 있습니다.^주요사용 언어는 Nodejs, React, MongoDB, Mysql이며, DevOps관련 Docker, CI/CD, git 등도 능숙합니다.^방송통신대 컴퓨터학과를 수료했습니다. (2022년 1학기졸업예정)^비지니스영어가 가능하고, 사이트 기획능력도 겸비하고 있습니다.",
