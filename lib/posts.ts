@@ -34,14 +34,13 @@ export async function getPostListSameTypeByName(
   const curpost = await getPostByName(`${fileName}.mdx`);
 
   for (const file of filesArray) {
-    console.log(file);
     const post = await getPostByName(file);
 
     if (post) {
       const { meta } = post;
-      console.log(lang);
       let language = meta.language;
-      if (language === "ko") language = "kr";
+      console.log(meta.title,meta.type, curpost?.meta.type, language, lang);
+      if (language === "kr") language = "ko";
       if (meta.type === curpost?.meta.type && language === lang)
         posts.push(meta);
     }

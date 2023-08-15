@@ -1,10 +1,11 @@
 import React from "react";
 import Link from "next/link";
 import { getPostListSameTypeByName } from "@/lib/posts";
+import { Locale } from "@/i18n.config";
 
 type Props = {
   postId: string;
-  lang: string;
+  lang: Locale;
   meta: Meta;
 };
 const bullet = "w-2 h-2 rounded-full ";
@@ -22,7 +23,7 @@ const sideItems = [
   { title: "demo", url: "demo" },
 ];
 export default async function Sidebar({ postId, lang, meta }: Props) {
-  const posts = await getPostListSameTypeByName(postId,lang);
+  const posts = await getPostListSameTypeByName(postId, lang);
 
   if (!posts) {
     return <p className="mt-10 text-center">Sorry, no posts available.</p>;
@@ -39,6 +40,7 @@ export default async function Sidebar({ postId, lang, meta }: Props) {
         <nav className="mt-4 -mx-3 space-y-3 ">
           {posts.map((k: Meta, i: number) => {
             return (
+              // eslint-disable-next-line react/jsx-key
               <Link
                 className=" hover:text-black/170 dark:hover:text-grey dark:text-white"
                 href={`${lang}/posts/${k.id}`}
