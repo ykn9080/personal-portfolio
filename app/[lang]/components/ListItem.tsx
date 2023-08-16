@@ -16,12 +16,16 @@ export default function ListItem({ post, lang }: Props) {
         className=" hover:text-black/170 dark:hover:text-grey dark:text-white"
         href={`${lang}/posts/${id}`}
       >
-        <div className="w-full max-w-xs overflow-hidden border-2 block border-indigo-500/50 bg-white rounded-lg shadow-lg dark:bg-gray-800 mb-4">
+        <div className="overflow-hidden border-2 block border-indigo-500/50 bg-white rounded-lg shadow-lg dark:bg-gray-800 mb-4">
           <Image
             src={featureImage}
-            className="rounded-lg lg:w-64"
+            // className="object-cover object-center w-full h-44 rounded-lg md:h-100"
+            className={
+              type === "work"
+                ? "object-cover object-center w-full h-44 rounded-lg md:h-100"
+                : "object-contain object-center w-full h-44"
+            }
             alt={title}
-            layout="responsive"
             width={250}
             height={100}
           />

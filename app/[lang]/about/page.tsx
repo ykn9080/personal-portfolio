@@ -10,7 +10,7 @@ export default async function About({
   const { page } = await getDictionary(lang);
 
   return (
-    <section className="py-24">
+    <div className="md:container md:mx-auto lg py-14">
       <h1 className="text-3xl font-bold ml-10">{page.about["about-head"]}</h1>
       <div className="flex flex-row">
         <Image
@@ -25,6 +25,15 @@ export default async function About({
           <p className="text-gray-500">{page.about["about-body"]}</p>
         </div>
       </div>
-    </section>
+      <div>
+        <Image
+          src="/images/Myskills.png"
+          alt="myskill"
+          width={800}
+          height={400}
+          className=" mx-auto mt-8 ml-5"
+        ></Image>
+      </div>
+    </div>
   );
 }

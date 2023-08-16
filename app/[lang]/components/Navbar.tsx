@@ -12,12 +12,18 @@ export default async function Navbar({ lang }: { lang: Locale }) {
     <nav className="flex items-center justify-between flex-wrap bg-gray-800 p-6">
       <div className="flex items-center flex-shrink-0 text-white mr-6">
         <Link href={`/${lang}`} className="font-bold text-xl">
-          Youngki Nam Portfolio
+          Youngki Nam
         </Link>
       </div>
 
       <div className="w-full block flex-grow sm:flex sm:items-center sm:w-auto">
         <div className="text-sm sm:flex-grow">
+          <Link
+            href={`/${lang}`}
+            className="block mt-4 sm:inline-block sm:mt-0 text-teal-200 hover:text-white mr-4"
+          >
+            {navigation.home}
+          </Link>
           <Link
             href={`/${lang}/work`}
             className="block mt-4 sm:inline-block sm:mt-0 text-teal-200 hover:text-white mr-4"

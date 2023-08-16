@@ -4,7 +4,6 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import "highlight.js/styles/github-dark.css";
 import Sidebar from "@/app/[lang]/components/Sidebar";
-import Video from "@/app/[lang]/components/Video";
 
 export const revalidate = 80000;
 
@@ -49,13 +48,6 @@ export default async function Post({ params: { postId, lang } }: Props) {
 
   const { meta, content } = post;
 
-  // const pubDate = getFormattedDate(meta.date);
-
-  // const tags = meta.tags.map((tag, i) => (
-  //   <Link key={i} href={`/tags/${tag}`}>
-  //     {tag}
-  //   </Link>
-  // ));
   return (
     <div className="grid grid-cols-1 sm:grid-cols-4 gap-3 p-3 ml-3">
       <div className="col-span-3">
@@ -64,7 +56,6 @@ export default async function Post({ params: { postId, lang } }: Props) {
             {meta.title}
           </div>
           <article className="gridtwo">
-            {" "}
             <Image
               src={meta.featureImage}
               width={400}
@@ -75,7 +66,7 @@ export default async function Post({ params: { postId, lang } }: Props) {
             <p>{meta.excerpt}</p>
           </article>
           <div className="clear-both" />
-          <article className="my-10 w-full">
+          <article className="w-full aspect-video my-10">
             {meta.videoSourceURL && (
               <iframe
                 src={meta.videoSourceURL}

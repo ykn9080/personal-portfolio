@@ -6,12 +6,12 @@ import ThemeProviders from "@/app/[lang]/themeProvider";
 import { ReduxProviders } from "./reduxProvider";
 
 import { Inter } from "next/font/google";
+import Footer from "./components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Dave's Blog",
-  description: "Created by Dave Gray",
+  title: "Youngki Name Blog",
 };
 
 export async function generateStaticParams() {
@@ -33,6 +33,8 @@ export default function RootLayout({
             {/* @ts-expect-error async server component */}
             <Navbar lang={params.lang} />
             <main>{children}</main>
+            {/* @ts-expect-error async server component */}
+            <Footer lang={params.lang} />
           </ThemeProviders>
         </ReduxProviders>
       </body>

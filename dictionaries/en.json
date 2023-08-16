@@ -7,8 +7,9 @@
   },
   "page": {
     "home": {
-      "title": "Welcome to NextJs i18n",
-      "description": "Internationalization in NextJs 13 App router",
+      "title": "Fullstack Developer",
+      "subtitle": "10 year experienced web developer",
+      "description": "One-man, multi-level developer, including front-end, back-end, DevOps, and cloud management. Along with skills for front and back-end development such as React, Next, Node, and Java, he also has development capabilities such as CI/CD for cloud management such as Docker, Kubernetes, and AWS. ",
 
       "index-head": "A sample that isolates reusable modules from the project output. It is a mixture of npm published and cloned from github.",
       "index-interest": "All technologies necessary for MERN stack development. Development-related technologies such as Documentation, S3 file server, and DevOps-related technologies such as Docker and CI/CD",

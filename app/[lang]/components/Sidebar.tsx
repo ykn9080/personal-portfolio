@@ -16,7 +16,12 @@ const colors = [
   "bg-indigo-500",
   "bg-blue-500",
   "bg-yellow-500",
+  "bg-emerald-500",
+  "bg-violet-500",
+  "bg-amber-500",
+  "bg-fuchsia-500",
 ];
+
 const sideItems = [
   { title: "github", url: "github" },
   { title: "npm", url: "npmorg" },
@@ -77,7 +82,7 @@ export default async function Sidebar({ postId, lang, meta }: Props) {
           <h2 className="text-base font-semibold text-gray-800 dark:text-white">
             Github
           </h2>
-          <div className="text-sm break-words px-1">
+          <div className="text-sm break-words px-1 text-gray-500 px-1 hover:text-blue-500">
             <a href={meta.github} target="_blank" title="github">
               {meta.github}
             </a>
@@ -88,7 +93,7 @@ export default async function Sidebar({ postId, lang, meta }: Props) {
           <h2 className="text-base font-semibold text-gray-800 dark:text-white">
             npm
           </h2>
-          <div className="text-sm break-words px-1">
+          <div className="text-sm break-words text-gray-500 px-1 hover:text-blue-500">
             <a href={meta.npmorg} target="_blank" title="npm">
               {meta.npmorg}
             </a>
@@ -98,8 +103,8 @@ export default async function Sidebar({ postId, lang, meta }: Props) {
           <h2 className="text-base font-semibold text-gray-800 dark:text-white">
             Demo
           </h2>
-          <div className="text-sm break-words px-1">
-            <a href={meta.github} target="_blank" title="demo">
+          <div className="text-sm break-words px-1  text-gray-500 px-1 hover:text-blue-500">
+            <a href={meta.demo} target="_blank" title="demo">
               {meta.demo}
             </a>
           </div>

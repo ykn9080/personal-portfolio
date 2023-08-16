@@ -7,8 +7,9 @@
   },
   "page": {
     "home": {
-      "title": "Willkommen bei NextJs i18n",
-      "description": "Internationalisierung im NextJs 13 App-Router",
+      "title": "풀스택 웹개발자",
+      "subtitle": "10년 경력의 핸디맨",
+      "description": "프론트엔드, 백앤드, 데브옵스, 클라우드 관리 등 일인다역의 개발자. 리액트, 넥스트, 노드, 자바 등 프론트와 백앤드개발을 위한 스킬과 함께 도커, 쿠버네티스, AWS 등 클라우드 관리 CI/CD 등 개발역량도 함께 갖추고 있다. ",
       "index-introduce": "web개발분야는 빠르게 변화하고 있고, 새롭게 습득할 지식도 기하급수적으로 늘어나는 것같다. 수많은 분야중 필수적인 기술을 취사선택하는 것이 더욱 중요한 일이 되었다.^ 나의 관심분야는 MERN stack과 관련된 CI/CD기술과 npm module이나 docker-compose 등 쉽게 모듈화하여 재사용하는 것이다.",
       "index-head": "프로젝트의 산출물 중 재활용할만한 모듈을 isolation한 샘플. npm publish한 것과 github에서 clone해서 사용하는 것이 섞여 있음.",
 
