@@ -49,39 +49,41 @@ export default async function Post({ params: { postId, lang } }: Props) {
   const { meta, content } = post;
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-4 gap-3 p-3 ml-3">
-      <div className="col-span-3">
-        <section>
-          <div className="text-2xl text-black dark:text-white my-5">
-            {meta.title}
-          </div>
-          <article className="gridtwo">
-            <Image
-              src={meta.featureImage}
-              width={400}
-              height={100}
-              alt="featureImage"
-              className="float-right ml-10"
-            />
-            <p>{meta.excerpt}</p>
-          </article>
-          <div className="clear-both" />
-          <article className="w-full aspect-video my-10">
-            {meta.videoSourceURL && (
-              <iframe
-                src={meta.videoSourceURL}
-                allowFullScreen
-                width="100%"
-                height="400"
+    <div className="md:container md:mx-auto lg py-14">
+      <div className="grid grid-cols-1 sm:grid-cols-4 gap-3 p-3 ml-3">
+        <div className="col-span-3">
+          <section>
+            <div className="text-2xl text-black dark:text-white my-5">
+              {meta.title}
+            </div>
+            <article className="gridtwo">
+              <Image
+                src={meta.featureImage}
+                width={400}
+                height={100}
+                alt="featureImage"
+                className="float-right ml-10"
               />
-            )}
-          </article>
-          <article className="text-black dark:text-white">{content}</article>
-        </section>
-      </div>
-      <div className="p-3">
-        {/* @ts-expect-error Server Component */}
-        <Sidebar postId={postId} lang={lang} meta={meta} />
+              <p>{meta.excerpt}</p>
+            </article>
+            <div className="clear-both" />
+            <article className="w-full aspect-video my-10">
+              {meta.videoSourceURL && (
+                <iframe
+                  src={meta.videoSourceURL}
+                  allowFullScreen
+                  width="100%"
+                  height="400"
+                />
+              )}
+            </article>
+            <article className="text-black dark:text-white">{content}</article>
+          </section>
+        </div>
+        <div className="p-3">
+          {/* @ts-expect-error Server Component */}
+          <Sidebar postId={postId} lang={lang} meta={meta} />
+        </div>
       </div>
     </div>
   );

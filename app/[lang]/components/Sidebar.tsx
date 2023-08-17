@@ -83,7 +83,7 @@ export default async function Sidebar({ postId, lang, meta }: Props) {
             Github
           </h2>
           <div className="text-sm break-words px-1 text-gray-500 px-1 hover:text-blue-500">
-            <a href={meta.github} target="_blank" title="github">
+            <a href={meta.github} target="blank" title="github">
               {meta.github}
             </a>
           </div>
@@ -94,7 +94,7 @@ export default async function Sidebar({ postId, lang, meta }: Props) {
             npm
           </h2>
           <div className="text-sm break-words text-gray-500 px-1 hover:text-blue-500">
-            <a href={meta.npmorg} target="_blank" title="npm">
+            <a href={meta.npmorg} target="blank" title="npm">
               {meta.npmorg}
             </a>
           </div>
@@ -104,7 +104,7 @@ export default async function Sidebar({ postId, lang, meta }: Props) {
             Demo
           </h2>
           <div className="text-sm break-words px-1  text-gray-500 px-1 hover:text-blue-500">
-            <a href={meta.demo} target="_blank" title="demo">
+            <a href={meta.demo} target="blank" title="demo">
               {meta.demo}
             </a>
           </div>

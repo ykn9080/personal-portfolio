@@ -11,7 +11,7 @@ export default function ListItem({ post, lang }: Props) {
   const formattedDate = getFormattedDate(date);
 
   return (
-    <>
+    <div className="box-border md:box-content w-full lg:w-64 md:w-80">
       <Link
         className=" hover:text-black/170 dark:hover:text-grey dark:text-white"
         href={`${lang}/posts/${id}`}
@@ -40,6 +40,6 @@ export default function ListItem({ post, lang }: Props) {
           </div>
         </div>
       </Link>
-    </>
+    </div>
   );
 }

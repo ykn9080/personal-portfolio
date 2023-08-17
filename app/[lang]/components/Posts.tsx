@@ -16,17 +16,11 @@ export default async function Posts({
   }
 
   return (
-    <section className="mt-6 mx-auto max-w-4xl">
-      <h2 className="text-4xl font-bold text-black dark:text-white/90 mb-10 mt-10">
+    <section className="mt-6">
+      <h2 className="text-4xl font-bold text-black dark:text-white/90 mb-5 mt-10">
         {part}
       </h2>
-      {/* <div className="bodycontent">
-        {posts.map((post) => {
-          if (post.id.endsWith(params.lang) && post.type === part)
-            return <ListItem key={post.id} post={post} />;
-        })}
-      </div> */}
-      <div className="gap-4 columns-3xs">
+      <div className="gap-4 flex flex-row flex-wrap">
         {posts.map((post) => {
           if (post.id.endsWith(params.lang) && post.type === part)
             return <ListItem key={post.id} post={post} lang={params.lang} />;

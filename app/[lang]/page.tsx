@@ -8,7 +8,7 @@ export const revalidate = 80000;
 
 export default function Home({ params }: { params: { lang: Locale } }) {
   return (
-    <div className="mx-auto">
+    <div className="container mx-auto">
       {/* @ts-expect-error Server Component */}
       <MyProfilePic params={params} />
 
