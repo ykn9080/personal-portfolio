@@ -40,7 +40,7 @@ export function middleware(request: NextRequest) {
 }
 //export const config = { matcher: "/((?!.*\\.|api\\/).*)" };
 export const config = {
-  matcher: "/",
+  matcher: ["/", "/([a-z])w"],
 };
 // export const config = {
 //   // Matcher ignoring `/_next/` and `/api/`
