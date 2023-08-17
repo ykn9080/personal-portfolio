@@ -28,18 +28,18 @@ export default async function DetailPage({
             {posts.map((post) => {
               if (post.id.endsWith(lang) && post.type === "interest")
                 return (
-                  <div className="flex flex-row ">
-                    <div className="basis-72">
+                  <div className="lg:flex flex-row justify-between items-start shrink-0">
+                    <div className="flex-none w-full md:w-40">
                       <Image
-                        className="w-full max-w-xs overflow-hidden rounded-lg lg:w-64 border-solid border border-black-100 dark:border-white-500"
+                        className="rounded-lg border-solid border border-black-100 dark:border-white-500 bg-white"
                         layout="responsive"
-                        width={250}
+                        width={300}
                         height={100}
                         src={post.featureImage}
                         alt=""
                       />
                     </div>
-                    <div className="flex flex-col justify-between lg:mx-6">
+                    <div className="grow flex flex-col justify-between lg:mx-6">
                       <Link
                         href={`${lang}/posts/${post.id}`}
                         className="text-gray-800 dark:text-white "
