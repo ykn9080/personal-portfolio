@@ -19,10 +19,11 @@ export default async function DetailPage({
   return (
     <div>
       <section className="bg-white dark:bg-gray-900">
-        <div className="container px-6 py-10 mx-auto">
+        <div className="container py-10 mx-auto">
           <h1 className="text-2xl font-semibold text-gray-800 capitalize lg:text-3xl dark:text-white">
-            My Interests
+            {page.work.head}
           </h1>
+          <p>{page.work.sub}</p>
           <div className="grid grid-cols-1 gap-8 mt-8 md:mt-16 md:grid-cols-2">
             {posts.map((post) => {
               if (post.id.endsWith(lang) && post.type === "work")
