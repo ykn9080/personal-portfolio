@@ -77,6 +77,7 @@ export default async function Post({ params: { postId, lang } }: Props) {
                 />
               )}
             </article>
+
             <article className="text-black dark:text-white">{content}</article>
           </section>
         </div>
