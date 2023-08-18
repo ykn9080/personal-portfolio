@@ -1,0 +1,20 @@
+version: "3.8"
+services:
+  web:
+    container_name: "myportfolio"
+    restart: "on-failure"
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      # args:
+      #   GITHUB_TOKEN: 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
+      target: runner
+    env_file:
+      - ./.env.local
+    volumes:
+      - "./next:/usr/src/next"
+      - "/usr/src/next/node_modules"
+      - "/usr/src/next/.next"
+
+    ports:
+      - "3003:3000"
