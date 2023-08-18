@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import "highlight.js/styles/github-dark.css";
 import Sidebar from "@/app/[lang]/components/Sidebar";
 
-export const revalidate = 80000;
+export const revalidate = 800;
 
 type Props = {
   params: {

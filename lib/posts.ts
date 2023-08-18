@@ -18,7 +18,7 @@ export async function getPostListSameTypeByName(
         //Authorization: "Bearer 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",
         "X-GitHub-Api-Version": "2022-11-28",
       },
-      next: { revalidate: 83600 },
+      next: { revalidate: 600 },
     }
   );
   if (!res.ok) return undefined;
@@ -62,7 +62,7 @@ export async function getPostByName(
         //Authorization: "Bearer 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",
         "X-GitHub-Api-Version": "2022-11-28",
       },
-      next: { revalidate: 83600 },
+      next: { revalidate: 600 },
     }
   );
 
@@ -149,7 +149,7 @@ export async function getPostsMeta(): Promise<Meta[] | undefined> {
         //Authorization: "Bearer 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",
         "X-GitHub-Api-Version": "2022-11-28",
       },
-      next: { revalidate: 83600 },
+      next: { revalidate: 600 },
     }
   );
   if (!res.ok) return undefined;

@@ -4,7 +4,7 @@ import { Locale, i18n } from "@/i18n.config";
 import { NextRequest, NextResponse } from "next/server";
 import { request } from "http";
 
-export const revalidate = 80000;
+export const revalidate = 800;
 
 export default function Home({ params }: { params: { lang: Locale } }) {
   return (
