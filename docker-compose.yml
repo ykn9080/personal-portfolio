@@ -7,7 +7,7 @@ services:
       context: ./
       dockerfile: Dockerfile
       # args:
-      #   GITHUB_TOKEN: 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
+      #   GITHUB_TOKEN: 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
       target: runner
     env_file:
       - ./.env.local

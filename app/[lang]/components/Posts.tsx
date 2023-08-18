@@ -11,6 +11,7 @@ export default async function Posts({
   part: string;
 }) {
   const posts = await getPostsMeta();
+
   const { page } = await getDictionary(params.lang);
   if (!posts) {
     return <p className="mt-10 text-center">Sorry, no posts available.</p>;
