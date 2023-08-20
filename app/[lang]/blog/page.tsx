@@ -7,6 +7,7 @@ import { Locale } from "@/i18n.config";
 import { getDictionary } from "@/lib/dictionary";
 import Link from "next/link";
 import Image from "next/image";
+import { localBlog } from "@/lib/blogs";
 
 // app/page.tsx
 export default async function Blog({
@@ -16,32 +17,32 @@ export default async function Blog({
   params: { lang: Locale };
   part: string;
 }) {
-  // 1) Set blogs directory
-  const blogDir = "blogs";
+  // // 1) Set blogs directory
+  // const blogDir = "blogs";
 
-  // 2) Find all files in the blog directory
-  const files = fs.readdirSync(path.join(blogDir));
+  // // 2) Find all files in the blog directory
+  // const files = fs.readdirSync(path.join(blogDir));
+  // const { page } = await getDictionary(params.lang);
+  // if (!files) {
+  //   return <p className="mt-10 text-center">Sorry, no posts available.</p>;
+  // }
+
+  // // 3) For each blog found
+  // const blogs = files.map((filename) => {
+  //   // 4) Read the content of that blog
+  //   const fileContent = fs.readFileSync(path.join(blogDir, filename), "utf-8");
+
+  //   // 5) Extract the metadata from the blog's content
+  //   const { data: frontMatter } = matter(fileContent);
+
+  //   // 6) Return the metadata and page slug
+  //   return {
+  //     meta: frontMatter,
+  //     slug: filename.replace(".mdx", ""),
+  //   };
+  // });
   const { page } = await getDictionary(params.lang);
-  if (!files) {
-    return <p className="mt-10 text-center">Sorry, no posts available.</p>;
-  }
-
-  // 3) For each blog found
-  const blogs = files.map((filename) => {
-    console.log("filename:", filename);
-    // 4) Read the content of that blog
-    const fileContent = fs.readFileSync(path.join(blogDir, filename), "utf-8");
-
-    // 5) Extract the metadata from the blog's content
-    const { data: frontMatter } = matter(fileContent);
-    console.log("frontMatter:", frontMatter);
-
-    // 6) Return the metadata and page slug
-    return {
-      meta: frontMatter,
-      slug: filename.replace(".mdx", ""),
-    };
-  });
+  const blogs = await localBlog();
   return (
     <>
       <section className="mt-16">
@@ -82,7 +83,11 @@ export default async function Blog({
                 <div className="box-border md:box-content w-full lg:w-64 md:w-80">
                   <Link
                     className=" hover:text-black/170 dark:hover:text-grey dark:text-white"
-                    href={{ pathname: `${params.lang}/blogs/${blog.slug}` }}
+                    passHref
+                    href={{
+                      pathname: `${params.lang}/blogs/${blog.slug}`,
+                      query: { slug: blog.slug },
+                    }}
                   >
                     <div className="overflow-hidden border-2 block border-indigo-500/50 bg-white rounded-lg shadow-lg dark:bg-gray-800 mb-4">
                       <Image

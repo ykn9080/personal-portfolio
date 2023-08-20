@@ -78,11 +78,7 @@ export default async function Post({ params: { postId, lang } }: Props) {
                 />
               )}
             </article>
-
-            <article className="text-black dark:text-white">
-              {/* @ts-expect-error Server Component*/}
-              <MDXRemote source={content} />
-            </article>
+            {content}
           </section>
         </div>
         <div className="p-3">

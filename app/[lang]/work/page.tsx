@@ -12,7 +12,7 @@ export default async function DetailPage({
 }) {
   const { page } = await getDictionary(lang);
   const posts = await getPostsMeta();
-  console.log(lang);
+
   if (!posts) {
     return <p className="mt-10 text-center">Sorry, no posts available.</p>;
   }
