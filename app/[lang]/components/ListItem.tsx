@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import getFormattedDate from "@/lib/getFormattedDate";
+// import getFormattedDate from "@/lib/getFormattedDate";
 
 type Props = {
   post: Meta;
@@ -8,7 +8,7 @@ type Props = {
 };
 export default function ListItem({ post, lang }: Props) {
   const { id, title, date, featureImage, excerpt, type } = post;
-  const formattedDate = getFormattedDate(date);
+  // const formattedDate = getFormattedDate(date);
 
   return (
     <div className="box-border md:box-content w-full lg:w-64 md:w-80">

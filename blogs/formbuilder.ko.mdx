@@ -1,0 +1,144 @@
+---
+id: 12
+date:  2022-01-01
+tags: ["works"]
+title: FormBuilder
+slug: formbuilder
+type: work
+language: kr
+seq: 2
+featureImage: https://raw.githubusercontent.com/ykn9080/personal-contents/main/images/work/imcform.png
+thumb: https://raw.githubusercontent.com/ykn9080/personal-contents/main/images/work/imcform_edit.png
+github: https://github.com/ykn9080/imcFormDisplay
+npmorg:
+demo: http://imcmaster.iptime.org:4009/form/edit
+videoSourceURL: https://www.youtube.com/embed/yCVvpjU93bc;https://www.youtube.com/embed/9hMDpbNx9hg
+videoTitle: "원하는 위치에 삽입하는 폼;폼을 만들거나 수정하는 도구"
+excerpt: html form을 쉽고 빠르게 만들수 있어요. React를 기반으로 생성된 폼은 생성, 편집할 수 있는 기능이 제공됩니다.
+---
+
+![npm](https://img.shields.io/npm/v/imcformbuilder)
+![npm bundle size](https://img.shields.io/bundlephobia/min/imcformbuilder?style=plastic)
+![npm](https://img.shields.io/npm/dm/imcformbuild)
+
+> IMCFormBuilder는 폼을 쉽고 빠르게 만들수 있는 기능을 제공하며, ant design을 이용하여 만들어졌습니다.
+
+> | Display                                                                                                                | Form Edit                                                                                                            |
+> | ---------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+> | <a href="http://imcmaster.iptime.org/form" ><img src="https://i.ibb.co/7yWH0tT/antformdisplay.png" width="400px"/></a> | <a href="http://imcmaster.iptime.org:3080" ><img src="https://i.ibb.co/RNbtwWF/imcformedit.png" width="400px"/> </a> |
+
+## Install
+
+```sh
+npm install formbuilder
+```
+
+## Usage basic
+
+폼을 편집하기 위해서는 showedit={true} 를 코드중에 삽입해 주세요.
+이렇게 하면 상단에 편집버튼이 나타납니다. 편집 완료 후에는 코드를 삭제하세요.
+
+```js
+import FormDisplay from "imcformbuilder"
+;<FormDisplay
+  showedit={true}
+  formArray={formArray}
+  onFinish={onFinish}
+  onValuesChange={onValuesChange}
+/>
+```
+
+## EventHandler
+
+1. onFinish: 하단의 submit버튼을 클릭하면 fire됩니다. onFinish eventhandler function을 작성하고 return 값으로 value를 설정하세요.
+   리턴값은  키:값으로 구성된 json object입니다.
+
+2. onValuesChange: 자바스크립트의 onKeyPress와 같이 키입력과 동시에 리턴되는 이벤트핸들러로서 두개의 값을 리턴합니다.
+   첫번째는 현재 클릭한 폼아이템의 키와 값으로 구성된 json object이고, 두번째는 onFinish와 같이 전체 키,값으로 구성된 오브젝트입니다.
+
+
+```js
+const onFinish = val => {
+  console.log(val)
+}
+const onValuesChange = (changedValues, allValues) => {
+  console.log(changedValues, allValues)
+}
+```
+
+## Sample data(formArray)
+
+폼에 넘겨줄 값인 formArray는 폼아이템값과 폼스타일로 구성되어 있으며 아래와 같습니다.
+
+1. list: 폼 아이템
+2. setting: 폼 스타일
+
+```sh
+{
+  "list": [
+    {
+      "label": "Collection",
+      "name": "collection",
+      "type": "input",
+      "seq": 0,
+      "placeholder": "database table",
+      "rules": [
+        {
+          "required": false
+        }
+      ],
+      "requiredmsg": "you must insert"
+    },
+    {
+      "label": "QueryString",
+      "name": "querystring",
+      "type": "input",
+      "seq": 1,
+      "placeholder": "pid=xxxx or _id=yyyy",
+      "msgright": "라이트 메시지"
+    },
+    {
+      "label": "Submit",
+      "name": "",
+      "type": "button",
+      "seq": 7,
+      "action": "submit",
+      "btnStyle": "primary",
+      "btnColor": "primary",
+      "align": "right"
+    }
+  ],
+ "setting": {
+    "editable": false,
+    "name": "antform",
+    "layout": "horizontal",
+    "formColumn": 1,
+    "formItemLayout": {
+      "labelCol": {
+        "span": 4
+      },
+      "wrapperCol": {
+        "span": 20
+      }
+    },
+    "tailLayout": {},
+    "initial": {},
+    "size": "middle",
+    "onFinish": "{values => {console.log(values);};}",
+    "initialValues": {}
+  },
+ }
+```
+
+## Edit Form
+
+imcformbuilder로 showedit={true}값을 추가하면 폼 상단에 클릭버튼이 생성되며, 클릭시 수정페이지지로 이동합니다.
+
+[![FormEdit](https://i.ibb.co/ZhgW0SR/Imcformedit-small.png)](https://www.youtube.com/watch?v=_Fgp1g39Dc8 "Everything Is AWESOME")
+
+## Author
+
+👤 **Youngki Nam**
+
+- Website: http://imcmaster.iptime.org
+- Github: [@ykn9080](https://github.com/ykn9080)

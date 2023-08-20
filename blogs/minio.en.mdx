@@ -1,0 +1,68 @@
+---
+id: 21
+date:  2021-12-31
+tags: ["interests"]
+title: MinIO
+slug: minio
+seq: 1
+type: interest
+language: en
+featureImage: https://raw.githubusercontent.com/ykn9080/personal-contents/main/images/interest/minio_logo.png
+thumb: https://raw.githubusercontent.com/ykn9080/personal-contents/main/images/interest/minio_logo2.png
+github:
+demo: http://imcmaster.iptime.org:9010
+excerpt: s3 compatible storage solution. Custom install with docker-compose
+---
+
+|bash|Backup docker volume and push to minIO|After compressing the backup of docker volume (tar.bz2 format) to minIOscript to upload
+
+```bash
+#!/bin/bash
+
+array=(mysql-data,postgres-data,wp-content, mongodbdata ,minio-data)
+
+echo "Array size: ${#array[*]}"
+
+echo "Array items:"
+for item in ${array[*]}
+do
+    printf "   %s\n" $item
+    docker run --rm -v $item:/volume -v /tmp:/backup alpine tar -cjf /backup/$item.tar.bz2 -C /volume ./
+    s3cmd -c ~/.s3cfg_minio put /tmp/$item.tar.bz2 s3://backup
+done
+```
+
+|bash|Restore code|Get from minIO and restore, minIO backup bucker의 tar.bz2 파일을 다운받은 후
+도커볼륨으로 save하는 script
+
+```bash
+#!/bin/bash
+array=(mysql-data postgres-data mongodbdata wp-content minio-data)
+
+echo "Array items:"
+
+for item in ${array[*]}
+do
+
+        s3cmd -c ~/.s3cfg_minio_nam --force get s3://backup/$item.tar.bz2 /tmp/
+        volumes=$(docker volume ls)
+
+        exist=0;
+        for vol in ${volumes[*]}
+        do
+        if [ $vol == $item ]
+        then
+                exist=1
+        fi
+        done
+
+        if [ $exist == 0 ]
+        then
+        docker volume create $item
+        docker run --rm -v $item:/volume -v /tmp:/backup alpine sh -c
+        "rm -rf /volume/* /volume/..?* /volume/.[!.]* ; tar -C /volume/ -xjf /backup/$item.tar.bz2"
+
+        printf "   %s\n" $item
+        fi
+done
+```

@@ -1,0 +1,88 @@
+---
+id: 29
+date:  2021-12-31
+tags: ["interests"]
+title: Swagger
+slug: swagger
+seq: 9
+type: interest
+language: kr
+featureImage: https://raw.githubusercontent.com/ykn9080/personal-contents/main/images/interest/swagger_logo.png
+thumb: https://raw.githubusercontent.com/ykn9080/personal-contents/main/images/interest/swagger_logo.png
+github: https://github.com/ykn9080/imcnode
+demo: http://imcmaster.iptime.org:9006/swagger
+excerpt: api 서비스 documentation용으로 사용되는 swagger와 jsdoc을 결합한 swagger doc을 활용한 document
+---
+
+### swagger setting
+
+```js
+const swaggerJsDoc = require("swagger-jsdoc")
+const swaggerUi = require("swagger-ui-express")
+
+module.exports = app => {
+  // Extended: https://swagger.io/specification/#infoObject
+  const swaggerOptions = {
+    swaggerDefinition: {
+      info: {
+        version: "1.0.0",
+        title: "Customer API",
+        description: "Customer API Information",
+        contact: {
+          name: "Amazing Developer",
+        },
+        servers: [`${process.env.HOST}:${process.env.PORT}`],
+      },
+    },
+    // ['.routes/*.js']
+    apis: ["./router/*.js", "./controllers/*.js"],
+  }
+
+  const swaggerDocs = swaggerJsDoc(swaggerOptions)
+  app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerDocs))
+}
+```
+
+swaggerOptions중 servers는 문서화할 서버 url을 표시한다.
+apis는 서비내 문서중 swagger문서를 첨부한 파일 또는 디렉토리를 지정한다.
+마지막으로 적성된 문서에 접근할 수 있는 endpoint로 "/swagger"등과 같이 지정한다.
+
+### swagger jsdocs tag
+
+```js
+/**
+ * @swagger
+ * /customers:
+ *  get:
+ *    description: Use to request all customers
+ *    responses:
+ *      '200':
+ *        description: A successful response
+ */
+app.get("/customers", (req, res) => {
+  res.status(200).send("Customer results")
+})
+/**
+ * @swagger
+ * /customers:
+ *    put:
+ *      description: Use to return all customers
+ *    parameters:
+ *      - name: customer
+ *        in: query
+ *        description: Name of our customer
+ *        required: false
+ *        schema:
+ *          type: string
+ *          format: string
+ *    responses:
+ *      '201':
+ *        description: Successfully created user
+ */
+app.put("/customer", (req, res) => {
+  res.status(200).send("Successfully updated customer")
+})
+```
+
+node문서 내에 api function위에 documentation을 직접한후 compile시 문서화할 수 있어 편리하다.
+또는 별도의 파일에 문서를 작성할 수도 있다.

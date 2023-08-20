@@ -4,6 +4,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import "highlight.js/styles/github-dark.css";
 import Sidebar from "@/app/[lang]/components/Sidebar";
+import { MDXRemote } from "next-mdx-remote/rsc";
 
 export const revalidate = 800;
 
@@ -78,7 +79,10 @@ export default async function Post({ params: { postId, lang } }: Props) {
               )}
             </article>
 
-            <article className="text-black dark:text-white">{content}</article>
+            <article className="text-black dark:text-white">
+              {/* @ts-expect-error Server Component*/}
+              <MDXRemote source={content} />
+            </article>
           </section>
         </div>
         <div className="p-3">

@@ -1,0 +1,40 @@
+---
+id: 25
+date:  2021-12-31
+tags: ["interests"]
+title: Github Action
+slug: githubaction
+seq: 5
+type: interest
+language: kr
+featureImage: https://raw.githubusercontent.com/ykn9080/personal-contents/main/images/interest/githubaction_logo.png
+thumb: https://raw.githubusercontent.com/ykn9080/personal-contents/main/images/interest/githubaction_logo2.png
+github: https://github.com/ykn9080/imctemplate/actions
+demo: http://imcmaster.iptime.org:9110
+excerpt: github action을 활용하여 git push시에 자동으로 build & deploy가 되도록 사용할 수 있다.
+---
+
+|yaml|Github action workflow|docker image에서 pull하여 container를 생성하는 예제임.
+remote host에서 작동하는 사례임. 여기에서는 digitalocean 사이트에서 액션이 수행되도록설정된 사례
+
+```yaml
+name: remote ssh command
+on: [push]
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.DIGITALOCEAN_HOST }}
+          username: root
+          password: ${{ secrets.DIGITALOCEAN_PASSWORD }}
+          port: 22
+          script: |
+            docker rm -f imctemplatec
+            docker rmi -f imctemplate
+            docker pull yknam/imctemplate
+            docker run --rm --network kong-net --name imctemplatec -p 9010:9010 -d yknam/imctemplate
+```

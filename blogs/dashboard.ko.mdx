@@ -1,0 +1,157 @@
+---
+id: 11
+date:  2022-01-01
+tags: ["works"]
+title: Dashboard
+slug: dashboard
+seq: 1
+type: work
+language: kr
+featureImage: https://raw.githubusercontent.com/ykn9080/personal-contents/main/images/work/dashboard_view.png
+thumb: https://raw.githubusercontent.com/ykn9080/personal-contents/main/images/work/dashboard_view.png
+github: https://github.com/ykn9080/imcDashboard.git
+npmorg:
+demo: http://imcmaster.iptime.org:7000
+videoSourceURL: https://www.youtube.com/embed/CbdKylo3fsc
+videoTitle: "대쉬보드를 쉽게 설치하여 사용가능합니다."
+excerpt: chart,table,html문서등의 요소를 drag and drop으로 화면에 배치할 수 있다. 주제와 목적에 따라 복수의 dashboard를 생성하여 리스트로 관리한다. 필요에 따라 Easy chart, Easy table, html 등 다양한 모듈을 plugin으로 추가하여 사용할수있다.
+---
+
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/ykn9080/imcDashboard/LICENSE)
+
+> 대쉬보드기능을 제공하는 오픈소스. 차트,테이블,html문서 등을 drag & drop으로 배치할 수 있다. 각 오브젝트의 레이아웃과 사이즈변경을 할수 있으며. 각각의 오브젝트를 생성, 수정, 삭제할 수 있다.
+> 주제별로 여러개의 대쉬보드는 생성할 수 있고, 리스트로 관리할 수 있다.
+
+## Install
+
+```sh
+# Github
+git clone https://github.com/ykn9080/imcDashboard
+npm start //local init
+docker-compose up //using docker
+
+# Docker
+docker pull yknam/imcdashboard
+docker run --name imcdashboard -p 7000:80 -d yknam/imcdashboard
+```
+
+## Usage basic
+
+1. 신규로 dashboard를 생성하기
+2. Save
+3. Layout
+4. Edit
+   a. Chart
+   b. Table
+   c. HTML
+5. Setting
+   a. Localhost
+   샘플 파일: sampledata.json
+   b. Mongdb
+6. Multiple dashboard
+
+```javascript
+<AntFormDisplay
+  showedit={true}
+  formArray={formArray}
+  onFinish={onFinish}
+  onValuesChange={onValuesChange}
+/>
+```
+
+## EventHandler
+
+
+1. onFinish: By clicking submit button, onFinish function returns a value as object.
+   With this you can proceed other action, such as save to server or change state.
+  
+2. onValuesChange: returns two parameters, changedValues, allValues.
+   First value return just changed key value object, last value returns all key value object.
+
+
+
+```javascript
+const onFinish = val => {
+  console.log(val)
+}
+const onValuesChange = (changedValues, allValues) => {
+  console.log(changedValues, allValues)
+}
+```
+
+## Sample data(formArray)
+
+formArray is composed of two parts:
+
+1. list: items in the form
+2. setting: look and feel of the form
+
+```json
+{
+  "list": [
+    {
+      "label": "Collection",
+      "name": "collection",
+      "type": "input",
+      "seq": 0,
+      "placeholder": "database table",
+      "rules": [
+        {
+          "required": false
+        }
+      ],
+      "requiredmsg": "you must insert"
+    },
+    {
+      "label": "QueryString",
+      "name": "querystring",
+      "type": "input",
+      "seq": 1,
+      "placeholder": "pid=xxxx or _id=yyyy",
+      "msgright": "라이트 메시지"
+    },
+    {
+      "label": "Submit",
+      "name": "",
+      "type": "button",
+      "seq": 7,
+      "action": "submit",
+      "btnStyle": "primary",
+      "btnColor": "primary",
+      "align": "right"
+    }
+  ],
+  "setting": {
+    "editable": false,
+    "name": "antform",
+    "layout": "horizontal",
+    "formColumn": 1,
+    "formItemLayout": {
+      "labelCol": {
+        "span": 4
+      },
+      "wrapperCol": {
+        "span": 20
+      }
+    },
+    "tailLayout": {},
+    "initial": {},
+    "size": "middle",
+    "onFinish": "{values => {console.log(values);};}",
+    "initialValues": {}
+  }
+}
+```
+
+## Edit Form
+
+If you provide pros as showedit={true} and click edit button, it redirect edit page.
+
+[![FormEdit](https://i.ibb.co/ZhgW0SR/Imcformedit-small.png)](https://www.youtube.com/watch?v=_Fgp1g39Dc8 "Everything Is AWESOME")
+
+## Author
+
+👤 **Youngki Nam**
+
+- Website: http://imcmaster.iptime.org
+- Github: [@ykn9080](https://github.com/ykn9080)

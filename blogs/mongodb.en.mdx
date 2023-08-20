@@ -1,0 +1,222 @@
+---
+id: 22
+date:  2021-12-31
+tags: ["interests"]
+title: MongoDB
+slug: mongodb
+seq: 2
+type: interest
+language: en
+featureImage: https://raw.githubusercontent.com/ykn9080/personal-contents/main/images/interest/mongodb_logo.png
+thumb: https://raw.githubusercontent.com/ykn9080/personal-contents/main/images/interest/mongodb_logo.png
+github:
+demo: http://imcmaster.iptime.org:7000
+videoSourceURL:
+videoTitle:
+excerpt: Mongodb usually comes with nodejs. As schema less database, it's very convenient and fast data repository to develop unstructured contents.
+---
+
+<p>
+  When you use MongoDB with nodejs express, usually devide it with three
+  modules, i.e. Model,Router,Controller. This is example code for typical CRUD
+  development.
+</p>
+<br />
+<h3>Model</h3>
+
+```js
+var mongoose = require("mongoose")
+const Schema = mongoose.Schema
+const models = {}
+
+const allpurposeSchema = new Schema({
+  title: String,
+  desc: String,
+  formid: String,
+  data: Schema.Types.Mixed,
+  author: Schema.Types.Mixed,
+})
+
+models.Allpurpose = mongoose.model("Allpurpose", allpurposeSchema)
+
+module.exports = models
+```
+
+<h3>Router</h3>
+
+```js
+const crud = require("../controllers/reuseCRUD");//controller
+//route index에서 express 전송(app)
+module.exports = (app) => {
+  const model = require("../models/model");
+  app.use("/allpurpose", crud(model.Control));
+```
+
+<h3>Controller</h3>
+
+```js
+var mongoose = require("mongoose");
+const Schema = mongoose.Schema;
+const models = {};
+
+const allpurposeSchema = new Schema({
+  title: String,
+  desc: String,
+  formid: String,
+  data: Schema.Types.Mixed,
+  author: Schema.Types.Mixed,
+});
+
+models.Allpurpose = mongoose.model("Allpurpose", allpurposeSchema);
+
+module.exports = models;
+
+$$$$$|javascript|controller|재사용가능한 CRUD로 모든 모델에서 공통사용
+모든 모델을 한곳에서 처리함
+ ./model/models.js /router/reuseCRUD.js에서 접근처리
+const express = require("express");
+
+module.exports = (Collection) => {
+  // ======
+  // Create
+  // ======
+
+  const create = (req, res) => {
+    const newEntry = req.body;
+    Collection.create(newEntry, (e, newEntry) => {
+      if (e) {
+        console.log(e);
+        res.sendStatus(500);
+      } else {
+        res.send(newEntry);
+      }
+    });
+  };
+
+  // =========
+  // Read many
+  // =========
+
+  const readMany = (req, res) => {
+    let query = res.locals.query || {};
+
+    Collection.find(query, (e, result) => {
+      if (e) {
+        res.status(500).send(e);
+        console.log(e.message);
+      } else {
+        res.send(result);
+      }
+    });
+  };
+
+  // ========
+  // Read one
+  // ========
+  const readOne = (req, res, next) => {
+    /* reqest.query 경우
+          예: http://localhost:3001/reuse/control/:_id?ctrid=gggg
+          예: http://localhost:3001/reuse/control/:1?ctrid=gggg
+          req.param에 숫자가 있는 경우 숫자개만 리턴 1=>1개
+        */
+    let { _id } = req.params;
+    if (Object.keys(req.query).length > 0) {
+      var query = Collection.find(req.query);
+      if (typeof parseInt(_id) === "number") query = query.limit(parseInt(_id));
+      query.exec(function (err, someValue) {
+        if (err) return next(err);
+        res.send(someValue);
+      });
+      return null;
+    }
+    /* request.param 경우
+          예: http://localhost:3001/reuse/control/:_id
+          control/:_id
+        */
+
+    Collection.findById(_id, (e, result) => {
+      if (e) {
+        res.status(500).send(e);
+        console.log(e.message);
+      } else {
+        //res.send(result);
+        res.send(result);
+      }
+    });
+  };
+
+  // ======
+  // Update
+  // ======
+  const update = (req, res) => {
+    const keycode = Object.keys(req.query);
+    const changedEntry = req.body;
+
+    // ======
+    // MultiUpdate: array로 batch update처리
+    // url은 "/mutiupdate?id="과 같이 전송
+    // 현재는 multiupdate시 querystring 1개만 가능!!!!!!!!!! 수정할것
+    // ======
+    if (req.params._id == "multiupdate") {
+      let bulk = Collection.collection.initializeUnorderedBulkOp();
+      changedEntry.forEach((k, i) => {
+        bulk
+          .find({
+            [keycode]: k[keycode],
+          })
+          .upsert()
+          .update({ $set: k });
+      });
+
+      bulk.execute((e, result) => {
+        if (e) {
+          res.status(500).send(e);
+          console.log(e.message);
+        } else {
+          res.send(result);
+        }
+      });
+      return false;
+    }
+
+    //single update인 경우
+    let query = { _id: req.params._id };
+    if (keycode.length > 0) {
+      //querystring이 있을 경우 query를 대체함
+      //localhost:3001/menu/<req.param._id>?qrystring=value
+      query = req.query;
+    }
+    Collection.update(query, { $set: changedEntry }, (e) => {
+      if (e) res.sendStatus(500);
+      else res.sendStatus(200);
+    });
+  };
+
+  // ======
+  // Remove
+  // ======
+  const remove = (req, res) => {
+    let query = { _id: req.params._id };
+    //querystring이 있을 경우 query를 대체함
+    if (Object.keys(req.query).length > 0) {
+      query = req.query;
+    }
+    Collection.deleteOne(query, (e) => {
+      if (e) res.status(500).send(e);
+      else res.sendStatus(200);
+    });
+  };
+
+  // ======
+  // Routes
+  // ======
+  let router = express.Router();
+  router.get("/", readMany);
+  router.get("/:_id", readOne);
+  router.post("/", create);
+  router.put("/:_id", update);
+  router.delete("/:_id", remove);
+  return router;
+};
+
+```

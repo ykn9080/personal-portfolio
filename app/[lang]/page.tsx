@@ -1,4 +1,5 @@
 import Posts from "./components/Posts";
+import Blog from "@/app/[lang]/blog/page";
 import MyProfilePic from "./components/MyProfilePic";
 import { Locale, i18n } from "@/i18n.config";
 import { NextRequest, NextResponse } from "next/server";
@@ -13,9 +14,14 @@ export default function Home({ params }: { params: { lang: Locale } }) {
       <MyProfilePic params={params} />
 
       {/* @ts-expect-error Server Component */}
-      <Posts params={params} part="work" />
+      <Blog params={params} part="work" />
+
+      {/* @ts-expect-error Server Component */}
+      <Blog params={params} part="interest" />
       {/* @ts-expect-error Server Component */}
       <Posts params={params} part="interest" />
+      {/* @ts-expect-error Server Component */}
+      <Posts params={params} part="work" />
     </div>
   );
 }

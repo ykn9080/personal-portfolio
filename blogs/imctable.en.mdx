@@ -1,0 +1,135 @@
+---
+id: 15
+date:  2022-01-01
+tags: ["works"]
+title: imcTable
+slug: imctable
+type: work
+language: en
+seq: 5
+featureImage: https://raw.githubusercontent.com/ykn9080/personal-contents/main/images/work/imctable_edit.png
+thumb: https://raw.githubusercontent.com/ykn9080/personal-contents/main/images/work/imctable_edit.png
+github: https://github.com/ykn9080/imctable
+npmorg: https://www.npmjs.com/package/imcgridtable
+demo: http://imcmaster.iptime.org:3009
+videoSourceURL: https://www.youtube.com/embed/ge8b9X6MExw
+videoTitle: "Table maker"
+excerpt: You can create a table with only json data. Operations such as adding columns, changing column titles and order are possible. You can add sum, avg, count, etc. by groupby the input data.
+---
+
+## ✨ Features
+
+- 🌈 Editable .
+- 📦 Add new calculated columes.
+- 🛡 Delete or rearrange columes.
+- ⚙️ Group by a column and make sum,avg.
+  |
+
+## 📦 Install
+
+```bash
+npm install imceasytable
+```
+
+```bash
+yarn add imceasytable
+```
+
+## 🔨 Usage
+
+```jsx
+import React from "react";
+import "./App.css";
+
+import EasyTable from "imceasytable";
+
+const App = (props) => {
+  const onChange=(return)=>{
+
+  }
+  return (
+    <div>
+      <EasyTable showmenu={false} authObj={sampledata} onChange={onChange}/>
+    </div>
+  );
+};
+
+export default App;
+```
+
+## 📜 Document & API
+
+| Property | Description                   | Type                    | defaultValue |
+| -------- | ----------------------------- | ----------------------- | ------------ |
+| showmenu | edit or display               | boolean                 |              |
+| authObj  | chart data & setting          | json data               |              |
+| onChange | return changed data from edit | (val)=>console.log(val) |              |
+
+show edit button if you change showmenu={true}
+
+sampledata example:
+
+```jsx
+const sampledata = {
+  setting: {
+    column: [
+      {
+        title: "name",
+        titletext: "name",
+        origin: "name",
+        dataIndex: "name",
+        key: "name",
+        datatype: "string",
+      },
+      {
+        title: "math",
+        titletext: "math",
+        origin: "math",
+        dataIndex: "math",
+        key: "math",
+        datatype: "int",
+      },
+      {
+        title: "english",
+        titletext: "english",
+        origin: "english",
+        dataIndex: "english",
+        key: "english",
+        datatype: "int",
+      },
+    ],
+    reset: false,
+    title: "Score",
+    size: "small",
+  },
+  dtlist: [
+    {
+      key: "1",
+      name: "John Brown",
+      math: 60,
+      english: 70,
+    },
+    {
+      key: "2",
+      name: "Jim Green",
+      math: 66,
+      english: 89,
+    },
+  ],
+}
+```
+
+## ⌨️ Development
+
+https://github.com/ykn9080/imcTable
+
+Or clone locally:
+
+```bash
+$ git clone git@github.com:ykn9080/imctable.git
+$ cd imctable
+$ npm install
+$ npm start
+```
+
+Open your browser and visit http://127.0.0.1:3009
