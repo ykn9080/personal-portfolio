@@ -1,9 +1,6 @@
-import Posts from "./components/Posts";
-import Blog from "@/app/[lang]/blog/page";
+import Blog from "./blog/page";
 import MyProfilePic from "./components/MyProfilePic";
 import { Locale, i18n } from "@/i18n.config";
-import { NextRequest, NextResponse } from "next/server";
-import { request } from "http";
 
 export const revalidate = 800;
 
