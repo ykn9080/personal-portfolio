@@ -1,9 +1,9 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { getPostsMeta } from "@/lib/posts";
 import { Locale } from "@/i18n.config";
 import { getDictionary } from "@/lib/dictionary";
+import { localBlog } from "@/lib/blogs";
 
 export default async function DetailPage({
   params: { lang },
@@ -11,9 +11,9 @@ export default async function DetailPage({
   params: { lang: Locale };
 }) {
   const { page } = await getDictionary(lang);
-  const posts = await getPostsMeta();
 
-  if (!posts) {
+  const blogs = localBlog();
+  if (!blogs) {
     return <p className="mt-10 text-center">Sorry, no posts available.</p>;
   }
   return (
@@ -25,27 +25,27 @@ export default async function DetailPage({
           </h1>
           <p>{page.work.sub}</p>
           <div className="grid grid-cols-1 gap-8 mt-8 md:mt-16 md:grid-cols-2">
-            {posts.map((post) => {
-              if (post.id.endsWith(lang) && post.type === "work")
+            {blogs.map((blog) => {
+              if (blog.slug.endsWith(lang) && blog.meta.type === "work")
                 return (
                   <div className="lg:flex">
                     <Image
                       className="object-cover w-full h-56 rounded-lg lg:w-64 border-solid border border-black-100 dark:border-white-500"
                       width={200}
                       height={100}
-                      src={post.featureImage}
+                      src={blog.meta.featureImage}
                       alt=""
                     />
 
                     <div className="flex flex-col justify-between lg:mx-6">
                       <Link
-                        href={`${lang}/posts/${post.id}`}
-                        className="text-gray-800 dark:text-white "
+                        className=" hover:text-black/170 dark:hover:text-grey dark:text-white"
+                        href={`${lang}/blogs/${blog.slug}`}
                       >
                         <div className="text-xl hover:underline">
-                          {post.title}
+                          {blog.meta.title}
                         </div>
-                        <div className="text-sm mt-3">{post.excerpt}</div>
+                        <div className="text-sm mt-3">{blog.meta.excerpt}</div>
                       </Link>
                     </div>
                   </div>

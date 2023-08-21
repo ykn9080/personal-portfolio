@@ -1,8 +1,7 @@
 import React from "react";
 import Link from "next/link";
-import { getPostListSameTypeByName } from "@/lib/posts";
+import { localBlogList, localBlog } from "../../../lib/blogs.js";
 import { Locale } from "@/i18n.config";
-import { localBlog } from "@/lib/blogs";
 
 type Props = {
   slug: string;
@@ -28,13 +27,17 @@ const sideItems = [
   { title: "npm", url: "npmorg" },
   { title: "demo", url: "demo" },
 ];
-export default function Sidebar({ slug, lang, meta }: Props) {
-  const blogs = localBlog();
-  if (!posts) {
+export default function SideLocalbar({ slug, lang, meta }: Props) {
+  const blogs = localBlogList(slug);
+  const language = meta.language === "kr" ? "ko" : "en";
+  //const blogs = localBlog();
+  console.log(blogs);
+
+  if (!blogs) {
     return <p className="mt-10 text-center">Sorry, no posts available.</p>;
   }
   return (
-    <aside className="flex flex-col  h-screen pl-2 py-8 overflow-y-hidden bg-white border-l rtl:border-l-0 rtl:border-r dark:bg-gray-900 dark:border-gray-700">
+    <aside className="flex flex-col  h-screen pl-4 pt-4 overflow-hidden bg-white border-l rtl:border-l-0 rtl:border-r dark:bg-gray-900 dark:border-gray-700">
       <div>
         <div className="flex items-center justify-between">
           <h2 className="text-base font-semibold text-gray-800 dark:text-white">
@@ -43,12 +46,12 @@ export default function Sidebar({ slug, lang, meta }: Props) {
         </div>
 
         <nav className="mt-4 -mx-3 space-y-3 ">
-          {posts.map((k: Meta, i: number) => {
+          {blogs.map((k, i) => {
             return (
               // eslint-disable-next-line react/jsx-key
               <Link
                 className=" hover:text-black/170 dark:hover:text-grey dark:text-white"
-                href={`${lang}/posts/${k.id}`}
+                href={`${language}/blogs/${k.slug}.${language}`}
               >
                 <button className="flex items-center justify-between w-full px-3 py-2 text-xs font-medium text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700">
                   <div className="flex items-center gap-x-2 ">

@@ -3,12 +3,12 @@ import Image from "next/image";
 // import getFormattedDate from "@/lib/getFormattedDate";
 
 type Props = {
-  post: Meta;
+  blog: Meta;
   slug: string;
   lang: string;
 };
-export default function ListItem({ post, slug, lang }: Props) {
-  const { id, title, date, featureImage, excerpt, type } = post;
+export default function ListItem({ blog, slug, lang }: Props) {
+  const { id, title, date, featureImage, excerpt, type } = blog;
   // const formattedDate = getFormattedDate(date);
 
   return (

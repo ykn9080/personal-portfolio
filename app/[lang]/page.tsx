@@ -18,10 +18,6 @@ export default function Home({ params }: { params: { lang: Locale } }) {
 
       {/* @ts-expect-error Server Component */}
       <Blog params={params} part="interest" />
-      {/* @ts-expect-error Server Component */}
-      <Posts params={params} part="interest" />
-      {/* @ts-expect-error Server Component */}
-      <Posts params={params} part="work" />
     </div>
   );
 }

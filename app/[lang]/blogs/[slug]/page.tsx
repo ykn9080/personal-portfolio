@@ -6,7 +6,8 @@ import Image from "next/image";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { serialize } from "next-mdx-remote/serialize";
 import notFound from "./not-found";
-import Sidebar from "@/app/[lang]/components/Sidebar";
+import SideLocalbar from "@/app/[lang]/components/SideLocalbar";
+import { Locale } from "@/i18n.config";
 
 export async function generateStaticParams() {
   const files = fs.readdirSync(path.join("blogs"));
@@ -40,41 +41,47 @@ function getPost({ slug }: { slug: string }) {
   };
 }
 
-export default function Post({ params }: any) {
+export default function Post({ params }: any, lang: Locale) {
   const props = getPost(params);
-
+  const { frontMatter, content } = props;
   return (
     <div className="md:container md:mx-auto lg py-14">
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-3 p-3 ml-3">
         <div className="col-span-3">
-          <div className="prose dark:prose-invert">
+          <div className="prose dark:prose-invert max-w-none">
             <h1>{props.frontMatter.title}</h1>
-
-            <Image
-              src={props.frontMatter.featureImage}
-              width={400}
-              height={100}
-              alt="featureImage"
-              className="float-right ml-10"
-            />
-            <p>{props.frontMatter.excerpt}</p>
-            {props.frontMatter.videoSourceURL && (
-              <iframe
-                src={props.frontMatter.videoSourceURL}
-                allowFullScreen
-                width="100%"
-                height="400"
+            <div className="lg:float-right ml-10 ">
+              <Image
+                src={props.frontMatter.featureImage}
+                width={400}
+                height={100}
+                alt="featureImage"
               />
+            </div>
+            <p>{props.frontMatter.excerpt}</p>
+
+            <div className="clear-both" />
+            {props.frontMatter.videoSourceURL && (
+              <div className="embed-responsive aspect-ratio-16/9 my-5 py-10  w-full">
+                <h3>{props.frontMatter.videoTitle}</h3>
+                <iframe
+                  className="embed-responsive-item w-full"
+                  src={props.frontMatter.videoSourceURL}
+                  height={600}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope;
+            picture-in-picture allowfullscreen"
+                ></iframe>
+              </div>
             )}
-            <div>
+            <div className="prose-lg ">
               {/* @ts-expect-error Server Component*/}
               <MDXRemote source={props.content} />
             </div>
           </div>
-          <div className="p-3">
-            {/* @ts-expect-error Server Component */}
-            <SideLocalbar slug={props.slug} lang={lang} meta={meta} />
-          </div>
+        </div>
+        <div className="p-3">
+          {/* @ts-expect-error Server Component */}
+          <SideLocalbar slug={props.slug} lang={lang} meta={frontMatter} />
         </div>
       </div>
     </div>

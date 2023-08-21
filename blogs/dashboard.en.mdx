@@ -1,0 +1,146 @@
+---
+title: Dashboard
+slug: dashboard
+seq: 1
+type: work
+language: en
+featureImage: ../images/work/dashboard_view.png
+thumb: ../images/work/dashboard_view.png
+github: https://github.com/ykn9080/imcDashboard.git
+npmorg:
+demo: http://167.71.208.218:7000
+videoSourceURL: https://www.youtube.com/embed/zCbg4oprhdA
+videoTitle: "Dashboard made easy, out-of-box tool"
+excerpt: Elements such as chart, table, and html document can be placed on the screen by drag and drop. You can make multiple dashboards, managing them as a list by subject and purpose. This dashboard is made of modularized chart,table components, created and published by me. You can also make us of these components individually to your won project.
+---
+
+![npm](https://img.shields.io/npm/v/imcformbuilder)
+![npm bundle size](https://img.shields.io/bundlephobia/min/imcformbuilder?style=plastic)
+![npm](https://img.shields.io/npm/dm/imcformbuild)
+
+> Create and deploy various objects, such as chart, table, html in a dashboard and rearrange position, change each object size.
+> You can manage multiple dashboard by subjects and load each dashboard from list.
+
+## Install
+
+```sh
+# Github
+git clone https://github.com/ykn9080/imcDashboard
+npm start //local init
+docker-compose up //using docker
+
+# Docker
+docker pull yknam/imcdashboard
+docker run --name imcdashboard -p 7000:80 -d yknam/imcdashboard
+```
+
+## Usage basic
+
+While you develop, showedit={true} will show you edit button.
+Upon complete development, change showedit to false to hide button.
+
+```sh
+ <AntFormDisplay
+      showedit={true}
+      formArray={formArray}
+      onFinish={onFinish}
+      onValuesChange={onValuesChange}
+    />
+```
+
+## EventHandler
+
+1. onFinish: By clicking submit button, onFinish function returns a value as object.
+   With this you can proceed other action, such as save to server or change state.
+   Return data is key value object for example: {collection:"abc",querystring:"123",.....}
+2. onValuesChange: returns two parameters, changedValues, allValues.
+   First value return just changed key value object, last value returns all key value object.
+   e.g.
+   a. changedValues: {collection:"abc"},
+   b. allValues:{collection:"abc",querystring:undefined.....}
+
+```sh
+ const onFinish = (val) => {
+    console.log(val);
+  };
+  const onValuesChange = (changedValues, allValues) => {
+    console.log(changedValues, allValues);
+  };
+```
+
+## Sample data(formArray)
+
+formArray is composed of two parts:
+
+1. list: items in the form
+2. setting: look and feel of the form
+
+```sh
+{
+  "list": [
+    {
+      "label": "Collection",
+      "name": "collection",
+      "type": "input",
+      "seq": 0,
+      "placeholder": "database table",
+      "rules": [
+        {
+          "required": false
+        }
+      ],
+      "requiredmsg": "you must insert"
+    },
+    {
+      "label": "QueryString",
+      "name": "querystring",
+      "type": "input",
+      "seq": 1,
+      "placeholder": "pid=xxxx or _id=yyyy",
+      "msgright": "라이트 메시지"
+    },
+    {
+      "label": "Submit",
+      "name": "",
+      "type": "button",
+      "seq": 7,
+      "action": "submit",
+      "btnStyle": "primary",
+      "btnColor": "primary",
+      "align": "right"
+    }
+  ],
+ "setting": {
+    "editable": false,
+    "name": "antform",
+    "layout": "horizontal",
+    "formColumn": 1,
+    "formItemLayout": {
+      "labelCol": {
+        "span": 4
+      },
+      "wrapperCol": {
+        "span": 20
+      }
+    },
+    "tailLayout": {},
+    "initial": {},
+    "size": "middle",
+    "onFinish": "{values => {console.log(values);};}",
+    "initialValues": {}
+  },
+ }
+```
+
+## Edit Form
+
+If you provide pros as showedit={true} and click edit button, it redirect edit page.
+
+[![FormEdit](https://i.ibb.co/ZhgW0SR/Imcformedit-small.png)](https://www.youtube.com/watch?v=_Fgp1g39Dc8 "Everything Is AWESOME")
+
+## Author
+
+👤 **Youngki Nam**
+
+- Website: http://imcmaster.iptime.org
+- Github: [@ykn9080](https://github.com/ykn9080)
