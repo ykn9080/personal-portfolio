@@ -30,8 +30,6 @@ const sideItems = [
 export default function SideLocalbar({ slug, lang, meta }: Props) {
   const blogs = localBlogList(slug);
   const language = meta.language === "kr" ? "ko" : "en";
-  //const blogs = localBlog();
-  console.log(blogs);
 
   if (!blogs) {
     return <p className="mt-10 text-center">Sorry, no posts available.</p>;

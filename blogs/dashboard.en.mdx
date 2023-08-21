@@ -52,12 +52,9 @@ Upon complete development, change showedit to false to hide button.
 
 1. onFinish: By clicking submit button, onFinish function returns a value as object.
    With this you can proceed other action, such as save to server or change state.
-   Return data is key value object for example: {collection:"abc",querystring:"123",.....}
+   Return data is key value object
 2. onValuesChange: returns two parameters, changedValues, allValues.
    First value return just changed key value object, last value returns all key value object.
-   e.g.
-   a. changedValues: {collection:"abc"},
-   b. allValues:{collection:"abc",querystring:undefined.....}
 
 ```sh
  const onFinish = (val) => {
