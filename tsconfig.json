@@ -28,7 +28,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "lib/blogs.js"
+    "lib/blogs.js",
+    "app/[lang]/testbed/powerbi/page.jsx"
   ],
   "exclude": ["node_modules"]
 }

@@ -11,7 +11,7 @@ import Footer from "./components/Footer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Youngki Name Blog",
+  title: "Youngki Nam's Blog",
 };
 
 export async function generateStaticParams() {
