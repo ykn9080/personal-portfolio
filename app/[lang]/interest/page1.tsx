@@ -11,10 +11,7 @@ export default async function DetailPage({
   params: { lang: Locale };
 }) {
   const { page } = await getDictionary(lang);
-  const blogs = localBlog("blogs");
-  const newblogs = localBlog("newblogs");
-  const allblogs = blogs.concat(newblogs);
-
+  const blogs = localBlog();
   if (!blogs) {
     return <p className="mt-10 text-center">Sorry, no posts available.</p>;
   }
@@ -26,12 +23,12 @@ export default async function DetailPage({
             {page.interest.head}
           </h1>
           <p>{page.interest.sub}</p>
-          <div className="mt-8 md:mt-16 ">
-            {allblogs.map((blog) => {
+          <div className="grid grid-cols-1 gap-8 mt-8 md:mt-16 md:grid-cols-2 xl:grid-cols-3">
+            {blogs.map((blog) => {
               if (blog.slug.endsWith(lang) && blog.meta.type === "interest")
                 return (
-                  <div className="flex flex-row  hover:bg-slate-200 dark:hover:bg-slate-600">
-                    <div className="flex-none w-14 md:w-20 pt-2">
+                  <div className="lg:flex flex-row justify-between items-start shrink-0">
+                    <div className="flex-none w-full md:w-40">
                       <Image
                         className="rounded-lg border-solid border border-black-100 dark:border-white-500 bg-white"
                         layout="responsive"
@@ -46,10 +43,10 @@ export default async function DetailPage({
                         className=" hover:text-black/170 dark:hover:text-grey dark:text-white"
                         href={`${lang}/blogs/${blog.slug}`}
                       >
-                        <div className="text-lg font-bold hover:underline">
+                        <div className="text-xl hover:underline">
                           {blog.meta.title}
                         </div>
-                        <div className="text-sm">{blog.meta.excerpt}</div>
+                        <div className="text-sm mt-3">{blog.meta.excerpt}</div>
                       </Link>
                     </div>
                   </div>
