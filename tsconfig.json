@@ -31,6 +31,6 @@
     "lib/blogs.js",
     "app/[lang]/testbed/powerbi/page.jsx",
     "lib/childprocess.js"
-  ],
+, "app/[lang]/testbed/page.jsx", "app/_app.js"  ],
   "exclude": ["node_modules"]
 }

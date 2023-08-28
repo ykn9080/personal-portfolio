@@ -4,6 +4,9 @@ import Link from "next/link";
 import { Locale } from "@/i18n.config";
 import { getDictionary } from "@/lib/dictionary";
 import { localBlog } from "@/lib/blogs";
+// import { InterestList } from "@/app/[lang]/testbed/page";
+//import AntTable from "@/app/[lang]/testbed/antd/page";
+import ChakraList from "../testbed/chakra/page";
 
 export default async function DetailPage({
   params: { lang },
@@ -12,22 +15,21 @@ export default async function DetailPage({
 }) {
   const { page } = await getDictionary(lang);
   const blogs = localBlog("blogs");
-  const newblogs = localBlog("newblogs");
-  const allblogs = blogs.concat(newblogs);
 
   if (!blogs) {
     return <p className="mt-10 text-center">Sorry, no posts available.</p>;
   }
   return (
-    <div>
-      <section className="bg-white dark:bg-gray-900">
-        <div className="container py-10 mx-auto">
-          <h1 className="text-2xl font-semibold text-gray-800 capitalize lg:text-3xl dark:text-white">
-            {page.interest.head}
-          </h1>
-          <p>{page.interest.sub}</p>
-          <div className="mt-8 md:mt-16 ">
-            {allblogs.map((blog) => {
+    <div className="container py-10">
+      <h1 className="text-2xl font-semibold text-gray-800 capitalize lg:text-3xl ">
+        {page.interest.head}
+      </h1>
+      <p>{page.interest.sub}</p>
+      <div className="mt-8 md:mt-16 ">
+        <ChakraList />
+        {/* <InterestList blogs={blogs} lang={lang} /> */}
+        {/* <AntTable blogs={blogs} lang={lang} /> */}
+        {/* {blogs.map((blog) => {
               if (blog.slug.endsWith(lang) && blog.meta.type === "interest")
                 return (
                   <div className="flex flex-row  hover:bg-slate-200 dark:hover:bg-slate-600">
@@ -54,10 +56,8 @@ export default async function DetailPage({
                     </div>
                   </div>
                 );
-            })}
-          </div>
-        </div>
-      </section>
+            })} */}
+      </div>
     </div>
   );
 }
