@@ -3,13 +3,14 @@ import { FaYoutube, FaTwitter, FaGithub, FaLaptop } from "react-icons/fa";
 import { Locale } from "@/i18n.config";
 import { getDictionary } from "@/lib/dictionary";
 import LocaleSwitcher from "./locale-switcher";
-import { ThemeButton } from "@/app/[lang]/components/ThemeButton";
+// import { ThemeButton } from "@/app/[lang]/components/ThemeButton";
+import { ColorModeSwitcher } from "./ColorModeSwitcher";
 
 export default async function Navbar({ lang }: { lang: Locale }) {
   const { navigation } = await getDictionary(lang);
 
   return (
-    <nav className=" bg-gray-800 p-6">
+    <nav className=" bg-sky-900 p-6">
       <div className="container mx-auto flex items-center justify-between flex-wrap">
         <div className="flex items-center flex-shrink-0 text-white mr-6">
           <Link href={`/${lang}`} className="font-bold text-xl">
@@ -48,7 +49,8 @@ export default async function Navbar({ lang }: { lang: Locale }) {
             <LocaleSwitcher />
           </div>
           <div className="inline-block ">
-            <ThemeButton />
+            {/* <ThemeButton /> */}
+            <ColorModeSwitcher />
           </div>
         </div>
       </div>

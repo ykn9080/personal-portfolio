@@ -18,9 +18,9 @@ export default async function DetailPage({
   }
   return (
     <div>
-      <section className="bg-white dark:bg-gray-900">
+      <section>
         <div className="container py-10 mx-auto">
-          <h1 className="text-2xl font-semibold text-gray-800 capitalize lg:text-3xl dark:text-white">
+          <h1 className="text-2xl font-semibold  capitalize lg:text-3xl">
             {page.work.head}
           </h1>
           <p>{page.work.sub}</p>
@@ -39,7 +39,7 @@ export default async function DetailPage({
 
                     <div className="flex flex-col justify-between lg:mx-6">
                       <Link
-                        className=" hover:text-black/170 dark:hover:text-grey dark:text-white"
+                        className=" hover:text-black/170 dark:hover:text-grey "
                         href={`${lang}/blogs/${blog.slug}`}
                       >
                         <div className="text-xl hover:underline">

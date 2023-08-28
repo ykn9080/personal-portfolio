@@ -13,16 +13,14 @@ export default async function MyProfilePic({
       <div className="mb-16 lg:my-40 lg:max-w-lg lg:pr-5">
         <div className="max-w-xl mb-6">
           <div>
-            <p className="inline-block px-3 py-px mb-4 text-xs font-semibold tracking-wider text-teal-900  dark:text-white uppercase rounded-full bg-teal-accent-400">
+            <p className="inline-block px-3 py-px mb-4 text-xs font-semibold tracking-wider uppercase rounded-full bg-teal-accent-400">
               {page.home.title}
             </p>
           </div>
-          <h2 className="max-w-lg mb-6 font-sans text-3xl font-bold tracking-tight text-gray-900  dark:text-gray-200 sm:text-4xl sm:leading-none">
+          <h2 className="max-w-lg mb-6 font-sans text-3xl font-bold tracking-tight sm:text-4xl sm:leading-none">
             {page.home.subtitle}
           </h2>
-          <p className="text-base text-gray-700  dark:text-white md:text-lg">
-            {page.home.description}
-          </p>
+          <p className="text-base md:text-lg">{page.home.description}</p>
         </div>
       </div>
 

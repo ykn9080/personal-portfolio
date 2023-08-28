@@ -21,12 +21,12 @@ export default async function DetailPage({
   }
   return (
     <div className="container py-10">
-      <h1 className="text-2xl font-semibold text-gray-800 capitalize lg:text-3xl ">
+      <h1 className="text-2xl font-semibold capitalize lg:text-3xl ">
         {page.interest.head}
       </h1>
       <p>{page.interest.sub}</p>
       <div className="mt-8 md:mt-16 ">
-        <ChakraList />
+        <ChakraList blogs={blogs} lang={lang} />
         {/* <InterestList blogs={blogs} lang={lang} /> */}
         {/* <AntTable blogs={blogs} lang={lang} /> */}
         {/* {blogs.map((blog) => {

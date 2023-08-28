@@ -48,8 +48,10 @@ export default function Post({ params }: any, lang: Locale) {
     <div className="md:container md:mx-auto lg py-14">
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-3 p-3 ml-3">
         <div className="col-span-3">
-          <div className="prose dark:prose-invert max-w-none">
-            <h1>{props.frontMatter.title}</h1>
+          <div className=" max-w-none">
+            <h1 className="text-4xl font-bold mb-3">
+              {props.frontMatter.title}
+            </h1>
             <div className="lg:float-right ml-10 ">
               <Image
                 src={props.frontMatter.featureImage}
@@ -63,7 +65,9 @@ export default function Post({ params }: any, lang: Locale) {
             <div className="clear-both" />
             {props.frontMatter.videoSourceURL && (
               <div className="embed-responsive aspect-ratio-16/9 my-5 py-10  w-full">
-                <h3>{props.frontMatter.videoTitle}</h3>
+                <h3 className="text-xl font-bold">
+                  {props.frontMatter.videoTitle}
+                </h3>
                 <iframe
                   className="embed-responsive-item w-full"
                   src={props.frontMatter.videoSourceURL}

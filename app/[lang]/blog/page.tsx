@@ -22,9 +22,7 @@ export default async function Blog({
   return (
     <>
       <section className="mt-16">
-        <h2 className="text-4xl font-bold text-black dark:text-white/90 ">
-          {part}
-        </h2>
+        <h2 className="text-4xl font-bold">{part}</h2>
         <p className="mb-5 text-lg">
           {part === "interest"
             ? page.home["index-interest"]
@@ -36,14 +34,14 @@ export default async function Blog({
               return (
                 <div className="box-border md:box-content w-full lg:w-64 md:w-80">
                   <Link
-                    className=" hover:text-black/170 dark:hover:text-grey dark:text-white"
+                    className=" hover:text-black/170 dark:hover:text-grey"
                     passHref
                     href={{
                       pathname: `${params.lang}/blogs/${blog.slug}`,
                       query: { part, lang: params.lang },
                     }}
                   >
-                    <div className="overflow-hidden border-2 block border-indigo-500/50 bg-white rounded-lg shadow-lg dark:bg-gray-800 mb-4">
+                    <div className="overflow-hidden border-2 block border-indigo-500/50 bg-white rounded-lg shadow-lg mb-4">
                       <Image
                         src={blog.meta.featureImage}
                         // className="object-cover object-center w-full h-44 rounded-lg md:h-100"
@@ -58,10 +56,10 @@ export default async function Blog({
                       />
 
                       <div className="py-5 text-center">
-                        <p className="block text-xl font-bold text-gray-800 dark:text-white">
+                        <p className="block text-xl font-bold text-gray-800">
                           {blog.meta.title}
                         </p>
-                        <span className="px-2 text-sm truncate md:text-ellipsis text-gray-700 dark:text-gray-200">
+                        <span className="px-2 text-sm truncate md:text-ellipsis">
                           {blog.meta.excerpt}
                         </span>
                       </div>

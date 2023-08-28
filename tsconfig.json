@@ -30,7 +30,12 @@
     ".next/types/**/*.ts",
     "lib/blogs.js",
     "app/[lang]/testbed/powerbi/page.jsx",
-    "lib/childprocess.js"
-, "app/[lang]/testbed/page.jsx", "app/_app.js"  ],
+    "lib/childprocess.js",
+    "app/[lang]/testbed/page.jsx",
+    "app/_app.js",
+    "app/theme.js",
+    "app/theme.js",
+    "app/[lang]/testbed/chakra/page.jsx"
+  ],
   "exclude": ["node_modules"]
 }
