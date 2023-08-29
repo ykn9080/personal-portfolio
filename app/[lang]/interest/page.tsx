@@ -6,8 +6,13 @@ import { getDictionary } from "@/lib/dictionary";
 import { localBlog } from "@/lib/blogs";
 // import { InterestList } from "@/app/[lang]/testbed/page";
 //import AntTable from "@/app/[lang]/testbed/antd/page";
-import ChakraList from "../testbed/chakra/page";
-
+//import ChakraList from "../testbed/chakra/page";
+import ReactTable from "../testbed/react-table/page";
+type tableblog = {
+  title: string;
+  excerpt: string;
+  featureImage: string;
+};
 export default async function DetailPage({
   params: { lang },
 }: {
@@ -15,6 +20,19 @@ export default async function DetailPage({
 }) {
   const { page } = await getDictionary(lang);
   const blogs = localBlog("blogs");
+  let tableblogs: tableblog[] = [];
+  blogs.map((blog) => {
+    if (blog.slug.endsWith(lang) && blog.meta.type === "interest")
+      tableblogs.push({
+        single: {
+          title: blog.meta.title,
+          excerpt: blog.meta.excerpt,
+          featureImage: blog.meta.featureImage,
+          slug: `${blog.meta.slug}.${lang}`,
+          lang: lang,
+        },
+      });
+  });
 
   if (!blogs) {
     return <p className="mt-10 text-center">Sorry, no posts available.</p>;
@@ -26,7 +44,8 @@ export default async function DetailPage({
       </h1>
       <p>{page.interest.sub}</p>
       <div className="mt-8 md:mt-16 ">
-        <ChakraList blogs={blogs} lang={lang} />
+        {/* <ChakraList blogs={blogs} lang={lang} /> */}
+        <ReactTable blogs={tableblogs} lang={lang} />
         {/* <InterestList blogs={blogs} lang={lang} /> */}
         {/* <AntTable blogs={blogs} lang={lang} /> */}
         {/* {blogs.map((blog) => {
