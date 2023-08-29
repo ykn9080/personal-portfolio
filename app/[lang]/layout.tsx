@@ -6,7 +6,6 @@ import type { Metadata } from "next";
 import { Locale, i18n } from "@/i18n.config";
 import ThemeProviders from "@/app/[lang]/themeProvider";
 import { ReduxProviders } from "./reduxProvider";
-import { ChakraProviders } from "@/app/[lang]/chakraProviders";
 import { Inter } from "next/font/google";
 import Footer from "./components/Footer";
 
@@ -31,17 +30,15 @@ export default function RootLayout({
     <html lang={params.lang}>
       <body className={inter.className}>
         <ReduxProviders>
-          <ChakraProviders>
-            <ThemeProviders>
-              {/* @ts-expect-error async server component */}
-              <Navbar lang={params.lang} />
+          <ThemeProviders>
+            {/* @ts-expect-error async server component */}
+            <Navbar lang={params.lang} />
 
-              <main>{children}</main>
+            <main>{children}</main>
 
-              {/* @ts-expect-error async server component */}
-              <Footer lang={params.lang} />
-            </ThemeProviders>
-          </ChakraProviders>
+            {/* @ts-expect-error async server component */}
+            <Footer lang={params.lang} />
+          </ThemeProviders>
         </ReduxProviders>
       </body>
     </html>

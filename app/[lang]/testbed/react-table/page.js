@@ -4,7 +4,7 @@ import { useTable, usePagination } from "react-table";
 
 import { BiFirstPage, BiLastPage } from "react-icons/bi";
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
-import "@/app/style/style.css";
+import "./style/style.css";
 import useRows from "./hooks/useRows";
 import useColumns from "./hooks/useColumns";
 
@@ -40,7 +40,7 @@ export default function ReactTable({ blogs, lang }) {
     setPageSize,
     state: { pageIndex, pageSize },
   } = table;
-
+  console.log(getTableBodyProps());
   return (
     <div className="container1">
       <table {...getTableProps()}>

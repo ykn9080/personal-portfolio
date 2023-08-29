@@ -45,12 +45,14 @@ export default function Search() {
       </form>
       <h1>Result</h1>
 
-      <pre>
-        <code
-          className="language-html hljs"
-          dangerouslySetInnerHTML={{ __html: result }}
-        />
-      </pre>
+      <div className="bg-black-900 w-full">
+        <pre>
+          <code
+            className="language-html hljs"
+            dangerouslySetInnerHTML={{ __html: result }}
+          />
+        </pre>
+      </div>
     </div>
   );
 }

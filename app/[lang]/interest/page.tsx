@@ -4,14 +4,16 @@ import Link from "next/link";
 import { Locale } from "@/i18n.config";
 import { getDictionary } from "@/lib/dictionary";
 import { localBlog } from "@/lib/blogs";
-// import { InterestList } from "@/app/[lang]/testbed/page";
-//import AntTable from "@/app/[lang]/testbed/antd/page";
-//import ChakraList from "../testbed/chakra/page";
+
 import ReactTable from "../testbed/react-table/page";
 type tableblog = {
-  title: string;
-  excerpt: string;
-  featureImage: string;
+  single: {
+    title: string;
+    excerpt: string;
+    featureImage: string;
+    slug: string;
+    lang: string;
+  };
 };
 export default async function DetailPage({
   params: { lang },
@@ -43,11 +45,9 @@ export default async function DetailPage({
         {page.interest.head}
       </h1>
       <p>{page.interest.sub}</p>
-      <div className="mt-8 md:mt-16 ">
-        {/* <ChakraList blogs={blogs} lang={lang} /> */}
+      <div className="mt-4 md:mt-8 ">
         <ReactTable blogs={tableblogs} lang={lang} />
-        {/* <InterestList blogs={blogs} lang={lang} /> */}
-        {/* <AntTable blogs={blogs} lang={lang} /> */}
+
         {/* {blogs.map((blog) => {
               if (blog.slug.endsWith(lang) && blog.meta.type === "interest")
                 return (
