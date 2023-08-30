@@ -2,8 +2,8 @@ import React from "react";
 import { Locale } from "@/i18n.config";
 import { getDictionary } from "@/lib/dictionary";
 import { localBlog } from "@/lib/blogs";
+import ReactTable from "@/lib/react-table/page";
 
-import ReactTable from "../testbed/react-table/page";
 type tableblog = {
   single: {
     title: string;
@@ -21,6 +21,7 @@ export default async function DetailPage({
   const { page } = await getDictionary(lang);
   const blogs = localBlog("blogs");
   let tableblogs: tableblog[] = [];
+
   blogs.map((blog) => {
     if (blog.slug.endsWith(lang) && blog.meta.type === "interest")
       tableblogs.push({
@@ -32,6 +33,7 @@ export default async function DetailPage({
           lang: lang,
         },
       });
+    return null;
   });
 
   if (!blogs) {
@@ -44,7 +46,7 @@ export default async function DetailPage({
       </h1>
       <p>{page.interest.sub}</p>
       <div className="mt-4 md:mt-8 ">
-        <ReactTable blogs={tableblogs} lang={lang} />
+        <ReactTable blogs={tableblogs} />
       </div>
     </div>
   );

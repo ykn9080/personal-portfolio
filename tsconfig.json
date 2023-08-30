@@ -29,9 +29,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "lib/blogs.js",
-    "app/[lang]/testbed/powerbi/page.jsx",
-    "lib/childprocess.js",
-    "app/[lang]/testbed/page.jsx"
+    "lib/childprocess.js"
   ],
   "exclude": ["node_modules"]
 }
