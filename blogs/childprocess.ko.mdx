@@ -1,0 +1,67 @@
+---
+id: 123
+date: 2023-08-30
+tags: ["interests"]
+title: Nodejs child_process
+slug: childprocess
+seq: 21
+type: interest
+language: kr
+featureImage: /images/interest/child_process.png
+thumb: /images/interest/nodejs.svg
+github: https://github.com/ykn9080/childprocess
+demo:
+videoSourceURL:
+videoTitle:
+excerpt: event driven 방식으로 작동되는 nodejs에서 다수의 thread를 생성하여 작동하는 방식
+---
+
+## child_process
+
+> node실행 중 shell script를 실행하려고 할때, 새로운 프로세스 즉 child process를 생성하여 실행할 수 있다.
+
+### 기본 실행코드
+
+script부분에 실행할 shell script를 입력한다.
+예: ls -la,
+
+```js
+const { exec } = require("child_process");
+const childprocess = (script, res) => {
+  exec(script, (error, stdout, stderr) => {
+    if (error) {
+      console.error(`error: ${error.message}`);
+      //return;
+    }
+
+    if (stderr) {
+      console.error(`stderr: ${stderr}`);
+      //return;
+    }
+    //console.log(`stdout:\n${stdout}`);
+    res.status(200).send({
+      status: 200,
+      stderr: stderr,
+      result: stdout,
+    });
+  });
+};
+```
+
+실행결과는 stdout으로 출력됩니다.
+
+```bash
+합계 2097264
+drwxr-xr-x  21 root root       4096 May  2 15:55 .
+drwxr-xr-x  21 root root       4096 May  2 15:55 ..
+lrwxrwxrwx   1 root root          7 Feb  8  2023 bin -> usr/bin
+drwxr-xr-x   4 root root       4096 Aug 28 07:00 boot
+drwxrwxr-x   2 root root       4096 Feb  8  2023 cdrom
+drwxr-xr-x  19 root root       5060 Aug 25 04:43 dev
+drwxr-xr-x 158 root root      12288 Aug 30 06:42 etc
+drwxr-xr-x   5 root root       4096 Mar 22 19:37 home
+lrwxrwxrwx   1 root root          7 Feb  8  2023 lib -> usr/lib
+lrwxrwxrwx   1 root root          9 Feb  8  2023 lib32 -> usr/lib32
+lrwxrwxrwx   1 root root          9 Feb  8  2023 lib64 -> usr/lib64
+
+```
