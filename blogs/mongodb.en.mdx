@@ -1,6 +1,6 @@
 ---
 id: 22
-date:  2021-12-31
+date: 2021-12-31
 tags: ["interests"]
 title: MongoDB
 slug: mongodb
@@ -10,7 +10,7 @@ language: en
 featureImage: https://raw.githubusercontent.com/ykn9080/personal-contents/main/images/interest/mongodb_logo.png
 thumb: https://raw.githubusercontent.com/ykn9080/personal-contents/main/images/interest/mongodb_logo.png
 github:
-demo: http://imcmaster.iptime.org:7000
+demo:
 videoSourceURL:
 videoTitle:
 excerpt: Mongodb usually comes with nodejs. As schema less database, it's very convenient and fast data repository to develop unstructured contents.
@@ -25,9 +25,9 @@ excerpt: Mongodb usually comes with nodejs. As schema less database, it's very c
 <h3>Model</h3>
 
 ```js
-var mongoose = require("mongoose")
-const Schema = mongoose.Schema
-const models = {}
+var mongoose = require("mongoose");
+const Schema = mongoose.Schema;
+const models = {};
 
 const allpurposeSchema = new Schema({
   title: String,
@@ -35,11 +35,11 @@ const allpurposeSchema = new Schema({
   formid: String,
   data: Schema.Types.Mixed,
   author: Schema.Types.Mixed,
-})
+});
 
-models.Allpurpose = mongoose.model("Allpurpose", allpurposeSchema)
+models.Allpurpose = mongoose.model("Allpurpose", allpurposeSchema);
 
-module.exports = models
+module.exports = models;
 ```
 
 <h3>Router</h3>

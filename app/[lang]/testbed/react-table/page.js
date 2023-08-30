@@ -1,7 +1,6 @@
 "use client";
 
 import { useTable, usePagination } from "react-table";
-
 import { BiFirstPage, BiLastPage } from "react-icons/bi";
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
 import "./style/style.css";
@@ -11,7 +10,7 @@ import useColumns from "./hooks/useColumns";
 export default function ReactTable({ blogs, lang }) {
   const columns = useColumns();
   const data = useRows(blogs);
-  console.log(columns);
+
   const table = useTable(
     {
       columns,
@@ -40,7 +39,6 @@ export default function ReactTable({ blogs, lang }) {
     setPageSize,
     state: { pageIndex, pageSize },
   } = table;
-  console.log(getTableBodyProps());
   return (
     <div className="container1">
       <table {...getTableProps()}>
@@ -70,21 +68,21 @@ export default function ReactTable({ blogs, lang }) {
         <tbody {...getTableBodyProps()}>
           {
             // Loop over the table rows
-            page.map((row) => {
+            page.map((row, indx) => {
               // Prepare the row for display
               prepareRow(row);
 
               return (
                 // Apply the row props
 
-                <tr {...row.getRowProps()}>
+                <tr key={`tr${indx}`} {...row.getRowProps()}>
                   {
                     // Loop over the rows cells
-                    row.cells.map((cell) => {
+                    row.cells.map((cell, indx) => {
                       // Apply the cell props
 
                       return (
-                        <td {...cell.getCellProps()}>
+                        <td key={`td${indx}`} {...cell.getCellProps()}>
                           {
                             // Render the cell contents
                             cell.render("Cell")

@@ -3,6 +3,7 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import remarkGfm from "remark-gfm";
+import rehypeHighlight from "rehype-highlight";
 import Image from "next/image";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { serialize } from "next-mdx-remote/serialize";
@@ -50,7 +51,7 @@ export default function Post({ params }: any, lang: Locale) {
   const options = {
     mdxOptions: {
       remarkPlugins: [remarkGfm],
-      rehypePlugins: [],
+      rehypePlugins: [rehypeHighlight],
     },
   };
   return (

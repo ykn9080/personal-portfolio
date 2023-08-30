@@ -8,8 +8,8 @@ export default function embed() {
         width="1140"
         height="541.25"
         src="https://playground.powerbi.com/sampleReportEmbed"
-        frameborder="0"
-        allowFullScreen="true"
+        frameBorder={0}
+        allowFullScreen={true}
       ></iframe>
     </div>
   );

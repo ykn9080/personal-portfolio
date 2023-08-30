@@ -1,6 +1,6 @@
 ---
 id: 29
-date:  2021-12-31
+date: 2021-12-31
 tags: ["interests"]
 title: Swagger
 slug: swagger
@@ -17,10 +17,10 @@ excerpt: api 서비스 documentation용으로 사용되는 swagger와 jsdoc을 �
 ### swagger setting
 
 ```js
-const swaggerJsDoc = require("swagger-jsdoc")
-const swaggerUi = require("swagger-ui-express")
+const swaggerJsDoc = require("swagger-jsdoc");
+const swaggerUi = require("swagger-ui-express");
 
-module.exports = app => {
+module.exports = (app) => {
   // Extended: https://swagger.io/specification/#infoObject
   const swaggerOptions = {
     swaggerDefinition: {
@@ -36,11 +36,11 @@ module.exports = app => {
     },
     // ['.routes/*.js']
     apis: ["./router/*.js", "./controllers/*.js"],
-  }
+  };
 
-  const swaggerDocs = swaggerJsDoc(swaggerOptions)
-  app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerDocs))
-}
+  const swaggerDocs = swaggerJsDoc(swaggerOptions);
+  app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+};
 ```
 
 swaggerOptions중 servers는 문서화할 서버 url을 표시한다.
@@ -60,8 +60,8 @@ apis는 서비내 문서중 swagger문서를 첨부한 파일 또는 디렉토�
  *        description: A successful response
  */
 app.get("/customers", (req, res) => {
-  res.status(200).send("Customer results")
-})
+  res.status(200).send("Customer results");
+});
 /**
  * @swagger
  * /customers:
@@ -80,8 +80,8 @@ app.get("/customers", (req, res) => {
  *        description: Successfully created user
  */
 app.put("/customer", (req, res) => {
-  res.status(200).send("Successfully updated customer")
-})
+  res.status(200).send("Successfully updated customer");
+});
 ```
 
 node문서 내에 api function위에 documentation을 직접한후 compile시 문서화할 수 있어 편리하다.
