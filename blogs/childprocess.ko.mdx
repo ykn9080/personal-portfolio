@@ -50,7 +50,7 @@ const childprocess = (script, res) => {
 
 실행결과는 stdout으로 출력됩니다.
 
-```bash
+```sh
 합계 2097264
 drwxr-xr-x  21 root root       4096 May  2 15:55 .
 drwxr-xr-x  21 root root       4096 May  2 15:55 ..
@@ -65,3 +65,26 @@ lrwxrwxrwx   1 root root          9 Feb  8  2023 lib32 -> usr/lib32
 lrwxrwxrwx   1 root root          9 Feb  8  2023 lib64 -> usr/lib64
 
 ```
+
+[— Daring Fireball](https://daringfireball.net/projects/markdown/).
+
+```jsx live
+export default function App() {
+  return (
+    <div>
+      <p>
+        This is a live React component, that's being previewed in
+        codesandbox.{" "}
+      </p>
+      <p>Editing it will update the fenced codeblock in the markdown.</p>
+    </div>
+  );
+}
+```
+
+<details>
+  <summary>Parsing Frontmatter</summary>
+
+Markdown in general is often paired with frontmatter, and normally this means adding some extra custom processing to the way markdown is handled. To address this, `next-mdx-remote` comes with optional parsing of frontmatter, which can be enabled by passing `parseFrontmatter: true` to `serialize`.
+
+</details>

@@ -6,6 +6,7 @@ import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
 import Image from "next/image";
 import { MDXRemote } from "next-mdx-remote/rsc";
+import "@/styles/highlight-js/github-dark.css";
 import { serialize } from "next-mdx-remote/serialize";
 import notFound from "./not-found";
 import SideLocalbar from "@/app/[lang]/components/SideLocalbar";
@@ -21,14 +22,14 @@ export async function generateStaticParams() {
 
   return paths;
 }
-// export async function generateMetadata({ params }: any) {
-//   const blog = getPost(params);
+export async function generateMetadata({ params }: any) {
+  const blog = getPost(params);
 
-//   return {
-//     title: blog.frontMatter.title,
-//     description: blog.frontMatter.excerpt,
-//   };
-// }
+  return {
+    title: blog.frontMatter.title,
+    description: blog.frontMatter.excerpt,
+  };
+}
 function getPost({ slug }: { slug: string }) {
   const markdownFile = fs.readFileSync(
     path.join("blogs", slug + ".mdx"),

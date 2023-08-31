@@ -51,7 +51,7 @@ export default function SideLocalbar({ slug, lang, meta }: Props) {
               >
                 <button className="flex items-center justify-between w-full px-3 py-2 text-xs font-medium  transition-colors duration-300 transform rounded-lg  hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700">
                   <div className="flex items-center gap-x-2 ">
-                    <span className={bullet + colors[i]}></span>
+                    <span className={bullet + colors[i % 10]}></span>
                     <span>{k.title}</span>
                   </div>
 
