@@ -29,7 +29,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "lib/blogs.js",
-    "lib/childprocess.js"
+    "lib/childprocess.js",
+    "app/[lang]/components/Modal.jsx"
   ],
   "exclude": ["node_modules"]
 }

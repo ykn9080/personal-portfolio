@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { localBlogList, localBlog } from "../../../lib/blogs.js";
 import { Locale } from "@/i18n.config";
+import MyDialog from "./Modal.jsx";
 
 type Props = {
   slug: string;
@@ -54,21 +55,6 @@ export default function SideLocalbar({ slug, lang, meta }: Props) {
                     <span className={bullet + colors[i % 10]}></span>
                     <span>{k.title}</span>
                   </div>
-
-                  {/* <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    className="w-4 h-4 rtl:rotate-180"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M8.25 4.5l7.5 7.5-7.5 7.5"
-                    />
-                  </svg> */}
                 </button>
               </Link>
             );
@@ -76,6 +62,7 @@ export default function SideLocalbar({ slug, lang, meta }: Props) {
         </nav>
       </div>
 
+      <MyDialog data={blogs} />
       <div>
         <div className="mt-3">
           <h2 className="text-base font-semibold ">Github</h2>
