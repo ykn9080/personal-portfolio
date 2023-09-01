@@ -44,6 +44,7 @@ export default function SideLocalbar({ slug, lang, meta }: Props) {
 
         <nav className="mt-4 -mx-3 space-y-3 ">
           {blogs.map((k, i) => {
+            if (i > 10) return null;
             return (
               // eslint-disable-next-line react/jsx-key
               <Link
@@ -62,7 +63,7 @@ export default function SideLocalbar({ slug, lang, meta }: Props) {
         </nav>
       </div>
 
-      <MyDialog data={blogs} />
+      <MyDialog data={blogs} language={lang} />
       <div>
         <div className="mt-3">
           <h2 className="text-base font-semibold ">Github</h2>

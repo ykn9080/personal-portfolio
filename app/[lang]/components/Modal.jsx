@@ -3,9 +3,21 @@ import { useState } from "react";
 import { Dialog } from "@headlessui/react";
 import Link from "next/link";
 
-export default function MyDialog({ data }) {
+export default function MyDialog({ data, language }) {
   let [isOpen, setIsOpen] = useState(false);
-
+  const bullet = "w-2 h-2 rounded-full ";
+  const colors = [
+    "bg-gray-500",
+    "bg-pink-500",
+    "bg-slate-500",
+    "bg-indigo-500",
+    "bg-blue-500",
+    "bg-yellow-500",
+    "bg-emerald-500",
+    "bg-violet-500",
+    "bg-amber-500",
+    "bg-fuchsia-500",
+  ];
   return (
     <>
       <button onClick={() => setIsOpen(true)}>more</button>
@@ -20,14 +32,27 @@ export default function MyDialog({ data }) {
         {/* Full-screen container to center the panel */}
         <div className="fixed inset-0 flex items-center justify-center p-4 min-h-fit">
           {/* The actual dialog panel  */}
-          <Dialog.Panel className="mx-auto max-w-sm rounded bg-white">
-            <Dialog.Title>Complete your order</Dialog.Title>
-            <nav className="mt-4 -mx-3 space-y-3 ">
+          <Dialog.Panel className="mx-auto max-w-lg rounded bg-white p-5">
+            <Dialog.Title className="flex justify-between">
+              <p className="text-xl font-bold ">Interest List</p>
+              <button onClick={() => setIsOpen(false)}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  width="24px"
+                  height="24px"
+                  className="stroke-black-900 hover:stroke-cyan-700"
+                >
+                  <path d="M 4.9902344 3.9902344 A 1.0001 1.0001 0 0 0 4.2929688 5.7070312 L 10.585938 12 L 4.2929688 18.292969 A 1.0001 1.0001 0 1 0 5.7070312 19.707031 L 12 13.414062 L 18.292969 19.707031 A 1.0001 1.0001 0 1 0 19.707031 18.292969 L 13.414062 12 L 19.707031 5.7070312 A 1.0001 1.0001 0 0 0 18.980469 3.9902344 A 1.0001 1.0001 0 0 0 18.292969 4.2929688 L 12 10.585938 L 5.7070312 4.2929688 A 1.0001 1.0001 0 0 0 4.9902344 3.9902344 z" />
+                </svg>
+              </button>
+            </Dialog.Title>
+            <nav className="mt-4 -mx-3 space-y-3 flex flex-wrap">
               {data.map((k, i) => {
                 return (
                   // eslint-disable-next-line react/jsx-key
                   <Link
-                    className=" hover:text-black/170 dark:hover:text-grey "
+                    className=" hover:text-black/170 dark:hover:text-grey min-w-[33%]"
                     href={`${language}/blogs/${k.slug}.${language}`}
                   >
                     <button className="flex items-center justify-between w-full px-3 py-2 text-xs font-medium  transition-colors duration-300 transform rounded-lg  hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700">
@@ -40,7 +65,12 @@ export default function MyDialog({ data }) {
                 );
               })}
             </nav>
-            <button onClick={() => setIsOpen(false)}>close</button>
+            {/* <button
+              className="float-right mr-5 mt-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              onClick={() => setIsOpen(false)}
+            >
+              close
+            </button> */}
           </Dialog.Panel>
         </div>
       </Dialog>

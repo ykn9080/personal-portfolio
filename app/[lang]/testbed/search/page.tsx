@@ -17,7 +17,7 @@ export default function Search() {
     //setSearch("");
     //router.push(`/${search}/`);
     let rtn = await childProcess({ script: search });
-
+    console.log(rtn);
     //rtn.result = rtn.result.replace(/\n/g, "<br />");
     hljs.registerLanguage("javascript", html);
     const highlighted = hljs.highlight(rtn.result, {
