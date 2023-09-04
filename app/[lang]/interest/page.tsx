@@ -9,6 +9,7 @@ type tableblog = {
     title: string;
     excerpt: string;
     featureImage: string;
+    thumb: string;
     slug: string;
     lang: string;
   };
@@ -29,6 +30,7 @@ export default async function DetailPage({
           title: blog.meta.title,
           excerpt: blog.meta.excerpt,
           featureImage: blog.meta.featureImage,
+          thumb: blog.meta.thumb,
           slug: `${blog.meta.slug}.${lang}`,
           lang: lang,
         },
