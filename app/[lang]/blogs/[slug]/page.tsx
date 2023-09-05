@@ -56,8 +56,8 @@ export default function Post({ params }: any, lang: Locale) {
     },
   };
   return (
-    <div className="md:container md:mx-auto lg py-14">
-      <div className="grid grid-cols-1 sm:grid-cols-4 gap-3 p-3 ml-3">
+    <div className="md:container md:mx-auto lg py-6">
+      <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
         <div className="col-span-3">
           <div className="prose dark:prose-invert max-w-none">
             <h1 className="text-4xl font-bold mb-3">
@@ -98,7 +98,7 @@ export default function Post({ params }: any, lang: Locale) {
             </div>
           </div>
         </div>
-        <div className="p-3">
+        <div className="pl-3">
           {/* @ts-expect-error Server Component */}
           <SideLocalbar slug={props.slug} lang={lang} meta={frontMatter} />
         </div>

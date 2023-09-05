@@ -33,7 +33,7 @@ export default async function DetailPage({
                       className="object-cover w-full h-56 rounded-lg lg:w-64 border-solid border border-black-100 dark:border-white-500"
                       width={200}
                       height={100}
-                      src={blog.meta.featureImage}
+                      src={blog.meta.thumb}
                       alt=""
                     />
 

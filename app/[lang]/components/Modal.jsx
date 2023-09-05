@@ -1,9 +1,10 @@
 "use client";
 import { useState } from "react";
 import { Dialog } from "@headlessui/react";
+import MyListBox from "./ListBox";
 import Link from "next/link";
 
-export default function MyDialog({ data, language }) {
+export default function MyDialog({ data, language, icon, list }) {
   let [isOpen, setIsOpen] = useState(false);
   const bullet = "w-2 h-2 rounded-full ";
   const colors = [
@@ -18,9 +19,10 @@ export default function MyDialog({ data, language }) {
     "bg-amber-500",
     "bg-fuchsia-500",
   ];
+
   return (
     <>
-      <button onClick={() => setIsOpen(true)}>more</button>
+      <button onClick={() => setIsOpen(true)}>{icon}</button>
       <Dialog
         open={isOpen}
         onClose={() => setIsOpen(false)}
@@ -35,6 +37,7 @@ export default function MyDialog({ data, language }) {
           <Dialog.Panel className="mx-auto max-w-lg rounded bg-white p-5">
             <Dialog.Title className="flex justify-between">
               <p className="text-xl font-bold ">Interest List</p>
+              {list && list}
               <button onClick={() => setIsOpen(false)}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
