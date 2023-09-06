@@ -1,11 +1,38 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Dialog } from "@headlessui/react";
 import MyListBox from "./ListBox";
 import Link from "next/link";
+import _ from "lodash";
+import { useAppSelector, useAppDispatch } from "@/redux/hooks";
+import { updateValue } from "@/redux/features/globalSlice";
 
+const filterTags = (taglist, data) => {
+  if (taglist.length === 0) return data;
+  let newdata = [];
+  data.map((k, i) => {
+    const intersect = _.intersectionWith(k.tags, taglist, _.isEqual);
+    if (intersect.length > 0) newdata.push(k);
+  });
+  return newdata;
+};
 export default function MyDialog({ data, language, icon, list }) {
   let [isOpen, setIsOpen] = useState(false);
+  const [allData, setAllData] = useState(data);
+  const [filteredData, setFilteredData] = useState(data);
+
+  const dispatch = useAppDispatch();
+  const taglist = useAppSelector((state) => state.global).tags;
+
+  useEffect(() => {
+    const fil = filterTags(taglist, allData);
+    console.log("filtered list", fil, taglist);
+    setFilteredData(fil);
+  }, [taglist]);
+
+  useEffect(() => {
+    dispatch(updateValue({ tags: [] }));
+  }, []);
   const bullet = "w-2 h-2 rounded-full ";
   const colors = [
     "bg-gray-500",
@@ -51,11 +78,11 @@ export default function MyDialog({ data, language, icon, list }) {
               </button>
             </Dialog.Title>
             <nav className="mt-4 -mx-3 space-y-3 flex flex-wrap">
-              {data.map((k, i) => {
+              {filteredData.map((k, i) => {
                 return (
                   // eslint-disable-next-line react/jsx-key
                   <Link
-                    className=" hover:text-black/170 dark:hover:text-grey min-w-[33%]"
+                    className=" hover:text-black/170 dark:hover:text-grey max-w-[33%] min-w-[33%] truncate"
                     href={`${language}/blogs/${k.slug}.${language}`}
                   >
                     <button className="flex items-center justify-between w-full px-3 py-2 text-xs font-medium  transition-colors duration-300 transform rounded-lg  hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700">
@@ -68,12 +95,6 @@ export default function MyDialog({ data, language, icon, list }) {
                 );
               })}
             </nav>
-            {/* <button
-              className="float-right mr-5 mt-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-              onClick={() => setIsOpen(false)}
-            >
-              close
-            </button> */}
           </Dialog.Panel>
         </div>
       </Dialog>

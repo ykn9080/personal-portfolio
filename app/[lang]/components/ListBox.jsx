@@ -1,8 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import _ from "lodash";
+import { GrFormClose } from "react-icons/gr";
+import { updateValue } from "@/redux/features/globalSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 
 const people = [
   "Wade Cooper",
@@ -16,33 +19,55 @@ const people = [
   "Claudie Smitham",
   "Emil Schaefer",
 ];
+const sortByFrequency = (tags) => {
+  const uniqtag = _.uniq(tags);
+  let countArr = [];
+  uniqtag.map((k, i) => {
+    const num = _.size(
+      _.filter(tags, (o) => {
+        return o === k;
+      })
+    );
+    countArr.push({ name: k, count: num });
+  });
+  const orderObj = _.orderBy(countArr, "count", "desc");
+  return orderObj;
+};
 
 export default function MyListBox({ tags }) {
-  console.log(tags, _.uniq(tags));
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedPersons, setSelectedPersons] = useState([]);
+  const [selectedTags, setSelectedTags] = useState([]);
+  const [allTags, setAllTags] = useState(sortByFrequency(tags));
+
+  const dispatch = useAppDispatch();
+  const taglist = useAppSelector((state) => state.global).tags;
 
   function isSelected(value) {
-    return selectedPersons.find((el) => el === value) ? true : false;
+    return selectedTags.find((el) => el === value) ? true : false;
   }
+  useEffect(() => {
+    if (taglist.length === 0) setIsOpen(false);
+  }, [taglist]);
 
   function handleSelect(value) {
     if (!isSelected(value)) {
-      const selectedPersonsUpdated = [
-        ...selectedPersons,
-        people.find((el) => el === value),
-      ];
-      setSelectedPersons(selectedPersonsUpdated);
+      const findTag = allTags.find((el) => el.name === value);
+      if (Object.keys(findTag).length > 0) {
+        const newtags = [...selectedTags, findTag.name];
+        setSelectedTags(newtags);
+        dispatch(updateValue({ tags: newtags }));
+      }
     } else {
       handleDeselect(value);
     }
-    setIsOpen(true);
+    setIsOpen(false);
   }
 
   function handleDeselect(value) {
-    const selectedPersonsUpdated = selectedPersons.filter((el) => el !== value);
-    setSelectedPersons(selectedPersonsUpdated);
-    setIsOpen(true);
+    const selectedTagsUpdated = selectedTags.filter((el) => el !== value);
+    setSelectedTags(selectedTagsUpdated);
+    dispatch(updateValue({ tags: selectedTagsUpdated }));
+    setIsOpen(false);
   }
 
   return (
@@ -50,7 +75,7 @@ export default function MyListBox({ tags }) {
       <div className="w-full max-w-lg mx-auto">
         <Listbox
           as="div"
-          value={selectedPersons}
+          value={selectedTags}
           onChange={(value) => handleSelect(value)}
           open={isOpen}
         >
@@ -63,12 +88,23 @@ export default function MyListBox({ tags }) {
                     onClick={() => setIsOpen(!isOpen)}
                     open={isOpen}
                   >
-                    <span className="block truncate">
-                      {selectedPersons.length < 1
+                    <span className="truncate flex">
+                      {taglist.length > 0 && (
+                        <span className="mr-2 pt-1 align-base cursor-pointer hover:bg-slate-200">
+                          <GrFormClose
+                            onClick={() => {
+                              setSelectedTags([]);
+                              dispatch(updateValue({ tags: [] }));
+                            }}
+                          />
+                        </span>
+                      )}
+                      {selectedTags.length < 1
                         ? "Select "
-                        : // : `Selected persons (${selectedPersons.length})`
-                          selectedPersons.join(", ")}
+                        : // : `Selected tags (${selectedTags.length})`
+                          selectedTags.join(", ")}
                     </span>
+
                     <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                       <svg
                         className="h-5 w-5 text-gray-400"
@@ -99,10 +135,10 @@ export default function MyListBox({ tags }) {
                     static
                     className="max-h-60 rounded-md py-1 text-base leading-6 shadow-xs overflow-auto focus:outline-none sm:text-sm sm:leading-5 "
                   >
-                    {people.map((person) => {
-                      const selected = isSelected(person);
+                    {allTags.map((tag) => {
+                      const selected = isSelected(tag.name);
                       return (
-                        <Listbox.Option key={person} value={person}>
+                        <Listbox.Option key={tag.name} value={tag.name}>
                           {({ active }) => (
                             <div
                               className={`${
@@ -116,7 +152,7 @@ export default function MyListBox({ tags }) {
                                   selected ? "font-semibold" : "font-normal"
                                 } block truncate`}
                               >
-                                {person}
+                                {`${tag.name}(${tag.count})`}
                               </span>
                               {selected && (
                                 <span
@@ -145,11 +181,9 @@ export default function MyListBox({ tags }) {
                     })}
                   </Listbox.Options>
                 </Transition>
-                <div className="pt-1 text-sm">
-                  {selectedPersons.length > 0 && (
-                    <>{selectedPersons.join(", ")}</>
-                  )}
-                </div>
+                {/* <div className="pt-1 text-sm">
+                  {selectedTags.length > 0 && <>{selectedTags.join(", ")}</>}
+                </div> */}
               </div>
             </>
           )}

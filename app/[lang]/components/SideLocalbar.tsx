@@ -59,17 +59,17 @@ export default function SideLocalbar({ slug, lang, meta }: Props) {
 
         <nav className="mt-4 -mx-3 space-y-3 ">
           {blogs.map((k, i) => {
-            if (i > 10) return null;
+            if (i > 6) return null;
             return (
               // eslint-disable-next-line react/jsx-key
               <Link
                 className=" hover:text-black/170 dark:hover:text-grey "
                 href={`${language}/blogs/${k.slug}.${language}`}
               >
-                <button className="flex items-center justify-between w-full px-3 py-2 text-xs font-medium  transition-colors duration-300 transform rounded-lg  hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700">
-                  <div className="flex items-center gap-x-2 ">
+                <button className="w-full px-3 py-2 text-xs font-medium  transition-colors duration-300 transform rounded-lg  hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700">
+                  <div className="flex  gap-x-2 ">
                     <span className={bullet + colors[i % 10]}></span>
-                    <span>{k.title}</span>
+                    <span className="truncate">{k.title}</span>
                   </div>
                 </button>
               </Link>
