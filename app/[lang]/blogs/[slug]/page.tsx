@@ -88,7 +88,7 @@ export default function Post({ params }: any, lang: Locale) {
                 ></iframe>
               </div>
             )}
-            <div className="prose-lg ">
+            <div className="prose dark:prose-invert leading-3 ">
               {/* @ts-expect-error Server Component*/}
               <MDXRemote
                 source={props.content}
