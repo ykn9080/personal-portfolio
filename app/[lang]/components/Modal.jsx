@@ -61,7 +61,7 @@ export default function MyDialog({ data, language, icon, list }) {
         {/* Full-screen container to center the panel */}
         <div className="fixed inset-0 flex items-center justify-center p-4 min-h-fit">
           {/* The actual dialog panel  */}
-          <Dialog.Panel className="mx-auto max-w-lg rounded bg-white p-5">
+          <Dialog.Panel className="mx-auto max-w-lg rounded bg-white p-5  dark:bg-slate-700 dark:text-white">
             <Dialog.Title className="flex justify-between">
               <p className="text-xl font-bold ">Interest List</p>
               {list && list}
@@ -71,7 +71,7 @@ export default function MyDialog({ data, language, icon, list }) {
                   viewBox="0 0 24 24"
                   width="24px"
                   height="24px"
-                  className="stroke-black-900 hover:stroke-cyan-700"
+                  className="stroke-black-900 hover:stroke-cyan-700 dark:stroke-black-200"
                 >
                   <path d="M 4.9902344 3.9902344 A 1.0001 1.0001 0 0 0 4.2929688 5.7070312 L 10.585938 12 L 4.2929688 18.292969 A 1.0001 1.0001 0 1 0 5.7070312 19.707031 L 12 13.414062 L 18.292969 19.707031 A 1.0001 1.0001 0 1 0 19.707031 18.292969 L 13.414062 12 L 19.707031 5.7070312 A 1.0001 1.0001 0 0 0 18.980469 3.9902344 A 1.0001 1.0001 0 0 0 18.292969 4.2929688 L 12 10.585938 L 5.7070312 4.2929688 A 1.0001 1.0001 0 0 0 4.9902344 3.9902344 z" />
                 </svg>

@@ -12,6 +12,7 @@ import notFound from "./not-found";
 import SideLocalbar from "@/app/[lang]/components/SideLocalbar";
 import { Locale } from "@/i18n.config";
 import Button from "@/app/[lang]/components/Button";
+import MyPopOver from "@/app/[lang]/components/PopOver";
 
 export async function generateStaticParams() {
   const files = fs.readdirSync(path.join("blogs"));
@@ -88,12 +89,12 @@ export default function Post({ params }: any, lang: Locale) {
                 ></iframe>
               </div>
             )}
-            <div className="prose dark:prose-invert leading-3 ">
+            <div className="prose dark:prose-invert leading-5 ">
               {/* @ts-expect-error Server Component*/}
               <MDXRemote
                 source={props.content}
                 options={options}
-                components={{ Button }}
+                components={{ Button, MyPopOver }}
               />
             </div>
           </div>
