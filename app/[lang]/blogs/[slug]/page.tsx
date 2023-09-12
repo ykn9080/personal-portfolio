@@ -6,13 +6,13 @@ import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
 import Image from "next/image";
 import { MDXRemote } from "next-mdx-remote/rsc";
+
 import "@/styles/highlight-js/github-dark.css";
 import { serialize } from "next-mdx-remote/serialize";
 import notFound from "./not-found";
 import SideLocalbar from "@/app/[lang]/components/SideLocalbar";
 import { Locale } from "@/i18n.config";
-import Button from "@/app/[lang]/components/Button";
-import MyPopOver from "@/app/[lang]/components/PopOver";
+import { Button, MyPopOver } from "./components";
 
 export async function generateStaticParams() {
   const files = fs.readdirSync(path.join("blogs"));
