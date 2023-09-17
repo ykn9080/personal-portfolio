@@ -90,7 +90,7 @@ export default function Post({ params }: any, lang: Locale) {
                 ></iframe>
               </div>
             )}
-            <div className="prose dark:prose-invert leading-5 ">
+            <div className="leading-5 ">
               {/* @ts-expect-error Server Component*/}
               <MDXRemote
                 source={props.content}

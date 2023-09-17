@@ -26,7 +26,7 @@ export default function Search() {
   };
 
   return (
-    <div className="container mx-auto my-10">
+    <div>
       <form
         className="w-50 flex justify-center md:justify-between"
         onSubmit={handleSubmit}
@@ -42,9 +42,9 @@ export default function Search() {
           🚀
         </button>
       </form>
-      <h1>Result</h1>
+      <h3>Result</h3>
 
-      <div className="bg-black-900 w-full">
+      <div className="w-full">
         <pre>
           <code
             className="language-html hljs"
