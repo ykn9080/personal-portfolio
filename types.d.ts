@@ -6,6 +6,7 @@ type Meta = {
   type: string;
   language: string;
   featureImage: string;
+  thumb: string;
   excerpt: string;
   embeddedImagesRemote: string;
   videoSourceURL: string;

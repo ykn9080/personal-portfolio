@@ -6,11 +6,14 @@ import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
 import Image from "next/image";
 import { MDXRemote } from "next-mdx-remote/rsc";
+
+import "@/styles/highlight-js/github-dark.css";
 import { serialize } from "next-mdx-remote/serialize";
 import notFound from "./not-found";
 import SideLocalbar from "@/app/[lang]/components/SideLocalbar";
 import { Locale } from "@/i18n.config";
-import Button from "@/app/[lang]/components/Button";
+import { Button, MyPopOver } from "./components";
+import Search from "@/app/[lang]/testbed/search/page";
 
 export async function generateStaticParams() {
   const files = fs.readdirSync(path.join("blogs"));
@@ -21,14 +24,14 @@ export async function generateStaticParams() {
 
   return paths;
 }
-// export async function generateMetadata({ params }: any) {
-//   const blog = getPost(params);
+export async function generateMetadata({ params }: any) {
+  const blog = getPost(params);
 
-//   return {
-//     title: blog.frontMatter.title,
-//     description: blog.frontMatter.excerpt,
-//   };
-// }
+  return {
+    title: blog.frontMatter.title,
+    description: blog.frontMatter.excerpt,
+  };
+}
 function getPost({ slug }: { slug: string }) {
   const markdownFile = fs.readFileSync(
     path.join("blogs", slug + ".mdx"),
@@ -55,8 +58,8 @@ export default function Post({ params }: any, lang: Locale) {
     },
   };
   return (
-    <div className="md:container md:mx-auto lg py-14">
-      <div className="grid grid-cols-1 sm:grid-cols-4 gap-3 p-3 ml-3">
+    <div className="md:container md:mx-auto lg py-6">
+      <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
         <div className="col-span-3">
           <div className="prose dark:prose-invert max-w-none">
             <h1 className="text-4xl font-bold mb-3">
@@ -87,17 +90,17 @@ export default function Post({ params }: any, lang: Locale) {
                 ></iframe>
               </div>
             )}
-            <div className="prose-lg ">
+            <div className="prose dark:prose-invert leading-5 ">
               {/* @ts-expect-error Server Component*/}
               <MDXRemote
                 source={props.content}
                 options={options}
-                components={{ Button }}
+                components={{ Button, MyPopOver, Search }}
               />
             </div>
           </div>
         </div>
-        <div className="p-3">
+        <div className="pl-3">
           {/* @ts-expect-error Server Component */}
           <SideLocalbar slug={props.slug} lang={lang} meta={frontMatter} />
         </div>

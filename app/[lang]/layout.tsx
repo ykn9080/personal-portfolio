@@ -3,7 +3,7 @@ import Navbar from "./components/Navbar";
 import type { Metadata } from "next";
 import { Locale, i18n } from "@/i18n.config";
 import ThemeProviders from "@/app/[lang]/themeProvider";
-import { ReduxProviders } from "./reduxProvider";
+import { ReduxProviders } from "@/redux/reduxProvider";
 import { Inter } from "next/font/google";
 import Footer from "./components/Footer";
 

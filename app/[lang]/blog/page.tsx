@@ -7,7 +7,7 @@ import { Locale } from "@/i18n.config";
 import { getDictionary } from "@/lib/dictionary";
 import Link from "next/link";
 import Image from "next/image";
-import { localBlog } from "../../../lib/blogs.js";
+import { localBlog } from "@/lib/blogs.js";
 
 // app/page.tsx
 export default async function Blog({
@@ -19,6 +19,7 @@ export default async function Blog({
 }) {
   const { page } = await getDictionary(params.lang);
   const blogs = localBlog();
+
   return (
     <>
       <section className="mt-16">
@@ -43,7 +44,7 @@ export default async function Blog({
                   >
                     <div className="overflow-hidden border-2 block border-indigo-500/50 bg-white rounded-lg shadow-lg mb-4">
                       <Image
-                        src={blog.meta.featureImage}
+                        src={blog.meta.thumb}
                         // className="object-cover object-center w-full h-44 rounded-lg md:h-100"
                         className={
                           blog.meta.type === "work"

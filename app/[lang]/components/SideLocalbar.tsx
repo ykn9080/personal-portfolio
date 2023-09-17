@@ -2,6 +2,8 @@ import React from "react";
 import Link from "next/link";
 import { localBlogList, localBlog } from "../../../lib/blogs.js";
 import { Locale } from "@/i18n.config";
+import MyDialog from "./Modal.jsx";
+import { BiWindowOpen } from "react-icons/bi";
 
 type Props = {
   slug: string;
@@ -39,36 +41,36 @@ export default function SideLocalbar({ slug, lang, meta }: Props) {
       <div>
         <div className="flex items-center justify-between">
           <h2 className="text-base font-semibold ">Other List</h2>
+          <MyDialog
+            data={blogs}
+            language={language}
+            icon={
+              <div className="flex text-red-600 hover:text-blue-600 hover:bg-slate-200 mt-1">
+                <BiWindowOpen
+                  className={` h-4 w-4`}
+                  aria-hidden="true"
+                ></BiWindowOpen>
+                <p className="text-xs ml-1 hover:underline">view all</p>
+              </div>
+            }
+            list={null}
+          />
         </div>
 
         <nav className="mt-4 -mx-3 space-y-3 ">
           {blogs.map((k, i) => {
+            if (i > 6) return null;
             return (
               // eslint-disable-next-line react/jsx-key
               <Link
                 className=" hover:text-black/170 dark:hover:text-grey "
                 href={`${language}/blogs/${k.slug}.${language}`}
               >
-                <button className="flex items-center justify-between w-full px-3 py-2 text-xs font-medium  transition-colors duration-300 transform rounded-lg  hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700">
-                  <div className="flex items-center gap-x-2 ">
-                    <span className={bullet + colors[i]}></span>
-                    <span>{k.title}</span>
+                <button className="w-full px-3 py-2 text-xs font-medium  transition-colors duration-300 transform rounded-lg  hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700">
+                  <div className="flex  gap-x-2 ">
+                    <span className={bullet + colors[i % 10]}></span>
+                    <span className="truncate">{k.title}</span>
                   </div>
-
-                  {/* <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    className="w-4 h-4 rtl:rotate-180"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M8.25 4.5l7.5 7.5-7.5 7.5"
-                    />
-                  </svg> */}
                 </button>
               </Link>
             );

@@ -79,6 +79,7 @@ export async function getPostByName(
     type: string;
     language: string;
     featureImage: string;
+    thumb: string;
     excerpt: string;
     embeddedImagesRemote: string;
     videoSourceURL: string;
@@ -119,6 +120,7 @@ export async function getPostByName(
       type: frontmatter.type,
       language: frontmatter.language,
       featureImage: frontmatter.featureImage,
+      thumb: frontmatter.thumb,
       excerpt: frontmatter.excerpt,
       embeddedImagesRemote: frontmatter.embeddedImagesRemote,
       videoSourceURL: frontmatter.videoSourceURL,
