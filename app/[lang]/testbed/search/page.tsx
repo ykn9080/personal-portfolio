@@ -1,12 +1,12 @@
 "use client";
 
-import { useState, FormEvent } from "react";
+import { useState, FormEvent, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { winProcess, namProcess } from "@/lib/childprocess";
 import hljs from "highlight.js/lib/core";
 import html from "highlight.js/lib/languages/javascript";
 
-export default function Search() {
+export default function Search({ script }: LabelProps) {
   const [search, setSearch] = useState("");
   const router = useRouter();
   const [result, setResult] = useState("");
@@ -63,6 +63,60 @@ export default function Search() {
   );
 }
 
+type LabelProps = {
+  script: string;
+  server: string;
+};
+export function SearchLabel({ script, server }: LabelProps) {
+  const [search, setSearch] = useState("");
+  const router = useRouter();
+  const [result, setResult] = useState();
+  const [serverName, setServerName] = useState("winubuntu");
+
+  useEffect(() => {
+    if (script) setSearch(script);
+    if (server) setServerName(server);
+  }, [script, server]);
+
+  const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    let rtn;
+    if (serverName === "namubuntu") rtn = await namProcess({ script: search });
+    else rtn = await winProcess({ script: search });
+    hljs.registerLanguage("javascript", html);
+    const highlighted = hljs.highlight(rtn.result, {
+      language: "javascript",
+    }).value;
+    setResult(highlighted);
+  };
+
+  return (
+    <>
+      <div className="flex">
+        <label className="bg-white p-2 w-80 text-xl rounded-xl">{search}</label>
+
+        <button
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          onClick={handleClick}
+        >
+          Run
+        </button>
+      </div>
+
+      <div className="w-full">
+        {result && (
+          <pre>
+            <code
+              className="language-html hljs"
+              dangerouslySetInnerHTML={{ __html: result }}
+            />
+          </pre>
+        )}
+      </div>
+    </>
+  );
+}
 const Radiobtn = ({ onChange }) => {
   const [server, setServer] = useState("winubuntu");
   return (
