@@ -41,6 +41,7 @@
     "react-icons": "^4.8.0",
     "react-redux": "^8.1.2",
     "react-table": "^7.8.0",
+    "react-use-websocket": "^4.4.0",
     "redux": "^4.2.1",
     "redux-devtools-extension": "^2.13.9",
     "rehype-autolink-headings": "^6.1.1",
@@ -48,6 +49,8 @@
     "rehype-slug": "^5.1.0",
     "remark-gfm": "^3.0.1",
     "sharp": "^0.32.1",
+    "socket-io": "^1.0.0",
+    "socket.io-client": "^4.7.2",
     "typescript": "5.0.2"
   },
   "devDependencies": {
