@@ -14,7 +14,6 @@ import SideLocalbar from "@/app/[lang]/components/SideLocalbar";
 import { Locale } from "@/i18n.config";
 import { Button, MyPopOver } from "./components";
 import Search, { SearchLabel } from "@/app/[lang]/testbed/search/page";
-import Chat from "@/app/[lang]/components/Client";
 
 export async function generateStaticParams() {
   const files = fs.readdirSync(path.join("blogs"));
@@ -96,7 +95,7 @@ export default function Post({ params }: any, lang: Locale) {
               <MDXRemote
                 source={props.content}
                 options={options}
-                components={{ Button, MyPopOver, SearchLabel, Search, Chat }}
+                components={{ Button, MyPopOver, SearchLabel, Search }}
               />
             </div>
           </div>
