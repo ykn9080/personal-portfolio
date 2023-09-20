@@ -1,17 +1,18 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 
 // import { useSelector, useDispatch } from "react-redux";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { RootState } from "@/redux/store";
 import { updateValue } from "@/redux/features/globalSlice";
 
-const MainPage = () => {
+const MainPage = async () => {
   const dispatch = useAppDispatch();
   const name = useAppSelector((state: RootState) => state.global).name;
 
-  console.log(name);
+  // const rtn = await consumer();
+  // console.log(rtn);
 
   return (
     <div>

@@ -1,6 +1,7 @@
 "use client";
 import { Locale } from "@/i18n.config";
 import { getDictionary } from "@/lib/dictionary";
+import { consumer } from "@/lib/flask";
 import Image from "next/image";
 
 export default async function About({
@@ -9,7 +10,8 @@ export default async function About({
   params: { lang: Locale };
 }) {
   const { page } = await getDictionary(lang);
-
+  // const rtn = await consumer();
+  // console.log(rtn);
   return (
     <div className="md:container md:mx-auto py-14 ">
       <h1 className="text-3xl font-bold  mt-10">{page.about["about-sub"]}</h1>
