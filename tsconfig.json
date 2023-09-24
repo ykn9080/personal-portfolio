@@ -30,7 +30,8 @@
     ".next/types/**/*.ts",
     "lib/blogs.js",
     "lib/childprocess.js",
-    "app/[lang]/components/Modal.jsx"
+    "app/[lang]/components/Modal.jsx",
+    "app/[lang]/mdxComponents/kafkajs"
   ],
   "exclude": ["node_modules"]
 }

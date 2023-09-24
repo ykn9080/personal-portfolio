@@ -9,7 +9,7 @@ type: interest
 language: kr
 featureImage: /images/interest/microservices.png
 thumb: /images/interest/microservices_icon.png
-github:
+github: https://github.com/ykn9080/microservice
 demo:
 videoSourceURL:
 videoTitle:
@@ -19,3 +19,17 @@ excerpt: kafka를 활용한 microservice 구현
 ## kafka producer, consumer 실행
 
 ## python 사용하여 producer, consumer 구현
+
+client->mysql CRUD->kafka producer->kafka consumer ->MONGO CRUD
+
+### mysql create new user
+
+`{"name":"yknam12", "email":"ykn12@empal.com", "password":"908012"}`
+
+### producer
+
+mysql
+
+<Kafka apiUrl="mysql/users" method="get" />
+### consumer mongodb
+<Kafka apiUrl="mongo/users" method="get" />
