@@ -27,7 +27,7 @@ export default function Search({ script }: LabelProps) {
     }).value;
     setResult(highlighted);
   };
-  const onChange = (svr: any) => {
+  const onChange = (svr: string) => {
     setServer(svr);
     console.log(svr);
   };
@@ -70,7 +70,7 @@ type LabelProps = {
 export function SearchLabel({ script, server }: LabelProps) {
   const [search, setSearch] = useState("");
   const router = useRouter();
-  const [result, setResult] = useState();
+  const [result, setResult] = useState<any | null>();
   const [serverName, setServerName] = useState("winubuntu");
 
   useEffect(() => {
@@ -117,7 +117,7 @@ export function SearchLabel({ script, server }: LabelProps) {
     </>
   );
 }
-const Radiobtn = ({ onChange }) => {
+const Radiobtn = ({ onChange }: any) => {
   const [server, setServer] = useState("winubuntu");
   return (
     <div className="flex flex-row items-center">

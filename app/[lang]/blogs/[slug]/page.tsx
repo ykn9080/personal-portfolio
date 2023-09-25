@@ -13,7 +13,7 @@ import notFound from "./not-found";
 import SideLocalbar from "@/app/[lang]/components/SideLocalbar";
 import { Locale } from "@/i18n.config";
 import { Button, MyPopOver } from "./components";
-import { Kafka } from "@/app/[lang]/mdxComponents/kafka";
+import { KafkaDemo } from "@/app/[lang]/mdxComponents/kafka";
 import Search, { SearchLabel } from "@/app/[lang]/testbed/search/page";
 
 export async function generateStaticParams() {
@@ -61,7 +61,7 @@ export default function Post({ params }: any, lang: Locale) {
   return (
     <div className="md:container md:mx-auto lg py-6">
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
-        <div className="col-span-3">
+        <div className="col-span-3  border-r ltr:border-r-0 ltr:border-l pr-5 dark:border-gray-700">
           <div className="prose dark:prose-invert max-w-none">
             <h1 className="text-4xl font-bold mb-3">
               {props.frontMatter.title}
@@ -96,11 +96,18 @@ export default function Post({ params }: any, lang: Locale) {
               <MDXRemote
                 source={props.content}
                 options={options}
-                components={{ Button, MyPopOver, SearchLabel, Search, Kafka }}
+                components={{
+                  Button,
+                  MyPopOver,
+                  SearchLabel,
+                  Search,
+                  KafkaDemo,
+                }}
               />
             </div>
           </div>
         </div>
+
         <div className="pl-3">
           {/* @ts-expect-error Server Component */}
           <SideLocalbar slug={props.slug} lang={lang} meta={frontMatter} />

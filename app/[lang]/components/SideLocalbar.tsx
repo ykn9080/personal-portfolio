@@ -37,7 +37,7 @@ export default function SideLocalbar({ slug, lang, meta }: Props) {
     return <p className="mt-10 text-center">Sorry, no posts available.</p>;
   }
   return (
-    <aside className="flex flex-col  h-screen pl-4 pt-4 overflow-hidden  border-l rtl:border-l-0 rtl:border-r  dark:border-gray-700">
+    <aside className="flex flex-col  h-screen pt-4 overflow-hidden">
       <div>
         <div className="flex items-center justify-between">
           <h2 className="text-base font-semibold ">Other List</h2>
