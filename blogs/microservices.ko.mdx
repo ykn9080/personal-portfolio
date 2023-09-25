@@ -13,14 +13,152 @@ github: https://github.com/ykn9080/microservice
 demo:
 videoSourceURL:
 videoTitle:
-excerpt: kafka를 활용한 microservice 구현
+excerpt: 여러개로 구성된 microservice간에 공유데이터(고객,상품 등)에 대한 정보일치화를 처리한 데모설명이다. producer는 mysql, consumer는 mongodb로 만들어기진 각기 독립된 application 이며 고객정보의 crud가 발생될때 kafka를 이용하여 정보를 일치화 시키는 과정을 설명하고 있다.
 ---
 
-## kafka producer, consumer 실행
+## kafka producer
 
-## python 사용하여 producer, consumer 구현
+> middleware는 router로 kafka설정내용을 넘겨주기 위한 용도
+> topic과 modelName을 넘겨준다 ex) app.use(url, middleware("tweet", "Users"), controller);
+
+```js
+const { Kafka } = require("kafkajs");
+
+const rtn = {};
+const middleware = (topic, modelName) => (req, res, next) => {
+  if (req.method === "GET") return next();
+
+  req.topic = topic;
+  req.modelName = modelName;
+  next();
+};
+```
+
+> kafka producer는 controller에서 respond전에 request 정보를 바탕으로 처리한다.
+> 이때 신규생성처리의 경우 id가 추가되므로 data로 만들어 넘겨준다
+
+```js
+const producer = async (req, data) => {
+  if (req.method === "GET") return;
+  if (!req.topic) return;
+  try {
+    const kafka = new Kafka({
+      clientId: "tweet",
+      brokers: ["winubuntu:9092", "namubuntu:9092"],
+    });
+
+    const producer = kafka.producer();
+    console.log("Connecting producer.....");
+    await producer.connect();
+    console.log("Connected producer!");
+    //A-M 0 , N-Z 1
+    const partition = 1; //msg[0] < "N" ? 0 : 1;
+
+    const val = {
+      body: data ? data : req.body,
+      query: req.query,
+      params: req.params,
+      method: req.method,
+      modelName: req.modelName,
+    };
+
+    const result = await producer.send({
+      topic: req.topic,
+      messages: [
+        {
+          value: JSON.stringify(val),
+          partition: partition,
+        },
+      ],
+    });
+
+    console.log(`Send Successfully! ${JSON.stringify(result)}`);
+    await producer.disconnect();
+  } catch (ex) {
+    console.error(`Something bad happened ${ex}`);
+  }
+};
+```
+
+> 아래의 예는 mysql의 user table에 신규생성을 요청하는 경우이다.
+> respond전에 producer를 호출하여 kafka에 전달한다.
+
+```js
+const create = (req, res) => {
+  // Save Table in the database
+  Table.create(req.body)
+    .then((data) => {
+      producer(req, data);
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Some error occurred while creating.",
+      });
+    });
+};
+```
+
+## kafka consumer
+
+> consumer는 user요청으로 생성되는 producer와 달리 서버가 시작되면서 실행된다.
+> 아래코드는 kafkajs를 사용하여 consumer를 생성하고 tweet topic을 구독하는 부분이다.
+
+```js
+const kafka = new Kafka({
+  clientId: "tweet",
+  brokers: ["winubuntu:9092", "namubuntu:9092"],
+});
+
+const consumer = kafka.consumer({ groupId: "test" });
+console.log("Connecting consumer.....");
+await consumer.connect();
+console.log("Connected consumer!");
+
+await consumer.subscribe({
+  topic: "tweet",
+  fromBeginning: true,
+});
+```
+
+> 아래의 예는 위의 코드에서 생성한 tweet topic을 구독하고 있으며, mongoDB에 CRUD처리를 한다.
+
+```js
+ await consumer.run({
+      eachMessage: async (result) => {
+        const val = JSON.parse(result.message.value.toString());
+
+        switch (val.method) {
+          case "POST":
+            await db[val.modelName].create(val.body);
+            break;
+          case "PUT":
+            const filter = { id: val.params.id.toString() };
+            doc = await db[val.modelName].findOne(filter);
+            const update = val.body;
+            await db[val.modelName].findByIdAndUpdate(doc._id, update, {
+              new: true,
+            });
+            break;
+          case "DELETE":
+            const filter1 = { id: val.params.id };
+            await db[val.modelName].findOneAndDelete(filter1, {
+              new: true,
+            });
+            break;
+        }
+      },
+    });
+  } catch (ex) {
+    console.error(`Something bad happened ${ex}`);
+  }
+```
+
+## producer, consumer 구현
 
 client->mysql CRUD->kafka producer->kafka consumer ->MONGO CRUD
+
+<img alt="kafkaprocess" src="/images/mdx/kafka.png" />
 
 ### mysql create new user
 
