@@ -10,12 +10,75 @@ language: kr
 featureImage: /images/interest/hadoop.png
 thumb: /images/interest/hadoop_icon.png
 github:
-demo:
+demo: http://imcmaster.iptime.org:9871/dfshealth.html#tab-datanode
 videoSourceURL:
 videoTitle:
 excerpt: 분산처리환경의 대표적인 솔루션인 하둡과 에코시스템 소개
 ---
 
-## Hadoop구성
+## Hdfs command
+
+### ls
+
+> Hdfs 파일 리스트 조회
+
+<SearchLabel script="hdfs dfs -ls /" port="7878" />
+
+### put
+
+> local file을 Hdfs로 copy
+
+<SearchLabel
+  script="hdfs dfs -put  /data/samplePig.txt ~/imsidata/samplePig.txt;ls -la ~/imsidata"
+  port="7878"
+/>
+
+### get
+
+- Hdfs의 파일을 local directory로 다운로드
+- hdfs dfs -get <hdfspath>/<hdfsfile>
+
+<SearchLabel
+  script="hdfs dfs -get /data/samplePig.txt ~/imsidata/samplePig.txt;ls -la ~/imsidata"
+  port="7878"
+/>
+
+### mkdir
+
+- hdfs에 폴더생성
+- hdfs dfs -mkdir <hdfspath>/<pathname>
+
+<SearchLabel
+  script="hdfs dfs -mkdir /data/imsi/newfolder;hdfs dfs -ls /data/imsi;hdfs dfs -rmdir /data/imsi/newfolder"
+  port="7878"
+/>
+
+### put
+
+- local 파일을 hdfs로 업로드
+- hdfs dfs -put <localpath>/<filename> <hdfspath>/
+
+<SearchLabel
+  script="echo test>>~/imsidata/testing.txt;hdfs dfs -put ~/imsidata/testing.txt /data/imsi/;hdfs dfs -ls /data/imsi"
+  port="7878"
+/>
+
+### rm
+
+- hdfs file삭제
+- hdfs dfs -rm /<hdfspath>/<hdfsfile>
+- 하위 디렉토리 내의 것을 삭제할 때는 -rm -r
+
+<SearchLabel
+  script="hdfs dfs -rm /data/imsi/testing.txt;hdfs dfs -ls /data/imsi"
+  port="7878"
+/>
+
+### tail
+
+> 특정 file에 대해 마지막 kilobyte을 stdout으로 보여줌
+> hdfs dfs -tail [-f] URI
+
+<SearchLabel script="hdfs dfs -tail /data/samplePig.txt" port="7878" />
 
 ## EcoSystem

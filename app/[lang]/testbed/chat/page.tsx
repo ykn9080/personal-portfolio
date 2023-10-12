@@ -2,7 +2,7 @@
 import styles from "./page.module.css";
 import { io } from "socket.io-client";
 import { useState } from "react";
-import ChatPage from "@/app/[lang]/components/Chat";
+import ChatPage from "@/app/[lang]/testbed/chat/Chat";
 
 export default function Home() {
   const [showChat, setShowChat] = useState(false);

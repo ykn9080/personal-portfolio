@@ -74,7 +74,9 @@ export function SearchLabel({ script, server }: LabelProps) {
   const [serverName, setServerName] = useState("winubuntu");
 
   useEffect(() => {
-    if (script) setSearch(script);
+    if (script) {
+      setSearch(script);
+    }
     if (server) setServerName(server);
   }, [script, server]);
 
@@ -92,12 +94,14 @@ export function SearchLabel({ script, server }: LabelProps) {
   };
 
   return (
-    <>
-      <div className="flex">
-        <label className="bg-white p-2 w-80 text-xl rounded-xl">{search}</label>
-
+    <div>
+      <div className="flex flex-row space-x-2">
+        {/* <label className="pt-2 grow-0 text-base"> ~:</label> */}
+        <label className="p-2 grow text-base rounded-base bg-slate-50">
+          {search}
+        </label>
         <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded grow-0"
           onClick={handleClick}
         >
           Run
@@ -114,7 +118,7 @@ export function SearchLabel({ script, server }: LabelProps) {
           </pre>
         )}
       </div>
-    </>
+    </div>
   );
 }
 const Radiobtn = ({ onChange }: any) => {
