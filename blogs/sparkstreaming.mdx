@@ -1,0 +1,45 @@
+---
+id: 1251
+date: 2023-10-12
+tags: ["spark", "rdd", "sparkcore"]
+title: Spark core
+slug: sparkcore
+seq: 4
+type: interest
+language: kr
+featureImage: /images/interest/spark-big.png
+thumb: /images/interest/spark.png
+github:
+demo:
+videoSourceURL:
+videoTitle:
+excerpt: 데이터 파이프라인을 관리하는 툴로 정교한 스케쥴기반의 프로세스를 통제한다.
+---
+
+## Why Airflow
+
+### ls
+
+> Hdfs 파일 리스트 조회
+
+```python
+from pyspark import SparkContext
+from pyspark.sql import SparkSession
+
+# sc = SparkContext(appName="sparkRdd")
+spark = SparkSession.builder.appName(
+    "sparkRdd").master("local[2]").getOrCreate()
+
+moviePath = "/data/movieLens/movies.csv"
+ratingPath = "/data/movieLens/ratings.csv"
+
+movie = spark.read.csv(moviePath, header=True, inferSchema=True)
+movie.printSchema()
+movie.show()
+```
+
+<SearchLabel
+  script="/home/yknam/pythonfiles/pyspark/sparkRdd.py"
+  txt="spark rdd example"
+  port="7878"
+/>

@@ -5,16 +5,18 @@ import { useRouter } from "next/navigation";
 import { winProcess, namProcess } from "@/lib/childprocess";
 import hljs from "highlight.js/lib/core";
 import html from "highlight.js/lib/languages/javascript";
+import { LoadingScreen } from "@/app/[lang]/LoadingScreen";
 
 export default function Search({ script }: LabelProps) {
   const [search, setSearch] = useState("");
   const router = useRouter();
   const [result, setResult] = useState("");
   const [server, setServer] = useState("winubuntu");
+  const [isLoading, setLoading] = useState(false);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+    setLoading(true);
     //setSearch("");
     //router.push(`/${search}/`);
     let rtn;
@@ -26,6 +28,7 @@ export default function Search({ script }: LabelProps) {
       language: "javascript",
     }).value;
     setResult(highlighted);
+    setLoading(false);
   };
   const onChange = (svr: string) => {
     setServer(svr);
@@ -66,23 +69,27 @@ export default function Search({ script }: LabelProps) {
 type LabelProps = {
   script: string;
   server: string;
+  txt: string;
 };
-export function SearchLabel({ script, server }: LabelProps) {
+export function SearchLabel({ script, server, txt }: LabelProps) {
   const [search, setSearch] = useState("");
+  const [txtcomment, setTxtcomment] = useState("");
   const router = useRouter();
   const [result, setResult] = useState<any | null>();
   const [serverName, setServerName] = useState("winubuntu");
+  const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
     if (script) {
       setSearch(script);
     }
     if (server) setServerName(server);
-  }, [script, server]);
+    if (txt) setTxtcomment(txt);
+  }, [script, server, txt]);
 
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-
+    setLoading(true);
     let rtn;
     if (serverName === "namubuntu") rtn = await namProcess({ script: search });
     else rtn = await winProcess({ script: search });
@@ -91,17 +98,21 @@ export function SearchLabel({ script, server }: LabelProps) {
       language: "javascript",
     }).value;
     setResult(highlighted);
+    setLoading(false);
   };
-
+  if (isLoading) return <LoadingScreen />;
   return (
     <div>
       <div className="flex flex-row space-x-2">
-        {/* <label className="pt-2 grow-0 text-base"> ~:</label> */}
-        <label className="p-2 grow text-base rounded-base bg-slate-50">
-          {search}
-        </label>
+        {txt ? (
+          <label className="p-2 grow text-base">{txtcomment}</label>
+        ) : (
+          <label className="p-2 grow text-base rounded-base bg-slate-50">
+            {search}
+          </label>
+        )}
         <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded grow-0"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-2 rounded grow-0"
           onClick={handleClick}
         >
           Run

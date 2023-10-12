@@ -23,7 +23,7 @@ export default function Loading() {
           }
         }
       `}</style>
-      <div class="loader"></div>
+      <div className="loader"></div>
     </>
   );
 }

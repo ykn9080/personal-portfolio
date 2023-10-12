@@ -1,0 +1,61 @@
+---
+id: 1251
+date: 2023-10-12
+tags: ["spark", "rdd", "sparkcore"]
+title: Spark core
+slug: sparkcore
+seq: 4
+type: interest
+language: kr
+featureImage: /images/interest/spark-big.png
+thumb: /images/interest/spark.png
+github:
+demo:
+videoSourceURL:
+videoTitle:
+excerpt: 데이터 파이프라인을 관리하는 툴로 정교한 스케쥴기반의 프로세스를 통제한다.
+---
+
+## spark rdd 기본
+
+<details>
+  <summary>code snippet</summary>
+
+```python
+from pyspark.sql import SparkSession
+
+spark = SparkSession.builder.appName(
+"sparkRdd").master("local[2]").getOrCreate()
+
+moviePath = "/data/movieLens/movies.csv"
+
+movie = spark.read.csv(moviePath, header=True, inferSchema=True)
+movie.printSchema()
+movie.show(5)
+
+```
+
+</details>
+
+<SearchLabel
+  script="/home/yknam/pythonfiles/pyspark/sparkRdd.py"
+  txt="sparkSession객체를 생성한 후 hdfs의 data를 읽어서 스키마와 5개 row를 화면에 출력한다."
+  port="7878"
+/>
+
+#### master설정
+
+<img src="/images/interest/spark-master.png" width="250" alt="master" />
+
+- driver only: worker없이 driver로만 실행됨 local[1](코어갯수)
+- standalone: spark://localhost:7077로 지정. spark만으로 클러스터를 구성
+- multinode: resource manager와 node manager를 yarn에 의존한다.
+
+#### broadcast vs accumulator
+
+> 브로드캐스트변수는 파일 사이즈가 작을 경우 driver에서 각 work로 복사하여 사용한다.
+> accumulator변수는 각worker에서 공유되는 변수로 변수값이 합쳐진다.
+
+#### map side join vs shuffle join
+
+> worker 내에서 조인이 발생되는 경우와 worker간에 shuffle이 발생하여 조인이 일어나는 경우

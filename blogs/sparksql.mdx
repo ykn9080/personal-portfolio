@@ -1,0 +1,45 @@
+---
+id: 1251
+date: 2023-10-12
+tags: ["spark", "dataframe", "sparksql"]
+title: Spark Sql
+slug: sparksql
+seq: 4
+type: interest
+language: kr
+featureImage: /images/interest/sparksql-big.png
+thumb: /images/interest/sparksql.png
+github:
+demo:
+videoSourceURL:
+videoTitle:
+excerpt: spark rdd를 추상화하여 dataframe과 dataset, sql로 사용 편의성을 높혔다.
+---
+
+## Why Airflow
+
+### ls
+
+> Hdfs 파일 리스트 조회
+
+```python
+from pyspark import SparkContext
+from pyspark.sql import SparkSession
+
+# sc = SparkContext(appName="sparkRdd")
+spark = SparkSession.builder.appName(
+    "sparkRdd").master("local[2]").getOrCreate()
+
+moviePath = "/data/movieLens/movies.csv"
+ratingPath = "/data/movieLens/ratings.csv"
+
+movie = spark.read.csv(moviePath, header=True, inferSchema=True)
+movie.printSchema()
+movie.show()
+```
+
+<SearchLabel
+  script="/home/yknam/pythonfiles/pyspark/sparkRdd.py"
+  txt="spark rdd example"
+  port="7878"
+/>
