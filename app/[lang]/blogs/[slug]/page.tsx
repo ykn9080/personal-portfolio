@@ -14,7 +14,10 @@ import SideLocalbar from "@/app/[lang]/components/SideLocalbar";
 import { Locale } from "@/i18n.config";
 import { Button, MyPopOver } from "./components";
 import { KafkaDemo } from "@/app/[lang]/mdxComponents/kafka";
-import Search, { SearchLabel } from "@/app/[lang]/testbed/search/page";
+import Search, {
+  SearchLabel,
+  SearchShow,
+} from "@/app/[lang]/testbed/search/page";
 
 export async function generateStaticParams() {
   const files = fs.readdirSync(path.join("blogs"));
@@ -100,6 +103,7 @@ export default function Post({ params }: any, lang: Locale) {
                   Button,
                   MyPopOver,
                   SearchLabel,
+                  SearchShow,
                   Search,
                   KafkaDemo,
                 }}
