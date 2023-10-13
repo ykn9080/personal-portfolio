@@ -20,8 +20,12 @@ excerpt: 데이터 파이프라인을 관리하는 툴로 정교한 스케쥴기
 
 <details>
   <summary>code snippet</summary>
-
-```python
+<SearchLabel
+  script="cat /home/yknam/pythonfiles/pyspark/sparkRdd1.py"
+  
+  port="7878"
+/>
+{/* ```python
 from pyspark.sql import SparkSession
 
 spark = SparkSession.builder.appName(
@@ -33,7 +37,7 @@ movie = spark.read.csv(moviePath, header=True, inferSchema=True)
 movie.printSchema()
 movie.show(5)
 
-```
+```*/}
 
 </details>
 
@@ -59,3 +63,4 @@ movie.show(5)
 #### map side join vs shuffle join
 
 > worker 내에서 조인이 발생되는 경우와 worker간에 shuffle이 발생하여 조인이 일어나는 경우
+```
