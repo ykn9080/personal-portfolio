@@ -53,13 +53,30 @@ excerpt: 데이터 파이프라인을 관리하는 툴로 정교한 스케쥴기
 
 #### broadcast vs accumulator
 
+<div style={{ float: "right", marginLeft: "20px" }}>
+  <img
+    src="/images/interest/sparkcore-broadcast.png"
+    width="300"
+    alt="broadcastjoin"
+  />
+</div>
+
 > 브로드캐스트변수는 파일 사이즈가 작을 경우 driver에서 각 work로 복사하여 사용한다.
 > accumulator변수는 각worker에서 공유되는 변수로 변수값이 합쳐진다.
 
+<div style={{ clear: "both" }} />
 <SearchShow
   script="cat /home/yknam/pythonfiles/pyspark/sparkRddToDF.py"
   port="7878"
 />
 #### map side join vs shuffle join
+<div style={{ float: "right", marginLeft: "20px" }}>
+  <img
+    src="/images/interest/sparkcore-shuffle.png"
+    width="300"
+    alt="shufflejoin"
+  />
+</div>> worker 내에서 조인이 발생되는 경우와 worker간에 shuffle이 발생하여
+조인이 일어나는 경우
 
-> worker 내에서 조인이 발생되는 경우와 worker간에 shuffle이 발생하여 조인이 일어나는 경우
+<div style={{ clear: "both" }} />
