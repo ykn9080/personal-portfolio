@@ -30,12 +30,14 @@ from pyspark.sql import SparkSession
 spark = SparkSession.builder.appName(
     "sparkRdd").master("local[2]").getOrCreate()
 
-moviePath = "/data/movieLens/movies.csv"
-ratingPath = "/data/movieLens/ratings.csv"
-
-movie = spark.read.csv(moviePath, header=True, inferSchema=True)
-movie.printSchema()
-movie.show()
+# From Mysql table
+df_mysql = spark.read.format("jdbc")
+   .option("url", "jdbc:mysql://winubuntu:3306/project")
+   .option("driver", "com.mysql.jdbc.Driver")
+   .option("dbtable", "tablename")
+   .option("user", "user")
+   .option("password", "password")
+   .load()
 ```
 
 <SearchLabel

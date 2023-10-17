@@ -15,11 +15,11 @@ import { LoadingScreen } from "@/app/[lang]/LoadingScreen";
 import "@/styles/cover-spin.css";
 import { generate } from "@/lib/mdxToHtml";
 
-export default function Search({ script }: LabelProps) {
-  const [search, setSearch] = useState("");
+export default function Search({ script, server }: LabelProps) {
+  const [search, setSearch] = useState(script);
   const router = useRouter();
   const [result, setResult] = useState("");
-  const [server, setServer] = useState("winubuntu");
+  const [serverName, setServerName] = useState("winubuntu");
   const [isLoading, setLoading] = useState(false);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -28,7 +28,7 @@ export default function Search({ script }: LabelProps) {
     //setSearch("");
     //router.push(`/${search}/`);
     let rtn;
-    if (server === "namubuntu") rtn = await namProcess({ script: search });
+    if (serverName === "namubuntu") rtn = await namProcess({ script: search });
     else rtn = await winProcess({ script: search });
     //rtn.result = rtn.result.replace(/\n/g, "<br />");
     hljs.registerLanguage("javascript", html);
@@ -39,7 +39,7 @@ export default function Search({ script }: LabelProps) {
     setLoading(false);
   };
   const onChange = (svr: string) => {
-    setServer(svr);
+    setServerName(svr);
     console.log(svr);
   };
   return (
@@ -167,26 +167,31 @@ export function SearchShow({ script, script1, server, txt }: LabelProps1) {
     if (server) setServerName(server);
     if (txt) setTxtcomment(txt);
     async function fetch() {
-      const rtn = await handleClick(script);
+      const rtn = await handleClick(script, server);
 
       setResult(rtn);
     }
     fetch();
   }, [script, server, txt]);
 
-  const handleClick = async (script: String | null | undefined) => {
+  const handleClick = async (
+    script: String | null | undefined,
+    svrname: String | undefined
+  ) => {
+    console.log(script, svrname);
     setLoading(true);
     if (!script) return;
     let rtn;
-    if (serverName === "namubuntu") rtn = await namProcess({ script });
+    if (serverName === "namubuntu" || svrname === "namubuntu")
+      rtn = await winProcess({ script });
     else rtn = await winProcess({ script });
-    if (rtn) {
-      const rtnArr = rtn.result.split('"""');
-      if (rtnArr.length > 1) setCodecomment(rtnArr[1]);
-      rtn.result = rtnArr[0];
-    }
+    // if (rtn) {
+    //   // const rtnArr = rtn.result.split('"""');
+    //   // if (rtnArr.length > 1) setCodecomment(rtnArr[1]);
+    //   rtn.result = rtnArr[0];
+    // }
     hljs.registerLanguage("javascript", html);
-
+    console.log(rtn.result);
     const highlighted = hljs.highlight(rtn.result, {
       language: "javascript",
     }).value;
@@ -197,7 +202,7 @@ export function SearchShow({ script, script1, server, txt }: LabelProps1) {
   const handleExecute = async () => {
     setToggle(false);
     if (!executed) {
-      const rtn = await handleClick(exescript);
+      const rtn = await handleClick(exescript, serverName);
       setExecuted(rtn);
     }
   };
@@ -220,6 +225,7 @@ export function SearchShow({ script, script1, server, txt }: LabelProps1) {
               >
                 result
               </button>
+
               <button
                 onClick={() => setToggle(true)}
                 className={`${btnClass} ${

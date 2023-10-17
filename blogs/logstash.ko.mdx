@@ -27,9 +27,25 @@ file명 config/work.conf
 input {}
 ```
 
-## logstash sample
+## logstash jdbc
 
-> ./bin/logstash -f filename
+<div style={{ float: "right", marginLeft: "20px" }}>
+  <img
+    src="/images/interest/sparkcore-shuffle.png"
+    width="300"
+    alt="shufflejoin"
+  />
+</div>
+
+> logstash로 mysql데이터를 query해서 화면에 출력함
+> input: mysql, filter:none, output:stdout
+
+<div style={{ clear: "both" }} />
+<SearchShow
+  script="ssh yknam@namubuntu cat /home/yknam/sandbox/logstash/conf/jdbcstdout.conf"
+  script1="ssh yknam@namubuntu  rm -rf /home/yknam/sandbox/logstash/logs3;/home/yknam/sandbox/logstash/bin/logstash -f /home/yknam/sandbox/logstash/conf/jdbcstdout.conf --path.data=logs3"
+  port="7878"
+/>
 
 #### Simple
 

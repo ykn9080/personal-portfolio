@@ -8,7 +8,7 @@ const socket = io("http://winubuntu:8833", {
   path: "/sockets",
 });
 
-export default function page() {
+export default function Page() {
   const [isConnected, setIsConnected] = useState(socket.connected);
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");

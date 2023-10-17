@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
 import { Dialog } from "@headlessui/react";
-import MyListBox from "./ListBox";
 import Link from "next/link";
 import _ from "lodash";
 import { useAppSelector, useAppDispatch } from "@/redux/hooks";
@@ -26,7 +25,6 @@ export default function MyDialog({ data, language, icon, list }) {
 
   useEffect(() => {
     const fil = filterTags(taglist, allData);
-    console.log("filtered list", fil, taglist);
     setFilteredData(fil);
   }, [taglist]);
 
