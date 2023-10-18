@@ -1,0 +1,133 @@
+---
+id: 125
+date: 2023-09-12
+tags: ["filebeat", "elk"]
+title: Filebeat
+slug: filebeat
+seq: 4
+type: interest
+language: kr
+featureImage: /images/interest/filebeat.png
+thumb: /images/interest/filebeat_icon.jpg
+github:
+demo: http://imcmaster.iptime.org:5601/app/dashboards#/view/79ffd6e0-faa0-11e6-947f-177f697178b8-ecs?_g=(filters:!(),refreshInterval:(pause:!t,value:0),time:(from:'2023-09-12T02:00:00.000Z',to:now))
+videoSourceURL:
+videoTitle:
+excerpt: 간편하게 메트릭 데이터를 수집.
+---
+
+## Filebeat 설정
+
+> filebeat.yml파일에 input, output을 설정하여 실행한다. 하나씩만 설정, 실행할 수 있다.
+>
+> input 데이터 소스로 nginx 로그를 수집하는 예이다. type->log, enable->true,path->/var/log/nginx/access.log로 설정한다.
+>
+> output 으로 elatic을 선택했다. logstash를 거쳐 filtering해서 elastic으로 전송할 경우에는 elastic을 주석처리하고 logstash를 활성화하면된다.
+
+```
+# ============================== Filebeat inputs ===============================
+
+filebeat.inputs:
+
+- type: log
+
+  # Unique ID among all inputs, an ID is required.
+  id: my-filestream-id
+
+  # Change to true to enable this input configuration.
+  enabled: true
+
+  # Paths that should be crawled and fetched. Glob based paths.
+  paths:
+    - /var/log/nginx/access.log
+
+....
+....
+....
+
+# ================================== Outputs ===================================
+
+# ---------------------------- Elasticsearch Output ----------------------------
+output.elasticsearch:
+  # Array of hosts to connect to.
+  hosts: ["localhost:9200"]
+
+  # Protocol - either `http` (default) or `https`.
+  #protocol: "https"
+
+  # Authentication credentials - either API key or username/password.
+  #api_key: "id:api_key"
+  #username: "elastic"
+  #password: "changeme"
+
+# ------------------------------ Logstash Output -------------------------------
+output.logstash:
+  # The Logstash hosts
+  hosts: ["localhost:5044"]
+
+  # Optional SSL. By default is off.
+  # List of root certificates for HTTPS server verifications
+  #ssl.certificate_authorities: ["/etc/pki/root/ca.pem"]
+
+  # Certificate for SSL client authentication
+  #ssl.certificate: "/etc/pki/client/cert.pem"
+
+  # Client Certificate Key
+  #ssl.key: "/etc/pki/client/cert.key"
+
+```
+
+### filebeat 실행
+
+> filebeat> ./filebeat 만으로 실행됨
+>
+> filebeat는 한번 실행한 데이터는 다시 읽지 않기 때문에 새로 데이터를 읽으려면 data디렉토리를 삭제한 후 실행해야함
+
+### filebeat -> kafka -> logstash -> elasticsearch
+
+1.fielbeat.yml
+
+```
+# ------------------------------ Kafka Output -------------------------------
+output.kafka:
+  # initial brokers for reading cluster metadata
+  hosts: ["winubuntu:9092","namubuntu:9092"]
+
+  # message topic selection + partitioning
+  topic: "filebeat"
+  partition.round_robin:
+    reachable_only: false
+
+  required_acks: 1
+  compression: gzip
+  max_message_bytes: 1000000
+```
+
+2. ./filebeat 실행
+3. kafka topic 생성: filebeat
+4. logstash.yml생성
+
+```
+input {
+    kafka {
+        bootstrap_servers =>  "winubuntu:9092, namubuntu:9092"
+        topics => ["filebeat"]
+    }
+}
+
+filter {
+}
+
+output {
+    stdout {
+        codec => rubydebug
+    }
+    elasticsearch {
+        hosts => "http://localhost:9200"
+        index => "kafka-filebeat"
+        document_type => "_doc"
+    }
+}
+```
+
+5. elasticsearch
