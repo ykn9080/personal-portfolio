@@ -87,6 +87,8 @@ output.logstash:
 
 1.fielbeat.yml
 
+> filebeat.yml에 kafka output을 추가한다.
+
 ```
 # ------------------------------ Kafka Output -------------------------------
 output.kafka:
@@ -104,8 +106,15 @@ output.kafka:
 ```
 
 2. ./filebeat 실행
-3. kafka topic 생성: filebeat
-4. logstash.yml생성
+3. kafka 실행
+
+- topic 생성: filebeat
+- producer 실행: filebeat
+
+4. logstash실행
+   > logstash conf파일을 생성한다.
+   > input: kafka, output:elasticsearch
+   > logstash를 실행하면 kafka에서 데이터를 가져와 elasticsearch로 전송한다.
 
 ```
 input {
