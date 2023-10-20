@@ -24,7 +24,7 @@ excerpt: 간편하게 메트릭 데이터를 수집.
 >
 > output 으로 elatic을 선택했다. logstash를 거쳐 filtering해서 elastic으로 전송할 경우에는 elastic을 주석처리하고 logstash를 활성화하면된다.
 
-```
+```yaml
 # ============================== Filebeat inputs ===============================
 
 filebeat.inputs:
@@ -79,17 +79,19 @@ output.logstash:
 
 ### filebeat 실행
 
-> filebeat> ./filebeat 만으로 실행됨
+> filebeat 실행command : ./filebeat
 >
 > filebeat는 한번 실행한 데이터는 다시 읽지 않기 때문에 새로 데이터를 읽으려면 data디렉토리를 삭제한 후 실행해야함
 
 ### filebeat -> kafka -> logstash -> elasticsearch
 
+<img src="/images/interest/filebeat-pipeline.png" width="100%" alt="pipeline" />
+
 1.fielbeat.yml
 
 > filebeat.yml에 kafka output을 추가한다.
 
-```
+```js
 # ------------------------------ Kafka Output -------------------------------
 output.kafka:
   # initial brokers for reading cluster metadata
@@ -116,7 +118,7 @@ output.kafka:
    > input: kafka, output:elasticsearch
    > logstash를 실행하면 kafka에서 데이터를 가져와 elasticsearch로 전송한다.
 
-```
+```json
 input {
     kafka {
         bootstrap_servers =>  "winubuntu:9092, namubuntu:9092"
@@ -140,3 +142,9 @@ output {
 ```
 
 5. elasticsearch
+
+<SearchShow
+  script="cat /home/yknam/pythonfiles/pyspark/sparkRddToDF.py"
+  script1="ssh yknam@namubuntu curl localhost:9200/filebeat*/_search"
+  port="7878"
+/>

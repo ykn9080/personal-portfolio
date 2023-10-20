@@ -167,31 +167,20 @@ export function SearchShow({ script, script1, server, txt }: LabelProps1) {
     if (server) setServerName(server);
     if (txt) setTxtcomment(txt);
     async function fetch() {
-      const rtn = await handleClick(script, server);
+      const rtn = await handleClick(script);
 
       setResult(rtn);
     }
     fetch();
   }, [script, server, txt]);
 
-  const handleClick = async (
-    script: String | null | undefined,
-    svrname: String | undefined
-  ) => {
-    console.log(script, svrname);
+  const handleClick = async (script: String | null | undefined) => {
     setLoading(true);
     if (!script) return;
-    let rtn;
-    if (serverName === "namubuntu" || svrname === "namubuntu")
-      rtn = await winProcess({ script });
-    else rtn = await winProcess({ script });
-    // if (rtn) {
-    //   // const rtnArr = rtn.result.split('"""');
-    //   // if (rtnArr.length > 1) setCodecomment(rtnArr[1]);
-    //   rtn.result = rtnArr[0];
-    // }
+    let rtn = await winProcess({ script });
+
     hljs.registerLanguage("javascript", html);
-    console.log(rtn.result);
+
     const highlighted = hljs.highlight(rtn.result, {
       language: "javascript",
     }).value;
@@ -202,7 +191,7 @@ export function SearchShow({ script, script1, server, txt }: LabelProps1) {
   const handleExecute = async () => {
     setToggle(false);
     if (!executed) {
-      const rtn = await handleClick(exescript, serverName);
+      const rtn = await handleClick(exescript);
       setExecuted(rtn);
     }
   };

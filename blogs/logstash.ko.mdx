@@ -1,7 +1,7 @@
 ---
 id: 125
 date: 2023-09-30
-tags: ["elastic", "elk"]
+tags: ["elastic", "logstash", "elk"]
 title: Logstash
 slug: logstash
 seq: 4
@@ -18,16 +18,110 @@ excerpt: 데이터를 수집하여 엘라스틱 또는 다른 파이프라인으
 
 ## Logstash 구성
 
-## 실행방법
+<img src="/images/interest/logstash_pipeline1.png" alt="logstash-pipeline" />
 
-file명 config/work.conf
+> 기본 구성 conf 파일은 input,filter,output으로 구성된다.
 
-```sh
-
+```bash
 input {}
+filter {}
+output {}
 ```
 
-## logstash jdbc
+> 실행은 bin directory의 logstash를 구동하며 -f 로 conf 파일을 지정한다.
+
+```
+bin/logstash -f conf/example.conf
+```
+
+## Input설정
+
+```
+tcp {
+  port => 12345
+  codec => json
+}
+beats {
+  port => 5044
+}
+ file {
+  id => "my_plugin_id"
+  path => "/var/log/*"
+  exclude => "*.gz"
+}
+jdbc {
+  jdbc_driver_library => "/home/yknam/sandbox/logstash/mysql-connector-java-8.0.11.jar"
+  jdbc_driver_class => "com.mysql.jdbc.Driver"
+  jdbc_connection_string => "jdbc:mysql://winubuntu:3336/sakila"
+  jdbc_user => "user"
+  jdbc_password => "pass"
+  statement => "SELECT id, mycolumn1, mycolumn2 FROM my_table WHERE id > :sql_last_value",
+  #statement => "CALL fetch_my_data(:sql_last_value, :offset, :size)",
+  jdbc_paging_enabled => true,
+  jdbc_paging_mode => "explicit",
+  jdbc_page_size => 100000
+}
+
+```
+
+## filter설정
+
+```bash
+#data
+55.3.244.1 GET /index.html 15824 0.043
+#grok
+%{IP:client} %{WORD:method} %{URIPATHPARAM:request} %{NUMBER:bytes} %{NUMBER:duration}
+#result
+{
+  "duration": "0.043",
+  "request": "/index.html",
+  "method": "GET",
+  "bytes": "15824",
+  "client": "55.3.244.1"
+}
+
+```
+
+#### grok pattern
+
+- pattern 형태: `%{IP: ip}`
+- sample: 2.3.4.5 => `%{IP:ip} => {ip:"2.3.4.5"}`
+- pattern유형
+  IP  
+  GREEDYDATA : 모든 유형의 데이터
+  SPACE  
+  WORD  
+  UUID  
+  MAC  
+  EMAILADDRESS
+  NUMBER  
+  INT  
+  QUOTEDSTRING
+
+## Output설정
+
+```bash
+file {
+   path => ...
+   codec => line { format => "custom format: %{message}"}
+}
+elasticsearch {
+  hosts => ["http://localhost:9200"]
+  index => "%{[@metadata][beat]}-%{[@metadata][version]}"
+}
+stdout { codec => json }
+syslog {
+  id => "my_plugin_id"
+}
+kafka {
+  codec => json
+  topic_id => "mytopic"
+}
+```
+
+## example1:
+
+#### jdbc
 
 <div style={{ float: "right", marginLeft: "20px" }}>
   <img
@@ -47,70 +141,10 @@ input {}
   port="7878"
 />
 
-#### Simple
+#### 유용한 tip
+
+- 개발시 자동 reload되도록 config/logstash.yml 수정
 
 ```
-input { stdin {} }
-output { stdout {} }
+config.reload.automatic : true
 ```
-
-#### Simple1
-
-```
-input { stdin {} }
-output { stdout {} }
-```
-
-<details>
-  <summary>more</summary>
-#### Simple
-```
-input { stdin {} }
-output { stdout {} }
-```
-#### Simple1
-```
-input { stdin {} }
-output { stdout {} }
-```
-</details>
-
-### input
-
-<details>
-  <summary>more</summary>
-#### Simple
-```
-input { stdin {} }
-output { stdout {} }
-```
-</details>
-
-### output
-
-<details>
-  <summary>more</summary>
-#### Simple
-```
-input { stdin {} }
-output { stdout {} }
-```
-</details>
-### Filter
-<details>
-  <summary>more</summary>
-#### Simple
-```
-input { stdin {} }
-output { stdout {} }
-```
-</details>
-### Grok Sample
-<details>
-  <summary>more</summary>
-#### Simple
-```
-input { stdin {} }
-output { stdout {} }
-```
-</details>
