@@ -14,6 +14,7 @@ import "@/styles/highlight-js/github-dark.css";
 import { LoadingScreen } from "@/app/[lang]/LoadingScreen";
 import "@/styles/cover-spin.css";
 import { generate } from "@/lib/mdxToHtml";
+import { elasticscript } from "./data";
 
 export default function Search({ script, server }: LabelProps) {
   const [search, setSearch] = useState(script);
@@ -76,13 +77,17 @@ export default function Search({ script, server }: LabelProps) {
 
 interface LabelProps {
   script: string;
-  server: string;
-  txt: string;
+  type: string;
 }
 interface LabelProps1 extends LabelProps {
   script1: string | null;
+  type1: string;
 }
-export function SearchLabel({ script, server, txt }: LabelProps) {
+interface LabelProps2 {
+  filename: string;
+  script1: string;
+}
+export function SearchLabel({ script }: LabelProps) {
   const [search, setSearch] = useState("");
   const [txtcomment, setTxtcomment] = useState("");
   const router = useRouter();
@@ -94,9 +99,7 @@ export function SearchLabel({ script, server, txt }: LabelProps) {
     if (script) {
       setSearch(script);
     }
-    if (server) setServerName(server);
-    if (txt) setTxtcomment(txt);
-  }, [script, server, txt]);
+  }, [script]);
 
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -116,13 +119,10 @@ export function SearchLabel({ script, server, txt }: LabelProps) {
   return (
     <div>
       <div className="flex flex-row space-x-2">
-        {txt ? (
-          <label className="p-2 grow text-base">{txtcomment}</label>
-        ) : (
-          <label className="p-2 grow text-base rounded-base bg-slate-50">
-            {search}
-          </label>
-        )}
+        <label className="p-2 grow text-base rounded-base bg-slate-50">
+          {search}
+        </label>
+
         <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-2 rounded grow-0"
           onClick={handleClick}
@@ -145,10 +145,11 @@ export function SearchLabel({ script, server, txt }: LabelProps) {
   );
 }
 
-export function SearchShow({ script, script1, server, txt }: LabelProps1) {
+export function SearchShow({ script, script1, type, type1 }: LabelProps1) {
   const [search, setSearch] = useState("");
   const [exescript, setExescript] = useState<string | null>();
-  const [txtcomment, setTxtcomment] = useState("");
+  const [ftype, setFtype] = useState(type);
+  const [ftype1, setFtype1] = useState(type1);
   const [codecomment, setCodecomment] = useState("");
   const router = useRouter();
   const [result, setResult] = useState<any | null>();
@@ -164,25 +165,103 @@ export function SearchShow({ script, script1, server, txt }: LabelProps1) {
     if (script1) {
       setExescript(script1);
     }
-    if (server) setServerName(server);
-    if (txt) setTxtcomment(txt);
     async function fetch() {
-      const rtn = await handleClick(script);
+      const rtn = await handleClick(script, ftype);
 
       setResult(rtn);
     }
     fetch();
-  }, [script, server, txt]);
+  }, [script, type]);
+
+  const handleClick = async (
+    script: String | null | undefined,
+    filetype: String
+  ) => {
+    setLoading(true);
+    if (!script) return;
+    let rtn = await winProcess({ script });
+
+    hljs.registerLanguage("javascript", html);
+    setLoading(false);
+    if (filetype === "json")
+      return JSON.stringify(JSON.parse(rtn.result), undefined, 4);
+
+    const highlighted = hljs.highlight(rtn.result, {
+      language: "javascript",
+    }).value;
+
+    return highlighted;
+  };
+  const handleExecute = async () => {
+    setToggle(false);
+    if (!executed) {
+      const rtn = await handleClick(exescript, ftype1);
+      setExecuted(rtn);
+    }
+  };
+
+  const btnClass =
+    " float-right hover:bg-gray-400 text-gray-800 font-bold px-1 rounded inline-flex items-center mr-2 my-1";
+
+  return (
+    <div className="w-full mxheight">
+      <pre>
+        {exescript && (
+          <>
+            <button
+              onClick={handleExecute}
+              className={`${btnClass} ${
+                !toggle ? "bg-gray-300" : "bg-gray-600"
+              }`}
+            >
+              result
+            </button>
+
+            <button
+              onClick={() => setToggle(true)}
+              className={`${btnClass} ${
+                toggle ? "bg-gray-300" : "bg-gray-600"
+              }`}
+            >
+              code
+            </button>
+          </>
+        )}
+        <code
+          className="language-html hljs w-full"
+          dangerouslySetInnerHTML={{
+            __html: toggle ? result : executed,
+          }}
+        />
+        {isLoading && <LoadingScreen />}
+      </pre>
+    </div>
+  );
+}
+
+export function SearchScript({ filename, script1 }: LabelProps2) {
+  const [exescript, setExescript] = useState<string | null>();
+  const [result, setResult] = useState<any | null>();
+  const [executed, setExecuted] = useState<any | null>();
+  const [isLoading, setLoading] = useState(false);
+  const [toggle, setToggle] = useState(true);
+
+  useEffect(() => {
+    setResult(elasticscript[filename]);
+    if (script1) {
+      setExescript(script1);
+    }
+  }, [filename, script1]);
 
   const handleClick = async (script: String | null | undefined) => {
     setLoading(true);
     if (!script) return;
     let rtn = await winProcess({ script });
 
-    hljs.registerLanguage("javascript", html);
+    hljs.registerLanguage("json", html);
 
     const highlighted = hljs.highlight(rtn.result, {
-      language: "javascript",
+      language: "json",
     }).value;
 
     setLoading(false);
@@ -200,38 +279,35 @@ export function SearchShow({ script, script1, server, txt }: LabelProps1) {
     " float-right hover:bg-gray-400 text-gray-800 font-bold px-1 rounded inline-flex items-center mr-2 my-1";
 
   return (
-    <div>
-      <div className="w-full">
-        <div dangerouslySetInnerHTML={{ __html: codecomment }}></div>
-        <pre>
-          {exescript && (
-            <>
-              <button
-                onClick={handleExecute}
-                className={`${btnClass} ${
-                  !toggle ? "bg-gray-300" : "bg-gray-600"
-                }`}
-              >
-                result
-              </button>
+    <div className="w-full mxheight">
+      <pre>
+        {exescript && (
+          <>
+            <button
+              onClick={handleExecute}
+              className={`${btnClass} ${
+                !toggle ? "bg-gray-300" : "bg-gray-600"
+              }`}
+            >
+              result
+            </button>
 
-              <button
-                onClick={() => setToggle(true)}
-                className={`${btnClass} ${
-                  toggle ? "bg-gray-300" : "bg-gray-600"
-                }`}
-              >
-                code
-              </button>
-            </>
-          )}
-          <code
-            className="language-html hljs w-full"
-            dangerouslySetInnerHTML={{ __html: toggle ? result : executed }}
-          />
-          {isLoading && <LoadingScreen />}
-        </pre>
-      </div>
+            <button
+              onClick={() => setToggle(true)}
+              className={`${btnClass} ${
+                toggle ? "bg-gray-300" : "bg-gray-600"
+              }`}
+            >
+              code
+            </button>
+          </>
+        )}
+        <code
+          className="language-html hljs w-full"
+          dangerouslySetInnerHTML={{ __html: toggle ? result : executed }}
+        />
+        {isLoading && <LoadingScreen />}
+      </pre>
     </div>
   );
 }

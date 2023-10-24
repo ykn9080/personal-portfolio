@@ -13,6 +13,10 @@
   @apply bg-blue-700;
 }
 
+.mxheight {
+  max-height: 700px;
+  overflow: auto;
+}
 /*
 
 Dark style from softwaremaniacs.org (c) Ivan Sagalaev <Maniac@SoftwareManiacs.Org>

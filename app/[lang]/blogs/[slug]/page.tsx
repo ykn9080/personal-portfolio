@@ -17,6 +17,7 @@ import { KafkaDemo } from "@/app/[lang]/mdxComponents/kafka";
 import Search, {
   SearchLabel,
   SearchShow,
+  SearchScript,
 } from "@/app/[lang]/testbed/search/page";
 import Iframe from "@/app/[lang]/testbed/iframe/page";
 
@@ -105,6 +106,7 @@ export default function Post({ params }: any, lang: Locale) {
                   MyPopOver,
                   SearchLabel,
                   SearchShow,
+                  SearchScript,
                   Search,
                   KafkaDemo,
                   Iframe,

@@ -13,11 +13,64 @@ github:
 demo:
 videoSourceURL:
 videoTitle:
-excerpt: elk 스택 개요.
+excerpt: Apache Lucene기반의 검색 및 분석 엔진으로 방대한 데이터를 실시간으로 저장,검색한다. kibana, logstash와 함께 분석용으로 사용된다.
 ---
 
 ## Elastic Search 구성
 
-1. Elastic search
-2. Logstash
-3. Kibana
+## index mappings 수정안
+
+### 1. index mappings 수정
+
+1. mappings정보를 가져옴 => GET nginxlog-2023.10.23/\_mapping
+2. mapping정보 수정
+
+<SearchShow
+  script="ls -la"
+  script1="ssh yknam@namubuntu curl get http://namubuntu:9200/.monitoring-es-7-2023.10.22/_mapping"
+  type1="json"
+/>
+
+### 2. nginxlog의 mappings를 재정의 한다.
+
+- keyword
+- geo-point
+- number
+- text
+
+<SearchScript filename="mapping_update" script1="ls -la" />
+
+### 3. `_reindex`
+
+- 재정의된 nginxlog를 dest로 source를 reindex한다.
+- 하나의 index만 테스트해본다.
+
+<SearchScript filename="reindex" script1="ls -la" />
+
+### 4. index template
+
+-날짜로 구분된 동일 형태의 index모음에 모두 바뀐 mapping을 적용하기 위해서 -위에서 수정한 mapping정보를 적용하여 index template를 생성한다.
+
+<SearchScript filename="index_template" script1="ls -la" />
+
+### 5. \_reindex에 index template적용
+
+- 재정의된 nginxlog를 dest로 source를 \_reindex한다.
+- 하나의 index만 테스트해본다.
+
+<SearchScript filename="reindex_template" script1="ls -la" />
+
+### 6. painless script
+
+- 날짜로 구분된 동일 mapping을 가진 복수의 index를 수정하기 위한 script작성
+- nginxlog-날짜 형태의 index를 loop돌면서 nginxlog mappings로 \_reindex한다.
+- ctx.\_index는 nginxlogs를 가리킨다. nginxlog-2023.10.23.substring(9,19)로 2023.10.23을 잘라내 결합
+
+<SearchScript filename="painless" script1="ls -la" />
+
+### 7. ingest pipeline
+
+- mapping에서 삭제할 필드를 지정한 ingest/pipeline을 생성한다.
+- 생성한 nginxlogs_delete_fields를 painless script의 dest에 pipeline으로 추가
+
+<SearchScript filename="pipeline" script1="ls -la" />
