@@ -20,40 +20,60 @@ excerpt: Apache Lucene기반의 검색 및 분석 엔진으로 방대한 데이�
 
 ## index mappings 수정안
 
+> index의 file type은 자동으로 설정되는데, geo_point나, keyword, text등이 적절치 않게 추정된 경우가 있다. 이때 수작업으로 mapping정보를 변경하여 reindex해야 된다.
+
 ### 1. index mappings 수정
 
-1. mappings정보를 가져옴 => GET nginxlog-2023.10.23/\_mapping
-2. mapping정보 수정
+1. 수정하려는 index의 mappings정보를 다음과 같이 조회한다. => `GET nginxlog-2023.10.25/_mapping`
+2. mapping정보 수정를 복사한후 2번과 같이 수정한다.
 
 <SearchShow
-  script="ls -la"
-  script1="ssh yknam@namubuntu curl get http://namubuntu:9200/.monitoring-es-7-2023.10.22/_mapping"
-  type1="json"
+  script="ssh yknam@namubuntu curl GET http://namubuntu:9200/nginx-2023.10.25/_mapping"
+  type="json"
 />
 
 ### 2. nginxlog의 mappings를 재정의 한다.
 
-- keyword
-- geo-point
-- number
-- text
+> mapping데이터를 복사하여 filetype을 수정한다. 수정할 파일타입은 아래의 내용을 참조.
 
-<SearchScript filename="mapping_update" script1="ls -la" />
+#### file type
+
+- number: short,byte,integer, double,float, half_float
+- keyword: sorting, counting에 사용
+- text : 전문검색용
+- text + keyword: sorting,counting도 하고 전문검색도 할 경우 둘다 적용
+- geo_point: location에 적용(lat, lon가 float로 되어있으면 지도표시가 안된다.)
+- ip
+- range : ip_range, geo-point_range 등 범위를 지정할 때 사용
+- enabled: false => 사용하지 않는 컬럼 삭제용
+
+> 수정완료후 PUT method로 mapping정보를 등록해준다.
+
+```json
+PUT nginxlogs
+{ "mapping수정내용"}
+```
+
+<SearchScript filename="mappings_update" type="json" />
 
 ### 3. `_reindex`
 
-- 재정의된 nginxlog를 dest로 source를 reindex한다.
-- 하나의 index만 테스트해본다.
+> source는 원본 index이고, dest는 reindex적용후의 index(nginxlog)를 나타낸다. 아래의 예제는 날짜별로 구분된 여러 index중 하나의 index를 갖고 테스트해본다.
 
-<SearchScript filename="reindex" script1="ls -la" />
+<SearchScript
+  filename="reindex"
+  script1="ssh yknam@namubuntu curl GET http://namubuntu:9200/nginxlogs"
+  type1="json"
+/>
 
 ### 4. index template
 
--날짜로 구분된 동일 형태의 index모음에 모두 바뀐 mapping을 적용하기 위해서 -위에서 수정한 mapping정보를 적용하여 index template를 생성한다.
+> 3번의 테스트가 원하는 결과로 나왔을 경우 다음과정으로 template를 생성한다.
+> template는 날짜로 구분된 동일 형태의 index모음을 painless script에 적용하기 위해서 필요하다.
 
 <SearchScript filename="index_template" script1="ls -la" />
 
-### 5. \_reindex에 index template적용
+### 5. reindex에 index template적용
 
 - 재정의된 nginxlog를 dest로 source를 \_reindex한다.
 - 하나의 index만 테스트해본다.
@@ -66,7 +86,10 @@ excerpt: Apache Lucene기반의 검색 및 분석 엔진으로 방대한 데이�
 - nginxlog-날짜 형태의 index를 loop돌면서 nginxlog mappings로 \_reindex한다.
 - ctx.\_index는 nginxlogs를 가리킨다. nginxlog-2023.10.23.substring(9,19)로 2023.10.23을 잘라내 결합
 
-<SearchScript filename="painless" script1="ls -la" />
+<SearchScript
+  filename="painless"
+  script1="ssh yknam@namubuntu curl GET http://namubuntu:9200/_cat/indices/nginxlogs*"
+/>
 
 ### 7. ingest pipeline
 

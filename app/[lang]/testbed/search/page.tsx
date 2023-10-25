@@ -4,7 +4,8 @@ import { useState, FormEvent, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { winProcess, namProcess } from "@/lib/childprocess";
 import hljs from "highlight.js/lib/core";
-import html from "highlight.js/lib/languages/javascript";
+import javascript from "highlight.js/lib/languages/javascript";
+import json from "highlight.js/lib/languages/json";
 //import "@/styles/highlight-js/atom-one-light.css";
 import "@/styles/highlight-js/github-dark.css";
 //import "@/styles/highlight-js/night-owl.css";
@@ -13,10 +14,16 @@ import "@/styles/highlight-js/github-dark.css";
 //import "highlight.js/styles/default.css";
 import { LoadingScreen } from "@/app/[lang]/LoadingScreen";
 import "@/styles/cover-spin.css";
-import { generate } from "@/lib/mdxToHtml";
 import { elasticscript } from "./data";
+import {
+  JsonView,
+  allExpanded,
+  darkStyles,
+  defaultStyles,
+} from "react-json-view-lite";
+import "react-json-view-lite/dist/index.css";
 
-export default function Search({ script, server }: LabelProps) {
+export default function Search({ script }: LabelProps) {
   const [search, setSearch] = useState(script);
   const router = useRouter();
   const [result, setResult] = useState("");
@@ -86,6 +93,12 @@ interface LabelProps1 extends LabelProps {
 interface LabelProps2 {
   filename: string;
   script1: string;
+  type: string;
+  type1: string;
+}
+interface LabelProps3 {
+  data: string;
+  type: string;
 }
 export function SearchLabel({ script }: LabelProps) {
   const [search, setSearch] = useState("");
@@ -150,9 +163,8 @@ export function SearchShow({ script, script1, type, type1 }: LabelProps1) {
   const [exescript, setExescript] = useState<string | null>();
   const [ftype, setFtype] = useState(type);
   const [ftype1, setFtype1] = useState(type1);
-  const [codecomment, setCodecomment] = useState("");
-  const router = useRouter();
   const [result, setResult] = useState<any | null>();
+  const [result1, setResult1] = useState<any | null>();
   const [executed, setExecuted] = useState<any | null>();
   const [serverName, setServerName] = useState("winubuntu");
   const [isLoading, setLoading] = useState(false);
@@ -166,7 +178,7 @@ export function SearchShow({ script, script1, type, type1 }: LabelProps1) {
       setExescript(script1);
     }
     async function fetch() {
-      const rtn = await handleClick(script, ftype);
+      const rtn = await handleClick(script, type);
 
       setResult(rtn);
     }
@@ -181,11 +193,13 @@ export function SearchShow({ script, script1, type, type1 }: LabelProps1) {
     if (!script) return;
     let rtn = await winProcess({ script });
 
-    hljs.registerLanguage("javascript", html);
-    setLoading(false);
-    if (filetype === "json")
-      return JSON.stringify(JSON.parse(rtn.result), undefined, 4);
+    hljs.registerLanguage("javascript", javascript);
 
+    setLoading(false);
+
+    if (filetype === "json") {
+      return JSON.parse(rtn.result);
+    }
     const highlighted = hljs.highlight(rtn.result, {
       language: "javascript",
     }).value;
@@ -227,11 +241,9 @@ export function SearchShow({ script, script1, type, type1 }: LabelProps1) {
             </button>
           </>
         )}
-        <code
-          className="language-html hljs w-full"
-          dangerouslySetInnerHTML={{
-            __html: toggle ? result : executed,
-          }}
+        <Display
+          data={toggle ? result : executed}
+          type={toggle ? ftype : ftype1}
         />
         {isLoading && <LoadingScreen />}
       </pre>
@@ -239,15 +251,40 @@ export function SearchShow({ script, script1, type, type1 }: LabelProps1) {
   );
 }
 
-export function SearchScript({ filename, script1 }: LabelProps2) {
+function Display({ data, type }: LabelProps3) {
+  if (type === "json") {
+    console.log(data);
+    return (
+      <JsonView data={data} shouldExpandNode={allExpanded} style={darkStyles} />
+    );
+  }
+  return (
+    <code
+      dangerouslySetInnerHTML={{
+        __html: data,
+      }}
+    />
+  );
+}
+export function SearchScript({ filename, type, script1, type1 }: LabelProps2) {
   const [exescript, setExescript] = useState<string | null>();
   const [result, setResult] = useState<any | null>();
   const [executed, setExecuted] = useState<any | null>();
+  const [ftype, setFtype] = useState(type);
+  const [ftype1, setFtype1] = useState(type1);
   const [isLoading, setLoading] = useState(false);
   const [toggle, setToggle] = useState(true);
 
+  hljs.registerLanguage("javascript", javascript);
+  hljs.registerLanguage("json", json);
+
   useEffect(() => {
-    setResult(elasticscript[filename]);
+    async function fetch() {
+      const rtn = await elasticscript[filename];
+      if (ftype === "json") setResult(JSON.parse(rtn));
+      else readData(rtn);
+    }
+    if (filename) fetch();
     if (script1) {
       setExescript(script1);
     }
@@ -256,15 +293,15 @@ export function SearchScript({ filename, script1 }: LabelProps2) {
   const handleClick = async (script: String | null | undefined) => {
     setLoading(true);
     if (!script) return;
-    let rtn = await winProcess({ script });
 
-    hljs.registerLanguage("json", html);
+    let rtn = await winProcess({ script });
+    setLoading(false);
+    if (ftype1 === "json") return JSON.parse(rtn.result);
 
     const highlighted = hljs.highlight(rtn.result, {
-      language: "json",
+      language: "javascript",
     }).value;
 
-    setLoading(false);
     return highlighted;
   };
   const handleExecute = async () => {
@@ -272,7 +309,14 @@ export function SearchScript({ filename, script1 }: LabelProps2) {
     if (!executed) {
       const rtn = await handleClick(exescript);
       setExecuted(rtn);
+      //readData(result);
     }
+  };
+  const readData = (content: string) => {
+    const highlighted = hljs.highlight(content, {
+      language: "json",
+    }).value;
+    setResult(highlighted);
   };
 
   const btnClass =
@@ -302,10 +346,13 @@ export function SearchScript({ filename, script1 }: LabelProps2) {
             </button>
           </>
         )}
-        <code
-          className="language-html hljs w-full"
-          dangerouslySetInnerHTML={{ __html: toggle ? result : executed }}
+        <Display
+          data={toggle ? result : executed}
+          type={toggle ? ftype : ftype1}
         />
+        {/* <code
+          dangerouslySetInnerHTML={{ __html: toggle ? result : executed }}
+        /> */}
         {isLoading && <LoadingScreen />}
       </pre>
     </div>
