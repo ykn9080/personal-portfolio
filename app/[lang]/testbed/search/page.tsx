@@ -39,7 +39,7 @@ export default function Search({ script }: LabelProps) {
     if (serverName === "namubuntu") rtn = await namProcess({ script: search });
     else rtn = await winProcess({ script: search });
     //rtn.result = rtn.result.replace(/\n/g, "<br />");
-    hljs.registerLanguage("javascript", html);
+    hljs.registerLanguage("javascript", javascript);
     const highlighted = hljs.highlight(rtn.result, {
       language: "javascript",
     }).value;
@@ -91,7 +91,7 @@ interface LabelProps1 extends LabelProps {
   type1: string;
 }
 interface LabelProps2 {
-  filename: string;
+  filename: keyof Ielasticscript;
   script1: string;
   type: string;
   type1: string;
@@ -121,7 +121,7 @@ export function SearchLabel({ script }: LabelProps) {
     if (serverName === "namubuntu") rtn = await namProcess({ script: search });
     else rtn = await winProcess({ script: search });
 
-    hljs.registerLanguage("javascript", html);
+    hljs.registerLanguage("javascript", javascript);
     const highlighted = hljs.highlight(rtn.result, {
       language: "javascript",
     }).value;
@@ -266,6 +266,16 @@ function Display({ data, type }: LabelProps3) {
     />
   );
 }
+
+interface Ielasticscript {
+  mappings_update: string | undefined;
+  reindex: string | undefined;
+  index_template: string | undefined;
+  reindex_template: string | undefined;
+  painless: string | undefined;
+  pipeline: string | undefined;
+}
+
 export function SearchScript({ filename, type, script1, type1 }: LabelProps2) {
   const [exescript, setExescript] = useState<string | null>();
   const [result, setResult] = useState<any | null>();

@@ -36,7 +36,7 @@ excerpt: 분산처리환경의 대표적인 솔루션인 하둡과 에코시스�
 ### get
 
 - Hdfs의 파일을 local directory로 다운로드
-- hdfs dfs -get <hdfspath>/<hdfsfile>
+- hdfs dfs -get `<hdfspath>/<hdfsfile>`
 
 <SearchLabel
   script="hdfs dfs -get /data/samplePig.txt ~/imsidata/samplePig.txt;ls -la ~/imsidata"
@@ -46,7 +46,7 @@ excerpt: 분산처리환경의 대표적인 솔루션인 하둡과 에코시스�
 ### mkdir
 
 - hdfs에 폴더생성
-- hdfs dfs -mkdir <hdfspath>/<pathname>
+- hdfs dfs -mkdir `<hdfspath>/<pathname>`
 
 <SearchLabel
   script="hdfs dfs -mkdir /data/imsi/newfolder;hdfs dfs -ls /data/imsi;hdfs dfs -rmdir /data/imsi/newfolder"
@@ -56,7 +56,7 @@ excerpt: 분산처리환경의 대표적인 솔루션인 하둡과 에코시스�
 ### put
 
 - local 파일을 hdfs로 업로드
-- hdfs dfs -put <localpath>/<filename> <hdfspath>/
+- hdfs dfs -put `<localpath>/<filename> <hdfspath>/`
 
 <SearchLabel
   script="echo test>>~/imsidata/testing.txt;hdfs dfs -put ~/imsidata/testing.txt /data/imsi/;hdfs dfs -ls /data/imsi"
@@ -66,7 +66,7 @@ excerpt: 분산처리환경의 대표적인 솔루션인 하둡과 에코시스�
 ### rm
 
 - hdfs file삭제
-- hdfs dfs -rm /<hdfspath>/<hdfsfile>
+- hdfs dfs -rm `/<hdfspath>/<hdfsfile>`
 - 하위 디렉토리 내의 것을 삭제할 때는 -rm -r
 
 <SearchLabel

@@ -26,7 +26,7 @@ const list = [
 ];
 
 export default function FileInput({ onChange }: any) {
-  const autoFill = (e: React.ChangeEvent) => {
+  const autoFill = () => {
     const num = Math.floor(Math.random() * 20);
     const reversedString = list[num]
       .split("")
