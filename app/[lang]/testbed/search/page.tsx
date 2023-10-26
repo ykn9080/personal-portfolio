@@ -319,7 +319,6 @@ export function SearchScript({ filename, type, script1, type1 }: LabelProps2) {
     if (!executed) {
       const rtn = await handleClick(exescript);
       setExecuted(rtn);
-      //readData(result);
     }
   };
   const readData = (content: string) => {
