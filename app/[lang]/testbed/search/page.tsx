@@ -23,16 +23,18 @@ import {
 } from "react-json-view-lite";
 import "@/styles/jsonlite.css";
 import { ScrollShadow } from "@nextui-org/react";
-import Tab from "./Tab";
+import { Tabs, Tab, Card, CardBody, CardHeader } from "@nextui-org/react";
 
 interface LabelProps {
   script: string;
   type: string;
+  comment: string;
 }
 interface LabelProps1 extends LabelProps {
   script1: string | null;
   script2: string | null;
   type1: string;
+  comment1: string;
 }
 interface LabelProps2 {
   filename: keyof Ielasticscript;
@@ -44,6 +46,7 @@ interface LabelProps2 {
 interface LabelProps3 {
   data: string;
   type: string;
+  comment: string;
 }
 
 export default function Search({ script }: LabelProps) {
@@ -169,11 +172,16 @@ export function SearchShow({
   script2,
   type,
   type1,
+  comment,
+  comment1,
 }: LabelProps1) {
   const [search, setSearch] = useState("");
   const [exescript, setExescript] = useState<string | null>();
   const [ftype, setFtype] = useState(type);
   const [ftype1, setFtype1] = useState(type1);
+  const [cmt, setCmt] = useState(comment);
+  const [cmt1, setCmt1] = useState(comment1);
+
   const [result, setResult] = useState<any | null>();
   const [result1, setResult1] = useState<any | null>();
   const [executed, setExecuted] = useState<any | null>();
@@ -256,6 +264,7 @@ export function SearchShow({
         <Display
           data={toggle ? result : executed}
           type={toggle ? ftype : ftype1}
+          comment={toggle ? cmt : cmt1}
         />
 
         {isLoading && <LoadingScreen />}
@@ -264,11 +273,12 @@ export function SearchShow({
   );
 }
 
-function Display({ data, type }: LabelProps3) {
+function Display({ data, type, comment }: LabelProps3) {
   if (type === "json") {
     console.log(data);
     return (
       <ScrollShadow hideScrollBar className=" max-h-[600px]">
+        <div>{comment}</div>
         <JsonView
           data={data}
           shouldExpandNode={allExpanded}
@@ -279,6 +289,7 @@ function Display({ data, type }: LabelProps3) {
   }
   return (
     <ScrollShadow hideScrollBar className=" max-h-[600px]">
+      <div>{comment}</div>
       <code
         dangerouslySetInnerHTML={{
           __html: data,
@@ -389,14 +400,13 @@ export function SearchScript({
           data={toggle ? result : executed}
           type={toggle ? ftype : ftype1}
         />
-        {/* <code
-          dangerouslySetInnerHTML={{ __html: toggle ? result : executed }}
-        /> */}
+
         {isLoading && <LoadingScreen />}
       </pre>
     </div>
   );
 }
+
 const Radiobtn = ({ onChange }: any) => {
   const [server, setServer] = useState("winubuntu");
   return (
@@ -430,31 +440,17 @@ const Radiobtn = ({ onChange }: any) => {
   );
 };
 
-export function SearchTab() {
-  const [array1, setArray1] = useState<any>([
-    {
-      id: "photos",
-      label: "Photos",
-      content: <SearchShow script="ls -la" script1="ls -la"></SearchShow>,
-    },
-    {
-      id: "music",
-      label: "Music",
-      content: (
-        <SearchScript
-          filename="mappings_update"
-          type="json"
-          script1="console.log('hi')"
-        ></SearchScript>
-      ),
-    },
-    {
-      id: "videos",
-      label: "Videos",
-      content:
-        "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    },
-  ]);
-
-  return <Tab tabs={array1} />;
+export function SearchTab({ arr }: any) {
+  const [tabs, setTabs] = useState(arr);
+  return (
+    <div className="dark flex w-full flex-col">
+      <Tabs aria-label="Dynamic tabs" items={tabs}>
+        {(item) => (
+          <Tab key={item.id} title={item.label}>
+            <div className="mt-[-35px] ml-[-5px]">{item.content}</div>
+          </Tab>
+        )}
+      </Tabs>
+    </div>
+  );
 }

@@ -16,7 +16,32 @@ videoTitle:
 excerpt: Apache Lucene기반의 검색 및 분석 엔진으로 방대한 데이터를 실시간으로 저장,검색한다. kibana, logstash와 함께 분석용으로 사용된다.
 ---
 
-<SearchTab />
+<SearchTab
+  arr={[
+    {
+      id: "photos",
+      label: "Photos",
+      content: <SearchShow script="ls -la" script1="ls -la"></SearchShow>,
+    },
+    {
+      id: "music",
+      label: "Music",
+      content: (
+        <SearchScript
+          filename="mappings_update"
+          type="json"
+          script1="console.log('hi')"
+        ></SearchScript>
+      ),
+    },
+    {
+      id: "videos",
+      label: "Videos",
+      content:
+        "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    },
+  ]}
+/>
 ## Elastic Search 구성
 
 ## index mappings 수정안

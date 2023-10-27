@@ -34,6 +34,96 @@ excerpt: 간편하게 메트릭 데이터를 수집.
 >
 > filebeat는 한번 실행한 데이터는 다시 읽지 않기 때문에 새로 데이터를 읽으려면 data디렉토리를 삭제한 후 실행해야함
 
+#### 다양한 input source 읽기
+
+<SearchTab
+  arr={[
+    {
+      id: "elasticsearch",
+      label: "elasticsearch",
+      content: (
+        <SearchShow
+          script="ssh yknam@namubuntu cat /home/yknam/sandbox/filebeat/conf/filebeat1.yml"
+          script1="curl get http://imcmaster.iptime.org:9200/filebeat*/_search"
+          type1="json"
+          comment1={
+            <div>
+              <ul className="text-lg text-yellow-400 w-3/5 break-words mb-20">
+                <li>PROCESS: filebeat → elasticsearch </li>
+                <li>
+                  COMMAND: curl get http://localhost:9200/filebeat*/_search
+                </li>
+              </ul>
+            </div>
+          }
+        ></SearchShow>
+      ),
+    },
+    {
+      id: "logstash",
+      label: "logstash",
+      content: (
+        <SearchScript
+          filename="mappings_update"
+          type="json"
+          script1="console.log('hi')"
+        ></SearchScript>
+      ),
+    },
+    {
+      id: "kafka",
+      label: "kafka",
+      content:
+        "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    },
+    {
+      id: "sparkstreaming",
+      label: "sparkstreaming",
+      content:
+        "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    },
+    {
+      id: "redis",
+      label: "redis",
+      content:
+        "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    },
+  ]}
+/>
+#### 다양한 output으로 실행
+<SearchTab
+  arr={[
+    {
+      id: "elasticsearch",
+      label: "elasticsearch",
+      content: <SearchShow script="ls -la" script1="ls -la"></SearchShow>,
+    },
+    {
+      id: "logstash",
+      label: "logstash",
+      content: (
+        <SearchScript
+          filename="mappings_update"
+          type="json"
+          script1="console.log('hi')"
+        ></SearchScript>
+      ),
+    },
+    {
+      id: "kafka",
+      label: "kafka",
+      content:
+        "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    },
+    {
+      id: "sparkstreaming",
+      label: "sparkstreaming",
+      content:
+        "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    },
+  ]}
+/>
+
 ### filebeat -> kafka -> logstash -> elasticsearch
 
 <img src="/images/interest/filebeat-pipeline.png" width="100%" alt="pipeline" />
