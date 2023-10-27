@@ -24,58 +24,9 @@ excerpt: 간편하게 메트릭 데이터를 수집.
 >
 > output 으로 elatic을 선택했다. logstash를 거쳐 filtering해서 elastic으로 전송할 경우에는 elastic을 주석처리하고 logstash를 활성화하면된다.
 
-```yaml
-# ============================== Filebeat inputs ===============================
+#### filebeat.yml
 
-filebeat.inputs:
-
-- type: log
-
-  # Unique ID among all inputs, an ID is required.
-  id: my-filestream-id
-
-  # Change to true to enable this input configuration.
-  enabled: true
-
-  # Paths that should be crawled and fetched. Glob based paths.
-  paths:
-    - /var/log/nginx/access.log
-
-....
-....
-....
-
-# ================================== Outputs ===================================
-
-# ---------------------------- Elasticsearch Output ----------------------------
-output.elasticsearch:
-  # Array of hosts to connect to.
-  hosts: ["localhost:9200"]
-
-  # Protocol - either `http` (default) or `https`.
-  #protocol: "https"
-
-  # Authentication credentials - either API key or username/password.
-  #api_key: "id:api_key"
-  #username: "elastic"
-  #password: "changeme"
-
-# ------------------------------ Logstash Output -------------------------------
-output.logstash:
-  # The Logstash hosts
-  hosts: ["localhost:5044"]
-
-  # Optional SSL. By default is off.
-  # List of root certificates for HTTPS server verifications
-  #ssl.certificate_authorities: ["/etc/pki/root/ca.pem"]
-
-  # Certificate for SSL client authentication
-  #ssl.certificate: "/etc/pki/client/cert.pem"
-
-  # Client Certificate Key
-  #ssl.key: "/etc/pki/client/cert.key"
-
-```
+<SearchScript filename="filebeatyml" />
 
 ### filebeat 실행
 

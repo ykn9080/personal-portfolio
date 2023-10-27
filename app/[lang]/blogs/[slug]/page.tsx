@@ -18,8 +18,8 @@ import Search, {
   SearchLabel,
   SearchShow,
   SearchScript,
+  SearchTab,
 } from "@/app/[lang]/testbed/search/page";
-import Iframe from "@/app/[lang]/testbed/iframe/page";
 
 export async function generateStaticParams() {
   const files = fs.readdirSync(path.join("blogs"));
@@ -108,8 +108,8 @@ export default function Post({ params }: any, lang: Locale) {
                   SearchShow,
                   SearchScript,
                   Search,
+                  SearchTab,
                   KafkaDemo,
-                  Iframe,
                 }}
               />
             </div>

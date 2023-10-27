@@ -21,7 +21,30 @@ import {
   darkStyles,
   defaultStyles,
 } from "react-json-view-lite";
-import "react-json-view-lite/dist/index.css";
+import "@/styles/jsonlite.css";
+import { ScrollShadow } from "@nextui-org/react";
+import Tab from "./Tab";
+
+interface LabelProps {
+  script: string;
+  type: string;
+}
+interface LabelProps1 extends LabelProps {
+  script1: string | null;
+  script2: string | null;
+  type1: string;
+}
+interface LabelProps2 {
+  filename: keyof Ielasticscript;
+  script1: string;
+  type: string;
+  type1: string;
+  script2: string;
+}
+interface LabelProps3 {
+  data: string;
+  type: string;
+}
 
 export default function Search({ script }: LabelProps) {
   const [search, setSearch] = useState(script);
@@ -82,24 +105,6 @@ export default function Search({ script }: LabelProps) {
   );
 }
 
-interface LabelProps {
-  script: string;
-  type: string;
-}
-interface LabelProps1 extends LabelProps {
-  script1: string | null;
-  type1: string;
-}
-interface LabelProps2 {
-  filename: keyof Ielasticscript;
-  script1: string;
-  type: string;
-  type1: string;
-}
-interface LabelProps3 {
-  data: string;
-  type: string;
-}
 export function SearchLabel({ script }: LabelProps) {
   const [search, setSearch] = useState("");
   const [txtcomment, setTxtcomment] = useState("");
@@ -158,7 +163,13 @@ export function SearchLabel({ script }: LabelProps) {
   );
 }
 
-export function SearchShow({ script, script1, type, type1 }: LabelProps1) {
+export function SearchShow({
+  script,
+  script1,
+  script2,
+  type,
+  type1,
+}: LabelProps1) {
   const [search, setSearch] = useState("");
   const [exescript, setExescript] = useState<string | null>();
   const [ftype, setFtype] = useState(type);
@@ -241,10 +252,12 @@ export function SearchShow({ script, script1, type, type1 }: LabelProps1) {
             </button>
           </>
         )}
+
         <Display
           data={toggle ? result : executed}
           type={toggle ? ftype : ftype1}
         />
+
         {isLoading && <LoadingScreen />}
       </pre>
     </div>
@@ -255,15 +268,23 @@ function Display({ data, type }: LabelProps3) {
   if (type === "json") {
     console.log(data);
     return (
-      <JsonView data={data} shouldExpandNode={allExpanded} style={darkStyles} />
+      <ScrollShadow hideScrollBar className=" max-h-[600px]">
+        <JsonView
+          data={data}
+          shouldExpandNode={allExpanded}
+          style={darkStyles}
+        />
+      </ScrollShadow>
     );
   }
   return (
-    <code
-      dangerouslySetInnerHTML={{
-        __html: data,
-      }}
-    />
+    <ScrollShadow hideScrollBar className=" max-h-[600px]">
+      <code
+        dangerouslySetInnerHTML={{
+          __html: data,
+        }}
+      />
+    </ScrollShadow>
   );
 }
 
@@ -274,12 +295,20 @@ interface Ielasticscript {
   reindex_template: string | undefined;
   painless: string | undefined;
   pipeline: string | undefined;
+  filebeatyml: string | undefined;
 }
 
-export function SearchScript({ filename, type, script1, type1 }: LabelProps2) {
+export function SearchScript({
+  filename,
+  type,
+  script1,
+  type1,
+  script2,
+}: LabelProps2) {
   const [exescript, setExescript] = useState<string | null>();
   const [result, setResult] = useState<any | null>();
-  const [executed, setExecuted] = useState<any | null>();
+  const [executed, setExecuted] = useState<any | null>(script1);
+  const [lastScript, setLastScript] = useState<any | null>(script2); //ex kill script1 process aft 1 min
   const [ftype, setFtype] = useState(type);
   const [ftype1, setFtype1] = useState(type1);
   const [isLoading, setLoading] = useState(false);
@@ -295,10 +324,10 @@ export function SearchScript({ filename, type, script1, type1 }: LabelProps2) {
       else readData(rtn);
     }
     if (filename) fetch();
-    if (script1) {
-      setExescript(script1);
-    }
-  }, [filename, script1]);
+    // if (script1) {
+    //   setExescript(script1);
+    // }
+  }, []);
 
   const handleClick = async (script: String | null | undefined) => {
     setLoading(true);
@@ -319,6 +348,7 @@ export function SearchScript({ filename, type, script1, type1 }: LabelProps2) {
     if (!executed) {
       const rtn = await handleClick(exescript);
       setExecuted(rtn);
+      if (lastScript) await winProcess({ lastScript });
     }
   };
   const readData = (content: string) => {
@@ -399,3 +429,32 @@ const Radiobtn = ({ onChange }: any) => {
     </div>
   );
 };
+
+export function SearchTab() {
+  const [array1, setArray1] = useState<any>([
+    {
+      id: "photos",
+      label: "Photos",
+      content: <SearchShow script="ls -la" script1="ls -la"></SearchShow>,
+    },
+    {
+      id: "music",
+      label: "Music",
+      content: (
+        <SearchScript
+          filename="mappings_update"
+          type="json"
+          script1="console.log('hi')"
+        ></SearchScript>
+      ),
+    },
+    {
+      id: "videos",
+      label: "Videos",
+      content:
+        "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    },
+  ]);
+
+  return <Tab tabs={array1} />;
+}

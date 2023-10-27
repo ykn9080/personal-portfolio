@@ -320,4 +320,29 @@ POST _reindex
     }
   ]
 }`,
+  filebeatyml: `
+# ============================== Filebeat inputs ===============================
+filebeat.inputs:
+- type: log
+  id: my-filestream-id
+  enabled: true
+  paths:
+    - /var/log/nginx/access.log
+
+# ===================== Outputs (한개만 선택)===================================
+
+# Elasticsearch Output -------------------------
+output.elasticsearch:
+  # Array of hosts to connect to.
+  hosts: ["localhost:9200"]
+
+  # Authentication credentials - either API key or username/password.
+  #api_key: "id:api_key"
+  #username: "elastic"
+  #password: "changeme"
+
+# Logstash Output -------------------------------
+output.logstash:
+  hosts: ["localhost:5044"]
+  `,
 };
