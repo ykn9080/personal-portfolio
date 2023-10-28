@@ -23,7 +23,7 @@ import {
 } from "react-json-view-lite";
 import "@/styles/jsonlite.css";
 import { ScrollShadow } from "@nextui-org/react";
-import { Tabs, Tab, Card, CardBody, CardHeader } from "@nextui-org/react";
+import { Tabs, Tab, Divider } from "@nextui-org/react";
 
 interface LabelProps {
   script: string;
@@ -274,27 +274,49 @@ export function SearchShow({
 }
 
 function Display({ data, type, comment }: LabelProps3) {
+  const [expand, setExpand] = useState(false);
+
+  const btnClass =
+    "bg-gray-500 hover:bg-gray-300 text-gray-800 font-bold px-1 rounded inline-flex items-center mr-2 my-1";
   if (type === "json") {
     console.log(data);
     return (
-      <ScrollShadow hideScrollBar className=" max-h-[600px]">
+      <ScrollShadow
+        hideScrollBar
+        className={expand ? "max-h-[800px]" : "max-h-[300px]"}
+      >
         <div>{comment}</div>
+        {comment && <Divider className="my-4" />}
         <JsonView
           data={data}
           shouldExpandNode={allExpanded}
           style={darkStyles}
         />
+        <div className="sticky bottom-0 flex flex-col items-center">
+          <button onClick={() => setExpand(!expand)} className={btnClass}>
+            {expand ? "show less" : "show more"}
+          </button>
+        </div>
       </ScrollShadow>
     );
   }
   return (
-    <ScrollShadow hideScrollBar className=" max-h-[600px]">
+    <ScrollShadow
+      hideScrollBar
+      className={expand ? "max-h-[800px]" : "max-h-[300px]"}
+    >
       <div>{comment}</div>
+      {comment && <Divider className="my-4" />}
       <code
         dangerouslySetInnerHTML={{
           __html: data,
         }}
       />
+      <div className="sticky bottom-0 flex flex-col items-center">
+        <button onClick={() => setExpand(!expand)} className={btnClass}>
+          {expand ? "show less" : "show more"}
+        </button>
+      </div>
     </ScrollShadow>
   );
 }
