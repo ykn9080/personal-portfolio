@@ -23,7 +23,7 @@ import {
 } from "react-json-view-lite";
 import "@/styles/jsonlite.css";
 import { ScrollShadow } from "@nextui-org/react";
-import { Tabs, Tab, Divider } from "@nextui-org/react";
+import { Tabs, Tab, Divider, Chip } from "@nextui-org/react";
 
 interface LabelProps {
   script: string;
@@ -42,6 +42,8 @@ interface LabelProps2 {
   type: string;
   type1: string;
   script2: string;
+  comment: string;
+  comment1: string;
 }
 interface LabelProps3 {
   data: string;
@@ -337,6 +339,8 @@ export function SearchScript({
   script1,
   type1,
   script2,
+  comment,
+  comment1,
 }: LabelProps2) {
   const [exescript, setExescript] = useState<string | null>();
   const [result, setResult] = useState<any | null>();
@@ -346,6 +350,8 @@ export function SearchScript({
   const [ftype1, setFtype1] = useState(type1);
   const [isLoading, setLoading] = useState(false);
   const [toggle, setToggle] = useState(true);
+  const [cmt, setCmt] = useState(comment);
+  const [cmt1, setCmt1] = useState(comment1);
 
   hljs.registerLanguage("javascript", javascript);
   hljs.registerLanguage("json", json);
@@ -421,6 +427,7 @@ export function SearchScript({
         <Display
           data={toggle ? result : executed}
           type={toggle ? ftype : ftype1}
+          comment={toggle ? cmt : cmt1}
         />
 
         {isLoading && <LoadingScreen />}
@@ -463,6 +470,21 @@ const Radiobtn = ({ onChange }: any) => {
 };
 
 export function SearchTab({ arr }: any) {
+  const [tabs, setTabs] = useState(arr);
+  return (
+    <div className="dark flex w-full flex-col">
+      <Tabs aria-label="Dynamic tabs" items={tabs}>
+        {(item) => (
+          <Tab key={item.id} title={item.label}>
+            <div className="mt-[-35px] ml-[-5px]">{item.content}</div>
+          </Tab>
+        )}
+      </Tabs>
+    </div>
+  );
+}
+
+export function SearchStep({ arr }: any) {
   const [tabs, setTabs] = useState(arr);
   return (
     <div className="dark flex w-full flex-col">
