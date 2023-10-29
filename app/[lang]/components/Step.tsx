@@ -18,7 +18,7 @@ const steps = [
   },
 ];
 
-const App: React.FC = () => {
+const Step: React.FC = () => {
   const { token } = theme.useToken();
   const [current, setCurrent] = useState(0);
 
@@ -70,4 +70,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default Step;

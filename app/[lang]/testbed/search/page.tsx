@@ -23,7 +23,8 @@ import {
 } from "react-json-view-lite";
 import "@/styles/jsonlite.css";
 import { ScrollShadow } from "@nextui-org/react";
-import { Tabs, Tab, Divider, Chip } from "@nextui-org/react";
+import { Tabs, Tab, Divider, Stepp } from "@nextui-org/react";
+import Step from "@/app/[lang]/components/Step";
 
 interface LabelProps {
   script: string;
@@ -281,7 +282,6 @@ function Display({ data, type, comment }: LabelProps3) {
   const btnClass =
     "bg-gray-500 hover:bg-gray-300 text-gray-800 font-bold px-1 rounded inline-flex items-center mr-2 my-1";
   if (type === "json") {
-    console.log(data);
     return (
       <ScrollShadow
         hideScrollBar
@@ -346,15 +346,14 @@ export function SearchScript({
   const [result, setResult] = useState<any | null>();
   const [executed, setExecuted] = useState<any | null>(script1);
   const [lastScript, setLastScript] = useState<any | null>(script2); //ex kill script1 process aft 1 min
+  const [cmt, setCmt] = useState(comment);
+  const [cmt1, setCmt1] = useState(comment1);
   const [ftype, setFtype] = useState(type);
   const [ftype1, setFtype1] = useState(type1);
   const [isLoading, setLoading] = useState(false);
   const [toggle, setToggle] = useState(true);
-  const [cmt, setCmt] = useState(comment);
-  const [cmt1, setCmt1] = useState(comment1);
 
   hljs.registerLanguage("javascript", javascript);
-  hljs.registerLanguage("json", json);
 
   useEffect(() => {
     async function fetch() {
@@ -363,9 +362,6 @@ export function SearchScript({
       else readData(rtn);
     }
     if (filename) fetch();
-    // if (script1) {
-    //   setExescript(script1);
-    // }
   }, []);
 
   const handleClick = async (script: String | null | undefined) => {
@@ -435,7 +431,43 @@ export function SearchScript({
     </div>
   );
 }
+export function SearchSingle({ filename, type, comment }: LabelProps2) {
+  const [result, setResult] = useState<any | null>();
+  const [cmt, setCmt] = useState(comment);
+  const [ftype, setFtype] = useState(type);
+  const [isLoading, setLoading] = useState(false);
 
+  hljs.registerLanguage("javascript", javascript);
+
+  useEffect(() => {
+    async function fetch() {
+      let rtn;
+      if (elasticscript[filename]) rtn = await elasticscript[filename];
+      else rtn = await winProcess({ script: filename });
+
+      if (ftype === "json") setResult(JSON.parse(rtn));
+      else readData(rtn);
+    }
+    if (filename) fetch();
+  }, []);
+
+  const readData = (content: string) => {
+    const highlighted = hljs.highlight(content, {
+      language: "json",
+    }).value;
+    setResult(highlighted);
+  };
+
+  return (
+    <div className="w-full mxheight">
+      <pre>
+        <Display data={result} type={ftype} comment={cmt} />
+
+        {isLoading && <LoadingScreen />}
+      </pre>
+    </div>
+  );
+}
 const Radiobtn = ({ onChange }: any) => {
   const [server, setServer] = useState("winubuntu");
   return (
@@ -484,17 +516,26 @@ export function SearchTab({ arr }: any) {
   );
 }
 
-export function SearchStep({ arr }: any) {
-  const [tabs, setTabs] = useState(arr);
+const description = "This is a description.";
+export function SearchStep({ items }: any) {
+  const item = [
+    {
+      title: "Finished",
+      description,
+    },
+    {
+      title: "In Progress",
+      description,
+      subTitle: "Left 00:00:08",
+    },
+    {
+      title: "Waiting",
+      description,
+    },
+  ];
   return (
     <div className="dark flex w-full flex-col">
-      <Tabs aria-label="Dynamic tabs" items={tabs}>
-        {(item) => (
-          <Tab key={item.id} title={item.label}>
-            <div className="mt-[-35px] ml-[-5px]">{item.content}</div>
-          </Tab>
-        )}
-      </Tabs>
+      <Stepp items={items} />
     </div>
   );
 }

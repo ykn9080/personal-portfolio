@@ -19,9 +19,9 @@ import Search, {
   SearchShow,
   SearchScript,
   SearchTab,
+  SearchStep,
 } from "@/app/[lang]/testbed/search/page";
 import { Chipp, Snippett, Codee } from "@/app/[lang]/components/Chip";
-import Step from "@/app/[lang]/components/Step";
 
 export async function generateStaticParams() {
   const files = fs.readdirSync(path.join("blogs"));
@@ -111,11 +111,11 @@ export default function Post({ params }: any, lang: Locale) {
                   SearchScript,
                   Search,
                   SearchTab,
+                  SearchStep,
                   KafkaDemo,
                   Chipp,
                   Snippett,
                   Codee,
-                  Step,
                 }}
               />
             </div>
