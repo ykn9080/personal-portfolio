@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { Chip, Snippet, Code } from "@nextui-org/react";
 import { Steps, Button } from "antd";
+import { CaretLeftFilled, CaretRightFilled } from "@ant-design/icons";
 
 export function Chipp() {
   return (
@@ -28,43 +29,31 @@ export function Codee({
   return <Code size={siz}>{children}</Code>;
 }
 
-const description = "This is a description.";
-export function Stepp({ items }: any) {
-  const [current, setCurrent] = useState(1);
-  const item = [
-    {
-      title: "Finished",
-      description,
-    },
-    {
-      title: "In Progress",
-      description,
-      subTitle: "Left 00:00:08",
-    },
-    {
-      title: "Waiting",
-      description,
-    },
-  ];
-  return (
-    <>
-      <Steps current={current} items={items} />
-      <div style={{ marginTop: 24 }}>
-        {current < items.length - 1 && (
-          <Button type="primary" onClick={() => setCurrent(current + 1)}>
-            Next
-          </Button>
-        )}
+export function Stepp({ item }: any) {
+  const [current, setCurrent] = useState(0);
+  const [items, setItems] = useState(item);
+  const [maxnum, setMaxnum] = useState(0);
 
-        {current > 0 && (
-          <Button
-            style={{ margin: "0 8px" }}
-            onClick={() => setCurrent(current - 1)}
-          >
-            Previous
-          </Button>
-        )}
-      </div>
-    </>
+  const onChange = (value: number) => {
+    setCurrent(value);
+    if (maxnum < items.length - 1) {
+      delete items[value].status;
+      if (value < items.length - 1) items[value + 1].disabled = false;
+      setItems(items);
+      if (maxnum < value) setMaxnum(value);
+    }
+  };
+
+  return (
+    <div>
+      <Steps
+        size="small"
+        current={current}
+        items={items}
+        onChange={onChange}
+        className="site-navigation-steps"
+      />
+      <div>{items[current].content}</div>
+    </div>
   );
 }

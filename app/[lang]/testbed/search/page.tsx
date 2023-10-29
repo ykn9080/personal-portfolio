@@ -23,8 +23,9 @@ import {
 } from "react-json-view-lite";
 import "@/styles/jsonlite.css";
 import { ScrollShadow } from "@nextui-org/react";
-import { Tabs, Tab, Divider, Stepp } from "@nextui-org/react";
+import { Tabs, Tab, Divider } from "@nextui-org/react";
 import Step from "@/app/[lang]/components/Step";
+import { Stepp } from "@/app/[lang]/components/Chip";
 
 interface LabelProps {
   script: string;
@@ -535,7 +536,7 @@ export function SearchStep({ items }: any) {
   ];
   return (
     <div className="dark flex w-full flex-col">
-      <Stepp items={items} />
+      <Stepp item={items} />
     </div>
   );
 }

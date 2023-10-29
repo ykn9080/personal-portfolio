@@ -22,6 +22,7 @@ import Search, {
   SearchStep,
 } from "@/app/[lang]/testbed/search/page";
 import { Chipp, Snippett, Codee } from "@/app/[lang]/components/Chip";
+import Diagram from "@/app/[lang]/components/Diagram";
 
 export async function generateStaticParams() {
   const files = fs.readdirSync(path.join("blogs"));
@@ -116,6 +117,7 @@ export default function Post({ params }: any, lang: Locale) {
                   Chipp,
                   Snippett,
                   Codee,
+                  Diagram,
                 }}
               />
             </div>

@@ -16,7 +16,59 @@ videoTitle:
 excerpt: 간편하게 메트릭 데이터를 수집.
 ---
 
-<SearchStep />
+<SearchStep
+  items={[
+    {
+      title: "Start",
+        content: (
+        <SearchShow
+          comment={
+            <>
+            <Chipp>filebeat → elasticsearch</Chipp>
+            <Codee>
+
+              curl get http://localhost:9200/filebeat*/_search
+            </Codee>
+            <Diagram/>
+            </>
+          }
+        ></SearchShow>
+      ),
+    },
+    {
+      title: "Finished",
+        content: (
+        <SearchShow
+          script="ssh yknam@namubuntu cat /home/yknam/sandbox/filebeat/conf/filebeat1.yml"
+          script1="curl get http://imcmaster.iptime.org:9200/filebeat*/_search"
+          type1="json"
+          comment1={
+            <>
+            <Chipp>filebeat → elasticsearch</Chipp>
+            <Codee>
+
+              curl get http://localhost:9200/filebeat*/_search
+            </Codee>
+            </>
+          }
+        ></SearchShow>
+      ),
+    },
+    {
+      title: "In Progress",
+      subTitle: "Left 00:00:08",
+      status: "wait",
+      disabled: true,
+    },
+    {
+      title: "Waiting",
+      status: "wait",
+      disabled: true,
+    },
+
+]}
+/>
+
 ## Filebeat 설정
 
 > filebeat.yml파일에 input, output을 설정하여 실행한다. 하나씩만 설정, 실행할 수 있다.
