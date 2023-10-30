@@ -5,9 +5,8 @@ import { useRouter } from "next/navigation";
 import { winProcess, namProcess } from "@/lib/childprocess";
 import hljs from "highlight.js/lib/core";
 import javascript from "highlight.js/lib/languages/javascript";
-import json from "highlight.js/lib/languages/json";
-//import "@/styles/highlight-js/atom-one-light.css";
 import "@/styles/highlight-js/github-dark.css";
+//import "@/styles/highlight-js/atom-one-light.css";
 //import "@/styles/highlight-js/night-owl.css";
 //import "highlight.js/styles/night-owl.css";
 //import "highlight.js/styles/github-dark.css";
@@ -24,8 +23,7 @@ import {
 import "@/styles/jsonlite.css";
 import { ScrollShadow } from "@nextui-org/react";
 import { Tabs, Tab, Divider } from "@nextui-org/react";
-import Step from "@/app/[lang]/components/Step";
-import { Stepp } from "@/app/[lang]/components/Chip";
+import { Stepp } from "@/app/[lang]/components/nextui";
 
 interface LabelProps {
   script: string;
@@ -37,6 +35,7 @@ interface LabelProps1 extends LabelProps {
   script2: string | null;
   type1: string;
   comment1: string;
+  height: number;
 }
 interface LabelProps2 {
   filename: keyof Ielasticscript;
@@ -46,11 +45,13 @@ interface LabelProps2 {
   script2: string;
   comment: string;
   comment1: string;
+  height: number;
 }
 interface LabelProps3 {
   data: string;
   type: string;
   comment: string;
+  height: number;
 }
 
 export default function Search({ script }: LabelProps) {
@@ -178,6 +179,7 @@ export function SearchShow({
   type1,
   comment,
   comment1,
+  height,
 }: LabelProps1) {
   const [search, setSearch] = useState("");
   const [exescript, setExescript] = useState<string | null>();
@@ -192,8 +194,10 @@ export function SearchShow({
   const [serverName, setServerName] = useState("winubuntu");
   const [isLoading, setLoading] = useState(false);
   const [toggle, setToggle] = useState(true);
+  const [ht, setHt] = useState(300);
 
   useEffect(() => {
+    if (height) setHt(height);
     if (script) {
       setSearch(script);
     }
@@ -269,6 +273,7 @@ export function SearchShow({
           data={toggle ? result : executed}
           type={toggle ? ftype : ftype1}
           comment={toggle ? cmt : cmt1}
+          height={height}
         />
 
         {isLoading && <LoadingScreen />}
@@ -277,16 +282,21 @@ export function SearchShow({
   );
 }
 
-function Display({ data, type, comment }: LabelProps3) {
+function Display({ data, type, comment, height }: LabelProps3) {
   const [expand, setExpand] = useState(false);
-
+  const [ht, setHt] = useState(300);
+  useEffect(() => {
+    console.log("height::::::::::::::::::::::::::::::::::::::::", height);
+    if (height) setHt(height);
+  }, []);
+  console.log("ht::::::::::::::::::::::::::::::::::::::::", ht);
   const btnClass =
     "bg-gray-500 hover:bg-gray-300 text-gray-800 font-bold px-1 rounded inline-flex items-center mr-2 my-1";
   if (type === "json") {
     return (
       <ScrollShadow
         hideScrollBar
-        className={expand ? "max-h-[800px]" : "max-h-[300px]"}
+        className={expand ? "max-h-[800px]" : `max-h-[${ht}px]`}
       >
         <div>{comment}</div>
         {comment && <Divider className="my-4" />}
@@ -306,7 +316,7 @@ function Display({ data, type, comment }: LabelProps3) {
   return (
     <ScrollShadow
       hideScrollBar
-      className={expand ? "max-h-[800px]" : "max-h-[300px]"}
+      className={expand ? "max-h-[800px]" : `max-h-[${ht}px]`}
     >
       <div>{comment}</div>
       {comment && <Divider className="my-4" />}
@@ -342,6 +352,7 @@ export function SearchScript({
   script2,
   comment,
   comment1,
+  height,
 }: LabelProps2) {
   const [exescript, setExescript] = useState<string | null>();
   const [result, setResult] = useState<any | null>();
@@ -353,10 +364,12 @@ export function SearchScript({
   const [ftype1, setFtype1] = useState(type1);
   const [isLoading, setLoading] = useState(false);
   const [toggle, setToggle] = useState(true);
+  const [ht, setHt] = useState(300);
 
   hljs.registerLanguage("javascript", javascript);
 
   useEffect(() => {
+    if (height) setHt(height);
     async function fetch() {
       const rtn = await elasticscript[filename];
       if (ftype === "json") setResult(JSON.parse(rtn));
@@ -425,6 +438,7 @@ export function SearchScript({
           data={toggle ? result : executed}
           type={toggle ? ftype : ftype1}
           comment={toggle ? cmt : cmt1}
+          height={ht}
         />
 
         {isLoading && <LoadingScreen />}
@@ -432,17 +446,23 @@ export function SearchScript({
     </div>
   );
 }
-export function SearchSingle({ filename, type, comment }: LabelProps2) {
+export function SearchSingle({ filename, type, comment, height }: LabelProps2) {
   const [result, setResult] = useState<any | null>();
   const [cmt, setCmt] = useState(comment);
   const [ftype, setFtype] = useState(type);
   const [isLoading, setLoading] = useState(false);
+  const [ht, setHt] = useState(300);
 
   hljs.registerLanguage("javascript", javascript);
 
   useEffect(() => {
+    if (height) {
+      setHt(height);
+      console.log(height);
+    }
     async function fetch() {
       let rtn;
+      setLoading(true);
       if (elasticscript[filename]) rtn = await elasticscript[filename];
       else rtn = await winProcess({ script: filename });
 
@@ -450,6 +470,7 @@ export function SearchSingle({ filename, type, comment }: LabelProps2) {
       else readData(rtn);
     }
     if (filename) fetch();
+    setLoading(false);
   }, []);
 
   const readData = (content: string) => {
@@ -462,7 +483,7 @@ export function SearchSingle({ filename, type, comment }: LabelProps2) {
   return (
     <div className="w-full mxheight">
       <pre>
-        <Display data={result} type={ftype} comment={cmt} />
+        <Display data={result} type={ftype} comment={cmt} height={ht} />
 
         {isLoading && <LoadingScreen />}
       </pre>
@@ -517,26 +538,6 @@ export function SearchTab({ arr }: any) {
   );
 }
 
-const description = "This is a description.";
 export function SearchStep({ items }: any) {
-  const item = [
-    {
-      title: "Finished",
-      description,
-    },
-    {
-      title: "In Progress",
-      description,
-      subTitle: "Left 00:00:08",
-    },
-    {
-      title: "Waiting",
-      description,
-    },
-  ];
-  return (
-    <div className="dark flex w-full flex-col">
-      <Stepp item={items} />
-    </div>
-  );
+  return <Stepp item={items} />;
 }

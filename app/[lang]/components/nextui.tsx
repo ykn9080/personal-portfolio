@@ -1,8 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Chip, Snippet, Code } from "@nextui-org/react";
-import { Steps, Button } from "antd";
-import { CaretLeftFilled, CaretRightFilled } from "@ant-design/icons";
+import { Steps } from "antd";
 
 export function Chipp() {
   return (

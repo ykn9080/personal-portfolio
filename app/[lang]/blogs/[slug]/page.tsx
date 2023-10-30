@@ -20,8 +20,9 @@ import Search, {
   SearchScript,
   SearchTab,
   SearchStep,
+  SearchSingle,
 } from "@/app/[lang]/testbed/search/page";
-import { Chipp, Snippett, Codee } from "@/app/[lang]/components/Chip";
+import { Chipp, Snippett, Codee } from "@/app/[lang]/components/nextui";
 import Diagram from "@/app/[lang]/components/Diagram";
 
 export async function generateStaticParams() {
@@ -113,6 +114,7 @@ export default function Post({ params }: any, lang: Locale) {
                   Search,
                   SearchTab,
                   SearchStep,
+                  SearchSingle,
                   KafkaDemo,
                   Chipp,
                   Snippett,
