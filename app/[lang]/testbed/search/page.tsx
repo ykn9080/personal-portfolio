@@ -22,7 +22,7 @@ import {
 } from "react-json-view-lite";
 import "@/styles/jsonlite.css";
 import { ScrollShadow } from "@nextui-org/react";
-import { Tabs, Tab, Divider } from "@nextui-org/react";
+import { Tabs, Tab, Divider, Tooltip } from "@nextui-org/react";
 import { Stepp } from "@/app/[lang]/components/nextui";
 
 interface LabelProps {
@@ -35,7 +35,6 @@ interface LabelProps1 extends LabelProps {
   script2: string | null;
   type1: string;
   comment1: string;
-  height: number;
 }
 interface LabelProps2 {
   filename: keyof Ielasticscript;
@@ -45,13 +44,11 @@ interface LabelProps2 {
   script2: string;
   comment: string;
   comment1: string;
-  height: number;
 }
 interface LabelProps3 {
-  data: string;
-  type: string;
-  comment: string;
-  height: number;
+  data: string | undefined;
+  type: string | undefined;
+  comment: string | undefined;
 }
 
 export default function Search({ script }: LabelProps) {
@@ -179,7 +176,6 @@ export function SearchShow({
   type1,
   comment,
   comment1,
-  height,
 }: LabelProps1) {
   const [search, setSearch] = useState("");
   const [exescript, setExescript] = useState<string | null>();
@@ -194,10 +190,8 @@ export function SearchShow({
   const [serverName, setServerName] = useState("winubuntu");
   const [isLoading, setLoading] = useState(false);
   const [toggle, setToggle] = useState(true);
-  const [ht, setHt] = useState(300);
 
   useEffect(() => {
-    if (height) setHt(height);
     if (script) {
       setSearch(script);
     }
@@ -273,7 +267,6 @@ export function SearchShow({
           data={toggle ? result : executed}
           type={toggle ? ftype : ftype1}
           comment={toggle ? cmt : cmt1}
-          height={height}
         />
 
         {isLoading && <LoadingScreen />}
@@ -282,21 +275,16 @@ export function SearchShow({
   );
 }
 
-function Display({ data, type, comment, height }: LabelProps3) {
+function Display({ data, type, comment }: LabelProps3) {
   const [expand, setExpand] = useState(false);
-  const [ht, setHt] = useState(300);
-  useEffect(() => {
-    console.log("height::::::::::::::::::::::::::::::::::::::::", height);
-    if (height) setHt(height);
-  }, []);
-  console.log("ht::::::::::::::::::::::::::::::::::::::::", ht);
+
   const btnClass =
     "bg-gray-500 hover:bg-gray-300 text-gray-800 font-bold px-1 rounded inline-flex items-center mr-2 my-1";
   if (type === "json") {
     return (
       <ScrollShadow
         hideScrollBar
-        className={expand ? "max-h-[800px]" : `max-h-[${ht}px]`}
+        className={expand ? "max-h-[800px]" : "max-h-[300px]"}
       >
         <div>{comment}</div>
         {comment && <Divider className="my-4" />}
@@ -316,7 +304,7 @@ function Display({ data, type, comment, height }: LabelProps3) {
   return (
     <ScrollShadow
       hideScrollBar
-      className={expand ? "max-h-[800px]" : `max-h-[${ht}px]`}
+      className={expand ? "max-h-[800px]" : "max-h-[300px]"}
     >
       <div>{comment}</div>
       {comment && <Divider className="my-4" />}
@@ -352,7 +340,6 @@ export function SearchScript({
   script2,
   comment,
   comment1,
-  height,
 }: LabelProps2) {
   const [exescript, setExescript] = useState<string | null>();
   const [result, setResult] = useState<any | null>();
@@ -364,12 +351,10 @@ export function SearchScript({
   const [ftype1, setFtype1] = useState(type1);
   const [isLoading, setLoading] = useState(false);
   const [toggle, setToggle] = useState(true);
-  const [ht, setHt] = useState(300);
 
   hljs.registerLanguage("javascript", javascript);
 
   useEffect(() => {
-    if (height) setHt(height);
     async function fetch() {
       const rtn = await elasticscript[filename];
       if (ftype === "json") setResult(JSON.parse(rtn));
@@ -438,7 +423,6 @@ export function SearchScript({
           data={toggle ? result : executed}
           type={toggle ? ftype : ftype1}
           comment={toggle ? cmt : cmt1}
-          height={ht}
         />
 
         {isLoading && <LoadingScreen />}
@@ -446,20 +430,15 @@ export function SearchScript({
     </div>
   );
 }
-export function SearchSingle({ filename, type, comment, height }: LabelProps2) {
+export function SearchSingle({ filename, type, comment }: LabelProps2) {
   const [result, setResult] = useState<any | null>();
   const [cmt, setCmt] = useState(comment);
   const [ftype, setFtype] = useState(type);
   const [isLoading, setLoading] = useState(false);
-  const [ht, setHt] = useState(300);
 
   hljs.registerLanguage("javascript", javascript);
 
   useEffect(() => {
-    if (height) {
-      setHt(height);
-      console.log(height);
-    }
     async function fetch() {
       let rtn;
       setLoading(true);
@@ -483,11 +462,34 @@ export function SearchSingle({ filename, type, comment, height }: LabelProps2) {
   return (
     <div className="w-full mxheight">
       <pre>
-        <Display data={result} type={ftype} comment={cmt} height={ht} />
+        <Display data={result} type={ftype} comment={cmt} />
 
         {isLoading && <LoadingScreen />}
       </pre>
     </div>
+  );
+}
+/**
+ * return값없이 백그라운드에서 실행만되는 serarch
+ * comment는 화면에 출력될 수 있다.
+ * @param param0
+ * @returns
+ */
+export function SearchHidden({ script, comment }: LabelProps) {
+  const [cmt, setCmt] = useState(comment);
+
+  useEffect(() => {
+    async function fetch() {
+      await winProcess({ script });
+    }
+    fetch();
+  }, []);
+
+  return (
+    // {comment ?<Display data="undefined" type="undefined" comment={comment} />
+
+    // :null}
+    null
   );
 }
 const Radiobtn = ({ onChange }: any) => {

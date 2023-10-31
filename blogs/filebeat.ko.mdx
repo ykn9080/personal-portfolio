@@ -16,11 +16,14 @@ videoTitle:
 excerpt: 간편하게 메트릭 데이터를 수집.
 ---
 
+### Filebeat → Elastic Search 조회
+
 <SearchStep
   items={[
     {
-      title: "Start",
+      title: "Intro",
         content: (
+          <>
         <SearchSingle
           comment={
             <>
@@ -29,15 +32,65 @@ excerpt: 간편하게 메트릭 데이터를 수집.
 
               curl get http://localhost:9200/filebeat*/_search
             </Codee>
-            <Diagram/>
+            <Diagram schema={{
+                nodes: [
+                { id: "node-1", content: <Tooltipp
+                    content={
+                      <div className="px-1 py-2">
+                        <div className="text-small font-bold">Custom Content</div>
+                        <div className="text-tiny">This is a custom tooltip content</div>
+                      </div>
+                    }
+                  ><img src="/images/interest/filebeat.png" width="120px" alt="pipeline" />
+                  </Tooltipp>, coordinates: [50, 60] },
+
+                { id: "node-4", content:  <Tooltipp
+                    content={
+                      <div className="px-1 py-2">
+                        <div className="text-small font-bold">Custom Content</div>
+                        <div className="text-tiny">This is a custom tooltip content</div>
+                      </div>
+                    }
+                  >
+                  <img src="/images/interest/elastic_icon1.png" width="120px" alt="elastic" />
+                  </Tooltipp>, coordinates: [600, 60] },
+                ],
+                links: [
+                { input: "node-1", output: "node-4" }
+                ],
+                }}/>
             </>
           }
-          height={1400}
+
         ></SearchSingle>
+
+        </>
       ),
     },
     {
-      title: "Finished",
+      title: "Filebeat Execute",
+        content: (
+          <>
+        <SearchShow
+          script="ssh yknam@namubuntu cat /home/yknam/sandbox/filebeat/conf/filebeat1.yml"
+          script1="curl get http://imcmaster.iptime.org:9200/filebeat*/_search"
+          type1="json"
+          comment1={
+            <>
+            <Chipp>filebeat → elasticsearch</Chipp>
+            <Codee>
+
+              curl get http://localhost:9200/filebeat*/_search
+            </Codee>
+            </>
+          }
+        ></SearchShow>
+        <SearchHidden script="ls -la" />
+        </>
+      ),
+    },
+    {
+      title: "Elastic Search 조회",
         content: (
         <SearchShow
           script="ssh yknam@namubuntu cat /home/yknam/sandbox/filebeat/conf/filebeat1.yml"
@@ -54,16 +107,7 @@ excerpt: 간편하게 메트릭 데이터를 수집.
           }
         ></SearchShow>
       ),
-    },
-    {
-      title: "In Progress",
-      subTitle: "Left 00:00:08",
-      status: "wait",
-      disabled: true,
-    },
-    {
-      title: "Waiting",
-      status: "wait",
+        status: "wait",
       disabled: true,
     },
 

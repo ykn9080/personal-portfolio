@@ -1,7 +1,8 @@
 "use client";
 
 import Diagram, { createSchema, useSchema } from "beautiful-react-diagrams";
-import "beautiful-react-diagrams/styles.css";
+// import "beautiful-react-diagrams/styles.css";
+import "@/styles/beautiful-react-diagrams.css";
 
 // the diagram model
 const initialSchema = createSchema({
@@ -18,13 +19,13 @@ const initialSchema = createSchema({
   ],
 });
 
-const UncontrolledDiagram = () => {
+const UncontrolledDiagram = ({ schema }: any) => {
   // create diagrams schema
-  const [schema, { onChange }] = useSchema(initialSchema);
+  const [schemainfo, { onChange }] = useSchema(createSchema(schema));
 
   return (
-    <div style={{ height: "22.5rem" }}>
-      <Diagram schema={schema} onChange={onChange} />
+    <div style={{ height: "12.5rem" }}>
+      <Diagram schema={schemainfo} onChange={onChange} />
     </div>
   );
 };

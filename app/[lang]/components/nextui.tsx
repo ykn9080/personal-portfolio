@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Chip, Snippet, Code } from "@nextui-org/react";
+import { Chip, Snippet, Code, Tooltip } from "@nextui-org/react";
 import { Steps } from "antd";
 
 export function Chipp() {
@@ -28,6 +28,13 @@ export function Codee({
   return <Code size={siz}>{children}</Code>;
 }
 
+export function Tooltipp({ children, content }: any) {
+  return (
+    <div>
+      <Tooltip content={content}>{children}</Tooltip>
+    </div>
+  );
+}
 export function Stepp({ item }: any) {
   const [current, setCurrent] = useState(0);
   const [items, setItems] = useState(item);
@@ -46,7 +53,6 @@ export function Stepp({ item }: any) {
   return (
     <div>
       <Steps
-        size="small"
         current={current}
         items={items}
         onChange={onChange}
