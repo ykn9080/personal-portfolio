@@ -35,6 +35,7 @@ interface LabelProps1 extends LabelProps {
   script2: string | null;
   type1: string;
   comment1: string;
+  buttonname: string | null;
 }
 interface LabelProps2 {
   filename: keyof Ielasticscript;
@@ -45,10 +46,17 @@ interface LabelProps2 {
   comment: string;
   comment1: string;
 }
+
 interface LabelProps3 {
   data: string | undefined;
   type: string | undefined;
   comment: string | undefined;
+}
+interface LabelProps4 {
+  script: keyof Ielasticscript | string | undefined;
+  scriptArr: Array<string> | null;
+  type: string;
+  comment: string;
 }
 
 export default function Search({ script }: LabelProps) {
@@ -176,6 +184,7 @@ export function SearchShow({
   type1,
   comment,
   comment1,
+  buttonname,
 }: LabelProps1) {
   const [search, setSearch] = useState("");
   const [exescript, setExescript] = useState<string | null>();
@@ -187,9 +196,12 @@ export function SearchShow({
   const [result, setResult] = useState<any | null>();
   const [result1, setResult1] = useState<any | null>();
   const [executed, setExecuted] = useState<any | null>();
-  const [serverName, setServerName] = useState("winubuntu");
   const [isLoading, setLoading] = useState(false);
   const [toggle, setToggle] = useState(true);
+  const [custombtn, setCustombtn] = useState<Array<string> | null>([
+    "code",
+    "result",
+  ]);
 
   useEffect(() => {
     if (script) {
@@ -198,12 +210,23 @@ export function SearchShow({
     if (script1) {
       setExescript(script1);
     }
+    if (script2) {
+      executeHidden(script2);
+    }
+    if (buttonname) {
+      const btn = buttonname.split(",");
+      let btn1 = ["code", "result"];
+      if (btn[0]) btn1[0] = btn[0];
+      if (btn[1]) btn1[1] = btn[1];
+
+      setCustombtn(btn1);
+    }
     async function fetch() {
       const rtn = await handleClick(script, type);
 
       setResult(rtn);
     }
-    fetch();
+    if (script && script !== "") fetch();
   }, [script, type]);
 
   const handleClick = async (
@@ -242,14 +265,14 @@ export function SearchShow({
     <div className="w-full mxheight">
       <pre>
         {exescript && (
-          <>
+          <div className="float-right">
             <button
               onClick={handleExecute}
               className={`${btnClass} ${
                 !toggle ? "bg-gray-300" : "bg-gray-600"
               }`}
             >
-              result
+              {custombtn[1]}
             </button>
 
             <button
@@ -258,11 +281,11 @@ export function SearchShow({
                 toggle ? "bg-gray-300" : "bg-gray-600"
               }`}
             >
-              code
+              {custombtn[0]}
             </button>
-          </>
+          </div>
         )}
-
+        <div className="clear-both" />
         <Display
           data={toggle ? result : executed}
           type={toggle ? ftype : ftype1}
@@ -275,6 +298,29 @@ export function SearchShow({
   );
 }
 
+export function SearchShow1({
+  script,
+  script1,
+  script2,
+  type,
+  type1,
+  comment,
+  comment1,
+  buttonname,
+}: LabelProps1) {
+  return (
+    <SearchShow
+      script={script}
+      script1={script1}
+      script2={script2}
+      type={type}
+      type1={type1}
+      comment={comment}
+      comment1={comment1}
+      buttonname={buttonname}
+    />
+  );
+}
 function Display({ data, type, comment }: LabelProps3) {
   const [expand, setExpand] = useState(false);
 
@@ -430,45 +476,75 @@ export function SearchScript({
     </div>
   );
 }
-export function SearchSingle({ filename, type, comment }: LabelProps2) {
-  const [result, setResult] = useState<any | null>();
-  const [cmt, setCmt] = useState(comment);
+export function SearchSingle({ script, script2, type, comment }: LabelProps1) {
+  const [search, setSearch] = useState("");
   const [ftype, setFtype] = useState(type);
-  const [isLoading, setLoading] = useState(false);
+  const [cmt, setCmt] = useState(comment);
 
-  hljs.registerLanguage("javascript", javascript);
+  const [result, setResult] = useState<any | null>();
+  const [isLoading, setLoading] = useState(false);
+  const [toggle, setToggle] = useState(true);
 
   useEffect(() => {
-    async function fetch() {
-      let rtn;
-      setLoading(true);
-      if (elasticscript[filename]) rtn = await elasticscript[filename];
-      else rtn = await winProcess({ script: filename });
-
-      if (ftype === "json") setResult(JSON.parse(rtn));
-      else readData(rtn);
+    if (script && script !== "") {
+      setSearch(script);
     }
-    if (filename) fetch();
-    setLoading(false);
+
+    if (script2) {
+      executeHidden(script2);
+    }
+    async function fetch() {
+      const rtn = await handleClick(script, type);
+      setLoading(false);
+      console.log(script, type);
+      setResult(rtn);
+    }
+    if (script && script !== "") fetch();
   }, []);
 
-  const readData = (content: string) => {
-    const highlighted = hljs.highlight(content, {
-      language: "json",
+  const handleClick = async (
+    script: String | null | undefined,
+    filetype: String
+  ) => {
+    setLoading(true);
+    if (!script) return;
+    let rtn = await winProcess({ script });
+
+    hljs.registerLanguage("javascript", javascript);
+
+    if (filetype === "json") {
+      return JSON.parse(rtn.result);
+    }
+    const highlighted = hljs.highlight(rtn.result, {
+      language: "javascript",
     }).value;
-    setResult(highlighted);
+
+    return highlighted;
   };
 
   return (
     <div className="w-full mxheight">
       <pre>
         <Display data={result} type={ftype} comment={cmt} />
-
         {isLoading && <LoadingScreen />}
       </pre>
     </div>
   );
 }
+export function SearchSingle1({ script, script2, type, comment }: LabelProps1) {
+  return (
+    <SearchSingle
+      script={script}
+      script2={script2}
+      type={type}
+      comment={comment}
+    />
+  );
+}
+const executeHidden = async (script: string) => {
+  const rtn = await winProcess({ script });
+  return rtn;
+};
 /**
  * return값없이 백그라운드에서 실행만되는 serarch
  * comment는 화면에 출력될 수 있다.

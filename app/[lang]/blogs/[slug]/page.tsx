@@ -17,10 +17,12 @@ import { KafkaDemo } from "@/app/[lang]/mdxComponents/kafka";
 import Search, {
   SearchLabel,
   SearchShow,
+  SearchShow1,
   SearchScript,
   SearchTab,
   SearchStep,
   SearchSingle,
+  SearchSingle1,
   SearchHidden,
 } from "@/app/[lang]/testbed/search/page";
 import {
@@ -28,6 +30,8 @@ import {
   Snippett,
   Codee,
   Tooltipp,
+  Spacee,
+  Dividerr,
 } from "@/app/[lang]/components/nextui";
 import Diagram from "@/app/[lang]/components/Diagram";
 
@@ -116,11 +120,13 @@ export default function Post({ params }: any, lang: Locale) {
                   MyPopOver,
                   SearchLabel,
                   SearchShow,
+                  SearchShow1,
                   SearchScript,
                   Search,
                   SearchTab,
                   SearchStep,
                   SearchSingle,
+                  SearchSingle1,
                   SearchHidden,
                   KafkaDemo,
                   Chipp,
@@ -128,6 +134,8 @@ export default function Post({ params }: any, lang: Locale) {
                   Codee,
                   Diagram,
                   Tooltipp,
+                  Spacee,
+                  Dividerr,
                 }}
               />
             </div>

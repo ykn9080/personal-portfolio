@@ -1,12 +1,21 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Chip, Snippet, Code, Tooltip } from "@nextui-org/react";
-import { Steps } from "antd";
+import { Chip, Snippet, Code, Tooltip, Divider } from "@nextui-org/react";
+import { Steps, Space } from "antd";
+import $ from "jquery";
 
-export function Chipp() {
+export function Chipp({ children, color, variant }: any) {
+  const [colorr, setColorr] = useState("default");
+  const [vari, setVari] = useState("solid");
+  useEffect(() => {
+    if (color) setColorr(color);
+    if (variant) setVari(variant);
+  }, []);
   return (
     <div>
-      <Chip>Chip</Chip>
+      <Chip color={colorr} variant={vari}>
+        {children}
+      </Chip>
     </div>
   );
 }
@@ -45,7 +54,9 @@ export function Stepp({ item }: any) {
     if (maxnum < items.length - 1) {
       delete items[value].status;
       if (value < items.length - 1) items[value + 1].disabled = false;
+      $("#content123 pre").empty();
       setItems(items);
+
       if (maxnum < value) setMaxnum(value);
     }
   };
@@ -58,7 +69,18 @@ export function Stepp({ item }: any) {
         onChange={onChange}
         className="site-navigation-steps"
       />
-      <div>{items[current].content}</div>
+      <div id="content123">{items[current].content}</div>
     </div>
   );
+}
+
+export function Spacee({ children }: any) {
+  return (
+    <div className="-mb-5">
+      <Space>{children}</Space>
+    </div>
+  );
+}
+export function Dividerr() {
+  return <Divider />;
 }
