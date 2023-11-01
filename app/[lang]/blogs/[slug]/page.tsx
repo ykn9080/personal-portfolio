@@ -85,7 +85,7 @@ export default function Post({ params }: any, lang: Locale) {
             <h1 className="text-4xl font-bold mb-3">
               {props.frontMatter.title}
             </h1>
-            <div className="lg:float-right ml-10 ">
+            <div className="lg:float-right ml-10 bg-white p-5">
               <Image
                 src={props.frontMatter.featureImage}
                 width={400}

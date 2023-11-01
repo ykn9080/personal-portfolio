@@ -22,11 +22,10 @@ excerpt: 간편하게 메트릭 데이터를 수집.
   items={[
     {
       title: "Intro",
+      
       content: (
-      <SearchShow1
-        script=""
-        script1="ssh nam rm -rf /home/yknam/sandbox/filebeat/data;ssh nam curl -X DELETE localhost:9200/filebeat\*"
-        buttonname="description,reset"
+      <SearchSingle
+       
         comment={
           <Diagram schema={{
               nodes: [
@@ -58,11 +57,11 @@ excerpt: 간편하게 메트릭 데이터를 수집.
               ],
               }}/>
         }
-      ></SearchShow1>
+      ></SearchSingle>
       ),
     },
     {
-      title: "Filebeat Execute",
+      title: "Filebeat 실행",
         content: (
           <>
         <SearchShow
@@ -72,6 +71,7 @@ excerpt: 간편하게 메트릭 데이터를 수집.
           buttonname="view filebeat,run filebeat"
           comment={
             <>
+            run filebeat를 클릭해서 filebeat를 실행하세요"👉
             <Spacee><Chipp color="warning" variant="bordered">filebeat.yml </Chipp>
             <Codee>
              cat ~/filebeat/conf/filebeat1.yml
@@ -79,7 +79,8 @@ excerpt: 간편하게 메트릭 데이터를 수집.
              <Spacee><Chipp  color="warning" variant="bordered">filebeat실행</Chipp>
             <Codee>
               ~/filebeat/filebeat -f conf/filebeat1.yml
-            </Codee></Spacee> <br />
+            </Codee>
+          </Spacee> <br />
             <Spacee><Chipp  color="warning" variant="bordered">kill 60초후</Chipp>
             <Codee>
               sleep 10; kill -9 $(pidof 'filebeat')"
@@ -95,17 +96,22 @@ excerpt: 간편하게 메트릭 데이터를 수집.
     {
       title: "Elastic Search 조회",
         content: (
-        <SearchSingle
+        <SearchShow1
           script="curl get http://imcmaster.iptime.org:9200/filebeat*/_search"
+          script1="ssh nam rm -rf /home/yknam/sandbox/filebeat/data;ssh nam curl -X DELETE localhost:9200/filebeat\*"
+          buttonname="view,reset"
           type="json"
           comment={
             <>
+            reset을 클릭시 filebeat data와 data folder삭제 👉<br/>
             <Codee>
               curl get http://localhost:9200/filebeat*/_search
             </Codee>
+
+
             </>
           }
-        ></SearchSingle>
+        ></SearchShow1>
       ),
         status: "wait",
       disabled: true,
@@ -114,25 +120,19 @@ excerpt: 간편하게 메트릭 데이터를 수집.
 ]}
 />
 
-## Filebeat 설정
+### Filebeat 설정 (filebeat.yml)
 
 > filebeat.yml파일에 input, output을 설정하여 실행한다. 하나씩만 설정, 실행할 수 있다.
->
 > input 데이터 소스로 nginx 로그를 수집하는 예이다. type->log, enable->true,path->/var/log/nginx/access.log로 설정한다.
->
 > output 으로 elatic을 선택했다. logstash를 거쳐 filtering해서 elastic으로 전송할 경우에는 elastic을 주석처리하고 logstash를 활성화하면된다.
 
 #### filebeat.yml
 
 <SearchScript filename="filebeatyml" />
 
-### filebeat 실행
+💡 filebeat는 한번 실행한 데이터는 다시 읽지 않기 때문에 새로 데이터를 읽으려면 data디렉토리를 삭제한 후 실행해야함
 
-> filebeat 실행command : ./filebeat
->
-> filebeat는 한번 실행한 데이터는 다시 읽지 않기 때문에 새로 데이터를 읽으려면 data디렉토리를 삭제한 후 실행해야함
-
-#### 다양한 input source 읽기
+### input
 
 <SearchTab
   arr={[
@@ -141,7 +141,7 @@ excerpt: 간편하게 메트릭 데이터를 수집.
       label: "elasticsearch",
       content: (
         <SearchShow
-          script="ssh yknam@namubuntu cat /home/yknam/sandbox/filebeat/conf/filebeat1.yml"
+          script="ssh nam cat /home/yknam/sandbox/filebeat/conf/filebeat1.yml"
           script1="curl get http://imcmaster.iptime.org:9200/filebeat*/_search"
           type1="json"
           comment1={
@@ -189,7 +189,7 @@ excerpt: 간편하게 메트릭 데이터를 수집.
 ]}
 />
 
-#### 다양한 output으로 실행
+### output
 
 <SearchTab
   arr={[
@@ -222,70 +222,4 @@ excerpt: 간편하게 메트릭 데이터를 수집.
         "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     },
   ]}
-/>
-
-### filebeat -> kafka -> logstash -> elasticsearch
-
-<img src="/images/interest/filebeat-pipeline.png" width="100%" alt="pipeline" />
-
-1.fielbeat.yml
-
-> filebeat.yml에 kafka output을 추가한다.
-
-```js
-# ------------------------------ Kafka Output -------------------------------
-output.kafka:
-  # initial brokers for reading cluster metadata
-  hosts: ["winubuntu:9092","namubuntu:9092"]
-
-  # message topic selection + partitioning
-  topic: "filebeat"
-  partition.round_robin:
-    reachable_only: false
-
-  required_acks: 1
-  compression: gzip
-  max_message_bytes: 1000000
-```
-
-2. ./filebeat 실행
-3. kafka 실행
-
-- topic 생성: filebeat
-- producer 실행: filebeat
-
-4. logstash실행
-   > logstash conf파일을 생성한다.
-   > input: kafka, output:elasticsearch
-   > logstash를 실행하면 kafka에서 데이터를 가져와 elasticsearch로 전송한다.
-
-```json
-input {
-    kafka {
-        bootstrap_servers =>  "winubuntu:9092, namubuntu:9092"
-        topics => ["filebeat"]
-    }
-}
-
-filter {
-}
-
-output {
-    stdout {
-        codec => rubydebug
-    }
-    elasticsearch {
-        hosts => "http://localhost:9200"
-        index => "kafka-filebeat"
-        document_type => "_doc"
-    }
-}
-```
-
-5. elasticsearch
-
-<SearchShow
-  script="cat /home/yknam/pythonfiles/pyspark/sparkRddToDF.py"
-  script1="ssh yknam@namubuntu curl localhost:9200/filebeat*/_search"
-  port="7878"
 />

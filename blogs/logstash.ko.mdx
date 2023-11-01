@@ -119,7 +119,71 @@ kafka {
 }
 ```
 
-## example1:
+### filebeat -> kafka -> logstash -> elasticsearch
+
+<img src="/images/interest/filebeat-pipeline.png" width="100%" alt="pipeline" />
+
+1.fielbeat.yml
+
+> filebeat.yml에 kafka output을 추가한다.
+
+```js
+# ------------------------------ Kafka Output -------------------------------
+output.kafka:
+  # initial brokers for reading cluster metadata
+  hosts: ["winubuntu:9092","namubuntu:9092"]
+
+  # message topic selection + partitioning
+  topic: "filebeat"
+  partition.round_robin:
+    reachable_only: false
+
+  required_acks: 1
+  compression: gzip
+  max_message_bytes: 1000000
+```
+
+2. ./filebeat 실행
+3. kafka 실행
+
+- topic 생성: filebeat
+- producer 실행: filebeat
+
+4. logstash실행
+   > logstash conf파일을 생성한다.
+   > input: kafka, output:elasticsearch
+   > logstash를 실행하면 kafka에서 데이터를 가져와 elasticsearch로 전송한다.
+
+```json
+input {
+    kafka {
+        bootstrap_servers =>  "winubuntu:9092, namubuntu:9092"
+        topics => ["filebeat"]
+    }
+}
+
+filter {
+}
+
+output {
+    stdout {
+        codec => rubydebug
+    }
+    elasticsearch {
+        hosts => "http://localhost:9200"
+        index => "kafka-filebeat"
+        document_type => "_doc"
+    }
+}
+```
+
+5. elasticsearch
+
+<SearchShow
+  script="cat /home/yknam/pythonfiles/pyspark/sparkRddToDF.py"
+  script1="ssh yknam@namubuntu curl localhost:9200/filebeat*/_search"
+  port="7878"
+/>
 
 #### jdbc
 

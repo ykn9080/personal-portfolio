@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Chip, Snippet, Code, Tooltip, Divider } from "@nextui-org/react";
-import { Steps, Space } from "antd";
+import { Steps, Space, ConfigProvider, theme } from "antd";
 
 export function Chipp({ children, color, variant }: any) {
   const [colorr, setColorr] = useState<
@@ -79,13 +79,26 @@ export function Stepp({ item }: any) {
 
   return (
     <div>
-      <Steps
-        current={current}
-        items={items}
-        onChange={onChange}
-        className="site-navigation-steps"
-      />
-      <div id="content123">{items[current].content}</div>
+      {/* <ConfigProvider
+        theme={{
+          // 1. Use dark algorithm
+          algorithm: theme.darkAlgorithm,
+
+          // 2. Combine dark algorithm and compact algorithm
+          // algorithm: [theme.darkAlgorithm, theme.compactAlgorithm],
+        }}
+      > */}
+      <div className="bg-white p-2 rounded">
+        <Steps
+          current={current}
+          items={items}
+          onChange={onChange}
+          className="site-navigation-steps"
+        />
+      </div>
+      <div>{items[current].content}</div>
+
+      {/* </ConfigProvider> */}
     </div>
   );
 }

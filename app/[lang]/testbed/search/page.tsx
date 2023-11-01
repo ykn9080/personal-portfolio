@@ -5,10 +5,10 @@ import { useRouter } from "next/navigation";
 import { winProcess, namProcess } from "@/lib/childprocess";
 import hljs from "highlight.js/lib/core";
 import javascript from "highlight.js/lib/languages/javascript";
-import "@/styles/highlight-js/github-dark.css";
+//import "@/styles/highlight-js/github-dark.css";
 //import "@/styles/highlight-js/atom-one-light.css";
 //import "@/styles/highlight-js/night-owl.css";
-//import "highlight.js/styles/night-owl.css";
+import "highlight.js/styles/night-owl.css";
 //import "highlight.js/styles/github-dark.css";
 //import "highlight.js/styles/default.css";
 import { LoadingScreen } from "@/app/[lang]/LoadingScreen";
@@ -107,7 +107,7 @@ export default function Search({ script }: LabelProps) {
       <h3>Result</h3>
 
       <div className="w-full">
-        <pre>
+        <pre className="bg-[#011627]">
           <code
             className="language-html hljs"
             dangerouslySetInnerHTML={{ __html: result }}
@@ -164,7 +164,7 @@ export function SearchLabel({ script }: LabelProps) {
 
       <div className="w-full">
         {result && (
-          <pre>
+          <pre className="bg-[#011627]">
             <code
               className="language-html hljs w-full"
               dangerouslySetInnerHTML={{ __html: result }}
@@ -259,8 +259,8 @@ export function SearchShow({
     " float-right hover:bg-gray-400 text-gray-800 font-bold px-1 rounded inline-flex items-center mr-2 my-1";
 
   return (
-    <div className="w-full mxheight">
-      <pre>
+    <div className="w-full ">
+      <pre className="bg-[#011627]">
         {exescript && (
           <div className="float-right">
             <button
@@ -327,7 +327,9 @@ function Display({ data, type, comment }: LabelProps3) {
     return (
       <ScrollShadow
         hideScrollBar
+        size={100}
         className={expand ? "max-h-[800px]" : "max-h-[300px]"}
+        //className="max-h-[600px]"
       >
         <div>{comment}</div>
         {comment && <Divider className="my-4" />}
@@ -336,7 +338,7 @@ function Display({ data, type, comment }: LabelProps3) {
           shouldExpandNode={allExpanded}
           style={darkStyles}
         />
-        <div className="sticky bottom-0 flex flex-col items-center">
+        <div className="sticky bottom-0 flex flex-col items-center pb-10">
           <button onClick={() => setExpand(!expand)} className={btnClass}>
             {expand ? "show less" : "show more"}
           </button>
@@ -347,7 +349,9 @@ function Display({ data, type, comment }: LabelProps3) {
   return (
     <ScrollShadow
       hideScrollBar
-      className={expand ? "max-h-[800px]" : "max-h-[300px]"}
+      size={100}
+      className={`bg-[#011627] ${expand} ? "max-h-[800px]" : "max-h-[300px]"`}
+      //className="max-h-[600px]"
     >
       <div>{comment}</div>
       {comment && <Divider className="my-4" />}
@@ -356,7 +360,7 @@ function Display({ data, type, comment }: LabelProps3) {
           __html: data,
         }}
       />
-      <div className="sticky bottom-0 flex flex-col items-center">
+      <div className="sticky bottom-0 flex flex-col items-center pb-10">
         <button onClick={() => setExpand(!expand)} className={btnClass}>
           {expand ? "show less" : "show more"}
         </button>
@@ -439,8 +443,8 @@ export function SearchScript({
     " float-right hover:bg-gray-400 text-gray-800 font-bold px-1 rounded inline-flex items-center mr-2 my-1";
 
   return (
-    <div className="w-full mxheight">
-      <pre>
+    <div className="w-full ">
+      <pre className="bg-[#011627]">
         {exescript && (
           <>
             <button
@@ -527,8 +531,8 @@ export function SearchSingle({ script, script2, type, comment }: LabelProps5) {
   };
 
   return (
-    <div className="w-full mxheight">
-      <pre>
+    <div className="w-full">
+      <pre className="bg-[#011627]">
         <Display data={result} type={ftype} comment={cmt} />
         {isLoading && <LoadingScreen />}
       </pre>
