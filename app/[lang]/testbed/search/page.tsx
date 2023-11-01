@@ -22,7 +22,7 @@ import {
 } from "react-json-view-lite";
 import "@/styles/jsonlite.css";
 import { ScrollShadow } from "@nextui-org/react";
-import { Tabs, Tab, Divider, Tooltip } from "@nextui-org/react";
+import { Tabs, Tab, Divider } from "@nextui-org/react";
 import { Stepp } from "@/app/[lang]/components/nextui";
 
 interface LabelProps {
@@ -604,22 +604,18 @@ const Radiobtn = ({ onChange }: any) => {
     </div>
   );
 };
-interface MyObject {
-  id: number;
+interface ItemObj {
+  id: string;
   label: string;
-  conetnt: string;
+  content: string;
 }
 
-interface MyExactData {
-  [key: string]: MyObject;
-}
-
-export function SearchTab({ arr }: MyExactData) {
+export function SearchTab({ arr }: any) {
   const [tabs, setTabs] = useState(arr);
   return (
     <div className="dark flex w-full flex-col">
       <Tabs aria-label="Dynamic tabs" items={tabs}>
-        {(item) => (
+        {(item: ItemObj) => (
           <Tab key={item.id} title={item.label}>
             <div className="mt-[-35px] ml-[-5px]">{item.content}</div>
           </Tab>
