@@ -2,11 +2,27 @@
 import React, { useEffect, useState } from "react";
 import { Chip, Snippet, Code, Tooltip, Divider } from "@nextui-org/react";
 import { Steps, Space } from "antd";
-import $ from "jquery";
 
 export function Chipp({ children, color, variant }: any) {
-  const [colorr, setColorr] = useState("default");
-  const [vari, setVari] = useState("solid");
+  const [colorr, setColorr] = useState<
+    | "default"
+    | "primary"
+    | "secondary"
+    | "success"
+    | "warning"
+    | "danger"
+    | undefined
+  >("default");
+  const [vari, setVari] = useState<
+    | "solid"
+    | "flat"
+    | "light"
+    | "shadow"
+    | "dot"
+    | "bordered"
+    | "faded"
+    | undefined
+  >("solid");
   useEffect(() => {
     if (color) setColorr(color);
     if (variant) setVari(variant);
@@ -54,7 +70,7 @@ export function Stepp({ item }: any) {
     if (maxnum < items.length - 1) {
       delete items[value].status;
       if (value < items.length - 1) items[value + 1].disabled = false;
-      $("#content123 pre").empty();
+
       setItems(items);
 
       if (maxnum < value) setMaxnum(value);

@@ -48,7 +48,7 @@ interface LabelProps2 {
 }
 
 interface LabelProps3 {
-  data: string | undefined;
+  data: string;
   type: string | undefined;
   comment: string | undefined;
 }
@@ -198,10 +198,7 @@ export function SearchShow({
   const [executed, setExecuted] = useState<any | null>();
   const [isLoading, setLoading] = useState(false);
   const [toggle, setToggle] = useState(true);
-  const [custombtn, setCustombtn] = useState<Array<string> | null>([
-    "code",
-    "result",
-  ]);
+  const [custombtn, setCustombtn] = useState<Array<string>>(["code", "result"]);
 
   useEffect(() => {
     if (script) {
@@ -476,7 +473,14 @@ export function SearchScript({
     </div>
   );
 }
-export function SearchSingle({ script, script2, type, comment }: LabelProps1) {
+interface LabelProps5 {
+  script: string | undefined;
+  script2: string | undefined;
+  type: string;
+  comment: string;
+}
+
+export function SearchSingle({ script, script2, type, comment }: LabelProps5) {
   const [search, setSearch] = useState("");
   const [ftype, setFtype] = useState(type);
   const [cmt, setCmt] = useState(comment);
@@ -531,7 +535,7 @@ export function SearchSingle({ script, script2, type, comment }: LabelProps1) {
     </div>
   );
 }
-export function SearchSingle1({ script, script2, type, comment }: LabelProps1) {
+export function SearchSingle1({ script, script2, type, comment }: LabelProps5) {
   return (
     <SearchSingle
       script={script}
@@ -600,8 +604,17 @@ const Radiobtn = ({ onChange }: any) => {
     </div>
   );
 };
+interface MyObject {
+  id: number;
+  label: string;
+  conetnt: string;
+}
 
-export function SearchTab({ arr }: any) {
+interface MyExactData {
+  [key: string]: MyObject;
+}
+
+export function SearchTab({ arr }: MyExactData) {
   const [tabs, setTabs] = useState(arr);
   return (
     <div className="dark flex w-full flex-col">
