@@ -320,52 +320,46 @@ export function SearchShow1({
 }
 function Display({ data, type, comment }: LabelProps3) {
   const [expand, setExpand] = useState(false);
-
+  const [ht, setHt] = useState<number>(0);
+  useEffect(() => {
+    var offsetHeight = document.getElementById("dvScroll").offsetHeight;
+    setHt(offsetHeight);
+    console.log(offsetHeight);
+  }, []);
   const btnClass =
     "bg-gray-500 hover:bg-gray-300 text-gray-800 font-bold px-1 rounded inline-flex items-center mr-2 my-1";
-  if (type === "json") {
-    return (
+
+  return (
+    <div id="dvScroll">
       <ScrollShadow
         hideScrollBar
         size={100}
-        className={expand ? "max-h-[800px]" : "max-h-[300px]"}
+        className={`bg-[#011627] ${expand} ? "max-h-[800px]" : "max-h-[300px]"`}
         //className="max-h-[600px]"
       >
         <div>{comment}</div>
-        {comment && <Divider className="my-4" />}
-        <JsonView
-          data={data}
-          shouldExpandNode={allExpanded}
-          style={darkStyles}
-        />
-        <div className="sticky bottom-0 flex flex-col items-center pb-10">
-          <button onClick={() => setExpand(!expand)} className={btnClass}>
-            {expand ? "show less" : "show more"}
-          </button>
-        </div>
+        {type === "json" ? (
+          <JsonView
+            data={data}
+            shouldExpandNode={allExpanded}
+            style={darkStyles}
+          />
+        ) : (
+          <code
+            dangerouslySetInnerHTML={{
+              __html: data,
+            }}
+          />
+        )}
+        {ht > 300 && (
+          <div className="sticky bottom-0 flex flex-col items-center pb-10">
+            <button onClick={() => setExpand(!expand)} className={btnClass}>
+              {expand ? "show less" : "show more"}
+            </button>
+          </div>
+        )}
       </ScrollShadow>
-    );
-  }
-  return (
-    <ScrollShadow
-      hideScrollBar
-      size={100}
-      className={`bg-[#011627] ${expand} ? "max-h-[800px]" : "max-h-[300px]"`}
-      //className="max-h-[600px]"
-    >
-      <div>{comment}</div>
-      {comment && <Divider className="my-4" />}
-      <code
-        dangerouslySetInnerHTML={{
-          __html: data,
-        }}
-      />
-      <div className="sticky bottom-0 flex flex-col items-center pb-10">
-        <button onClick={() => setExpand(!expand)} className={btnClass}>
-          {expand ? "show less" : "show more"}
-        </button>
-      </div>
-    </ScrollShadow>
+    </div>
   );
 }
 

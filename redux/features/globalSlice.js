@@ -5,6 +5,7 @@ export const initialState = {
   isLogin: false,
   count: 0,
   tags: [],
+  theme: "light",
 };
 
 export const global = createSlice({
