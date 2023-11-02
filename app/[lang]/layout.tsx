@@ -7,8 +7,6 @@ import { ReduxProviders } from "@/redux/reduxProvider";
 import { Inter } from "next/font/google";
 import Footer from "./components/Footer";
 import NextUIProvider from "./NextUIProvider";
-import { ClientCookiesProvider } from "./cookieProvider";
-import { cookies } from "next/headers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,20 +28,18 @@ export default function RootLayout({
   return (
     <html lang={params.lang}>
       <body className={inter.className}>
-        <ClientCookiesProvider value={cookies().getAll()}>
-          <NextUIProvider>
-            <ReduxProviders>
-              <ThemeProviders>
-                {/* @ts-expect-error async server component */}
-                <Navbar lang={params.lang} />
+        <NextUIProvider>
+          <ReduxProviders>
+            <ThemeProviders>
+              {/* @ts-expect-error async server component */}
+              <Navbar lang={params.lang} />
 
-                <main>{children}</main>
-                {/* @ts-expect-error async server component */}
-                <Footer lang={params.lang} />
-              </ThemeProviders>
-            </ReduxProviders>
-          </NextUIProvider>
-        </ClientCookiesProvider>
+              <main>{children}</main>
+              {/* @ts-expect-error async server component */}
+              <Footer lang={params.lang} />
+            </ThemeProviders>
+          </ReduxProviders>
+        </NextUIProvider>
       </body>
     </html>
   );

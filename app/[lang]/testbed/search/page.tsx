@@ -322,19 +322,20 @@ function Display({ data, type, comment }: LabelProps3) {
   const [expand, setExpand] = useState(false);
   const [ht, setHt] = useState<number>(0);
   useEffect(() => {
-    var offsetHeight = document.getElementById("dvScroll").offsetHeight;
-    setHt(offsetHeight);
-    console.log(offsetHeight);
+    var dvScroll = document.getElementById("dvScroll") as HTMLDivElement;
+
+    setHt(dvScroll.offsetHeight);
   }, []);
   const btnClass =
     "bg-gray-500 hover:bg-gray-300 text-gray-800 font-bold px-1 rounded inline-flex items-center mr-2 my-1";
 
   return (
-    <div id="dvScroll">
+    <div id="dvScroll" className="bg-[#011627]">
       <ScrollShadow
         hideScrollBar
         size={100}
-        className={`bg-[#011627] ${expand} ? "max-h-[800px]" : "max-h-[300px]"`}
+        //className={`bg-[#011627] ${expand} ? 'max-h-[600px]' : 'max-h-[300px]'`}
+        className={expand ? "max-h-[600px]" : "max-h-[300px]"}
         //className="max-h-[600px]"
       >
         <div>{comment}</div>

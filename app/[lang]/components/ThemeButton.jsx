@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import { updateValue } from "@/redux/features/globalSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
@@ -11,15 +11,16 @@ export const ThemeButton = () => {
   const [mounted, setMounted] = useState(false);
 
   const dispatch = useAppDispatch();
-
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   if (!mounted) {
     return null;
   }
   const changeTheme = () => {
     setTheme(resolvedTheme === "dark" ? "light" : "dark");
-    setCookie("theme", resolvedTheme === "dark" ? "light" : "dark", 365);
+
     dispatch(
       updateValue({ theme: resolvedTheme === "dark" ? "light" : "dark" })
     );
