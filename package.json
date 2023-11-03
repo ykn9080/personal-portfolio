@@ -18,6 +18,8 @@
     "@boiseitguru/cookie-cutter": "^0.2.1",
     "@formatjs/intl-localematcher": "^0.4.0",
     "@headlessui/react": "^1.7.17",
+    "@mdx-js/loader": "^3.0.0",
+    "@next/mdx": "^14.0.1",
     "@nextui-org/react": "^2.1.13",
     "@reduxjs/toolkit": "^1.9.5",
     "@types/mdx": "^2.0.7",
