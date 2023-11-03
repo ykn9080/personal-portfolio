@@ -3,6 +3,7 @@
 import Diagram, { createSchema, useSchema } from "beautiful-react-diagrams";
 // import "beautiful-react-diagrams/styles.css";
 import "@/styles/beautiful-react-diagrams.css";
+import { useTheme } from "next-themes";
 
 // the diagram model
 const initialSchema = createSchema({
@@ -22,9 +23,10 @@ const initialSchema = createSchema({
 const UncontrolledDiagram = ({ schema }: any) => {
   // create diagrams schema
   const [schemainfo, { onChange }] = useSchema(createSchema(schema));
+  const { theme } = useTheme();
 
   return (
-    <div style={{ height: "12.5rem" }}>
+    <div className={`h-48 ${theme === "dark" ? "bg-[#011627]" : "bg-white"}`}>
       <Diagram schema={schemainfo} onChange={onChange} />
     </div>
   );

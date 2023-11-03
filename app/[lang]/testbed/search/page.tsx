@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, FormEvent, useEffect } from "react";
+import React, { useState, FormEvent, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { winProcess, namProcess } from "@/lib/childprocess";
 import hljs from "highlight.js/lib/core";
@@ -8,9 +8,13 @@ import javascript from "highlight.js/lib/languages/javascript";
 //import "@/styles/highlight-js/github-dark.css";
 //import "@/styles/highlight-js/atom-one-light.css";
 //import "@/styles/highlight-js/night-owl.css";
-import "highlight.js/styles/night-owl.css";
+//import "highlight.js/styles/night-owl.css";
 //import "highlight.js/styles/github-dark.css";
+//import "highlight.js/styles/github.css";
+//import "highlight.js/styles/atom-one-light.css";
+//import "highlight.js/styles/grayscale.css";
 //import "highlight.js/styles/default.css";
+
 import { LoadingScreen } from "@/app/[lang]/LoadingScreen";
 import "@/styles/cover-spin.css";
 import { elasticscript } from "./data";
@@ -321,22 +325,17 @@ export function SearchShow1({
 function Display({ data, type, comment }: LabelProps3) {
   const [expand, setExpand] = useState(false);
   const [ht, setHt] = useState<number>(0);
-  useEffect(() => {
-    var dvScroll = document.getElementById("dvScroll") as HTMLDivElement;
+  const listRef = useRef<HTMLDivElement>(null);
 
-    setHt(dvScroll.offsetHeight);
-  }, []);
   const btnClass =
     "bg-gray-500 hover:bg-gray-300 text-gray-800 font-bold px-1 rounded inline-flex items-center mr-2 my-1";
 
   return (
-    <div id="dvScroll" className="bg-[#011627]">
+    <div ref={listRef} className="bg-[#011627]">
       <ScrollShadow
         hideScrollBar
         size={100}
-        //className={`bg-[#011627] ${expand} ? 'max-h-[600px]' : 'max-h-[300px]'`}
-        className={expand ? "max-h-[600px]" : "max-h-[300px]"}
-        //className="max-h-[600px]"
+        className={expand ? "max-h-[650px]" : "max-h-[300px]"}
       >
         <div>{comment}</div>
         {type === "json" ? (
@@ -352,13 +351,12 @@ function Display({ data, type, comment }: LabelProps3) {
             }}
           />
         )}
-        {ht > 300 && (
-          <div className="sticky bottom-0 flex flex-col items-center pb-10">
-            <button onClick={() => setExpand(!expand)} className={btnClass}>
-              {expand ? "show less" : "show more"}
-            </button>
-          </div>
-        )}
+
+        <div className="sticky bottom-0 flex flex-col items-center pb-10">
+          <button onClick={() => setExpand(!expand)} className={btnClass}>
+            {expand ? "show less" : "show more"}
+          </button>
+        </div>
       </ScrollShadow>
     </div>
   );

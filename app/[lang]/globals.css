@@ -17,6 +17,14 @@
   max-height: 700px;
   overflow: auto;
 }
+
+/* Assume light mode by default */
+@import "@/styles/highlight-js/atom-one-light.css" screen and
+  (prefers-color-scheme: light);
+/* Supersede dark mode when applicable */
+@import "@/styles/highlight-js/night-owl.css" screen and
+  (prefers-color-scheme: dark);
+
 /*
 
 Dark style from softwaremaniacs.org (c) Ivan Sagalaev <Maniac@SoftwareManiacs.Org>

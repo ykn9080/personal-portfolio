@@ -6,8 +6,8 @@ import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
 import Image from "next/image";
 import { MDXRemote } from "next-mdx-remote/rsc";
-
-import "@/styles/highlight-js/github-dark.css";
+import React from "react";
+// import "@/styles/highlight-js/atom-one-light.css";
 import { serialize } from "next-mdx-remote/serialize";
 import notFound from "./not-found";
 import SideLocalbar from "@/app/[lang]/components/SideLocalbar";
@@ -77,6 +77,7 @@ export default function Post({ params }: any, lang: Locale) {
       rehypePlugins: [rehypeHighlight],
     },
   };
+
   return (
     <div className="md:container md:mx-auto lg py-6">
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
