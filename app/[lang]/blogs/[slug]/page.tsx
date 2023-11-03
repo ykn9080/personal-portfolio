@@ -25,6 +25,7 @@ import Search, {
   SearchSingle1,
   SearchHidden,
 } from "@/app/[lang]/testbed/search/page";
+import Iframe from "react-iframe";
 import {
   Chipp,
   Snippett,
@@ -137,6 +138,7 @@ export default function Post({ params }: any, lang: Locale) {
                   Tooltipp,
                   Spacee,
                   Dividerr,
+                  Iframe,
                 }}
               />
             </div>
