@@ -324,14 +324,12 @@ export function SearchShow1({
 }
 function Display({ data, type, comment }: LabelProps3) {
   const [expand, setExpand] = useState(false);
-  const [ht, setHt] = useState<number>(0);
-  const listRef = useRef<HTMLDivElement>(null);
 
   const btnClass =
     "bg-gray-500 hover:bg-gray-300 text-gray-800 font-bold px-1 rounded inline-flex items-center mr-2 my-1";
 
   return (
-    <div ref={listRef} className="bg-[#011627]">
+    <div className="bg-[#011627]">
       <ScrollShadow
         hideScrollBar
         size={100}
