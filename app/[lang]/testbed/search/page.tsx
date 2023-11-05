@@ -192,6 +192,7 @@ export function SearchShow({
 }: LabelProps1) {
   const [search, setSearch] = useState("");
   const [exescript, setExescript] = useState<string | null>();
+  const [hiddenscript, setHiddenscript] = useState<string | null>();
   const [ftype, setFtype] = useState(type);
   const [ftype1, setFtype1] = useState(type1);
   const [cmt, setCmt] = useState(comment);
@@ -212,7 +213,7 @@ export function SearchShow({
       setExescript(script1);
     }
     if (script2) {
-      executeHidden(script2);
+      setHiddenscript(script2);
     }
     if (buttonname) {
       const btn = buttonname.split(",");
@@ -254,6 +255,8 @@ export function SearchShow({
   const handleExecute = async () => {
     setToggle(false);
     if (!executed) {
+      // console.log("HHHHHHHHHHHHHHHH",hiddenscript)
+      // if (hiddenscript) await winProcess({ hiddenscript });
       const rtn = await handleClick(exescript, ftype1);
       setExecuted(rtn);
     }
