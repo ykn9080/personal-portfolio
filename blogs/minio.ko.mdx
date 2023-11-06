@@ -68,12 +68,54 @@ do
 done
 ```
 
+### minio setting - /etc/default/minio
+
+>
+
+<SearchSingle script="ssh nam cat /etc/default/minio" />
+<SearchTab
+  arr={[
+    {
+      id: "removeBucket",
+      label: "removeBucket",
+      content: <SearchShow script="cat /home/yknam/nodefiles/minio/removeBucket.js" script1="/home/yknam/nodefiles/minio/removeBucket.js"></SearchShow>,
+    },
+    {
+      id: "uploadFile",
+      label: "uploadFile",
+      content: (
+        <SearchShow
+         script="cat /home/yknam/nodefiles/minio/uploadFile.js" script1="/home/yknam/nodefiles/minio/uploadFile.js"
+        ></SearchShow>
+      ),
+    },
+
+]}
+/>
+
+<SearchSingle script="ssh nam aws s3 ls --endpoint-url http://localhost:9010"></SearchSingle>
+
 <SearchTab
   arr={[
     {
       id: "elasticsearch",
       label: "elasticsearch",
-      content: <SearchShow script="ls -la" script1="ls -la"></SearchShow>,
+      content: (
+        <SearchShow
+          script="ssh nam cat /home/yknam/sandbox/filebeat/conf/filebeat1.yml"
+          script1="curl get http://imcmaster.iptime.org:9200/filebeat*/_search"
+          type1="json"
+          comment1={
+            <>
+            <Chipp>filebeat → elasticsearch</Chipp>
+            <Codee>
+
+              curl get http://localhost:9200/filebeat*/_search
+            </Codee>
+            </>
+          }
+        ></SearchShow>
+      ),
     },
     {
       id: "logstash",
@@ -98,9 +140,16 @@ done
       content:
         "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     },
-  ]}
+    {
+      id: "redis",
+      label: "redis",
+      content:
+        "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    },
+
+]}
 />
-<SearchSingle script="ssh nam aws s3 ls --endpoint-url http://localhost:9010"></SearchSingle>
+
 ### aws s3 ls --endpoint-url http://localhost:9010
 
 ### aws s3 mb s3://examplebucket --endpoint-url http://localhost:9010

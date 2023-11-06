@@ -2,7 +2,7 @@
 
 import React, { useState, FormEvent, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { winProcess, namProcess } from "@/lib/childprocess";
+import { winProcess, winProcess1 } from "@/lib/childprocess";
 import hljs from "highlight.js/lib/core";
 import javascript from "highlight.js/lib/languages/javascript";
 //import "@/styles/highlight-js/github-dark.css";
@@ -75,9 +75,7 @@ export default function Search({ script }: LabelProps) {
     setLoading(true);
     //setSearch("");
     //router.push(`/${search}/`);
-    let rtn;
-    if (serverName === "namubuntu") rtn = await namProcess({ script: search });
-    else rtn = await winProcess({ script: search });
+    let rtn = await winProcess({ script: search });
     //rtn.result = rtn.result.replace(/\n/g, "<br />");
     hljs.registerLanguage("javascript", javascript);
     const highlighted = hljs.highlight(rtn.result, {
@@ -139,9 +137,7 @@ export function SearchLabel({ script }: LabelProps) {
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setLoading(true);
-    let rtn;
-    if (serverName === "namubuntu") rtn = await namProcess({ script: search });
-    else rtn = await winProcess({ script: search });
+    let rtn = await winProcess({ script: search });
 
     hljs.registerLanguage("javascript", javascript);
     const highlighted = hljs.highlight(rtn.result, {
@@ -237,7 +233,7 @@ export function SearchShow({
   ) => {
     setLoading(true);
     if (!script) return;
-    let rtn = await winProcess({ script });
+    let rtn = await winProcess1({ script });
 
     hljs.registerLanguage("javascript", javascript);
 
@@ -254,12 +250,16 @@ export function SearchShow({
   };
   const handleExecute = async () => {
     setToggle(false);
-    if (!executed) {
-      // console.log("HHHHHHHHHHHHHHHH",hiddenscript)
-      // if (hiddenscript) await winProcess({ hiddenscript });
-      const rtn = await handleClick(exescript, ftype1);
-      setExecuted(rtn);
+    if (hiddenscript) {
+      const rtn1 = await winProcess1({ script: hiddenscript });
+      console.log("ssssssss", hiddenscript, rtn1);
     }
+    //if (!executed) {
+
+    const rtn = await handleClick(exescript, ftype1);
+    console.log("HHHHHHHHHHHHHHHH", rtn);
+    setExecuted(rtn);
+    //}
   };
 
   const btnClass =

@@ -21,7 +21,7 @@ excerpt: 데이터 파이프라인을 관리하는 툴로 정교한 스케쥴기
 <SearchShow
   script=""
   script1="/home/yknam/airflow/command.sh 'airflow tasks list example_xcom'"
-></SearchShow>
+/>
 <Iframe
   url="http://imcmaster.iptime.org:5601/app/dev_tools#/console"
   width="640px"
@@ -30,4 +30,46 @@ excerpt: 데이터 파이프라인을 관리하는 툴로 정교한 스케쥴기
   className=""
   display="block"
   position="relative"
+/>
+
+## cli
+
+### dags list
+
+<SearchShow
+  comment="airflow dags list"
+  script1="/home/yknam/airflow/command.sh 'airflow dags list'"
+/>
+### task list
+<SearchShow
+  comment="airflow tasks list my_first_dag"
+  script1="/home/yknam/airflow/command.sh 'airflow tasks list my_first_dag'"
+/>
+
+### task trigger
+
+<SearchShow
+  comment="airflow dags trigger -e 2023-11-06 my_first_dag"
+  script1="/home/yknam/airflow/command.sh 'airflow dags trigger -e 2023-11-06 my_first_dag'"
+/>
+### task clear
+
+<SearchShow
+  comment="airflow tasks clear --start-date 2023-11-01T00:00:00+00:00 my_first_dag"
+  script1="/home/yknam/airflow/command.sh 'airflow tasks clear --start-date 2023-11-01T00:00:00+00:00 my_first_dag'"
+/>
+
+### backfill
+
+> 이전 날짜 계획을 실행한다.
+
+<SearchShow
+  script="airflow dags backfill \
+    --start-date 2023-11-04T14:00:00 \
+    --end-date 2023-11-06 \
+    backfill-01"
+  script1="/home/yknam/airflow/command.sh 'airflow dags backfill \
+    --start-date 2023-11-04T14:00:00 \
+    --end-date 2023-11-06 \
+    backfill-01'"
 />
