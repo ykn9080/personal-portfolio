@@ -1,6 +1,6 @@
 ---
 id: 12
-date:  2022-01-01
+date: 2022-01-01
 tags: ["works"]
 title: FormBuilder
 slug: formbuilder
@@ -16,6 +16,8 @@ videoSourceURL: https://www.youtube.com/embed/yCVvpjU93bc;https://www.youtube.co
 videoTitle: "원하는 위치에 삽입하는 폼;폼을 만들거나 수정하는 도구"
 excerpt: html form을 쉽고 빠르게 만들수 있어요. React를 기반으로 생성된 폼은 생성, 편집할 수 있는 기능이 제공됩니다.
 ---
+
+### Contents
 
 ![npm](https://img.shields.io/npm/v/imcformbuilder)
 ![npm bundle size](https://img.shields.io/bundlephobia/min/imcformbuilder?style=plastic)
@@ -39,31 +41,30 @@ npm install formbuilder
 이렇게 하면 상단에 편집버튼이 나타납니다. 편집 완료 후에는 코드를 삭제하세요.
 
 ```js
-import FormDisplay from "imcformbuilder"
-;<FormDisplay
+import FormDisplay from "imcformbuilder";
+<FormDisplay
   showedit={true}
   formArray={formArray}
   onFinish={onFinish}
   onValuesChange={onValuesChange}
-/>
+/>;
 ```
 
 ## EventHandler
 
 1. onFinish: 하단의 submit버튼을 클릭하면 fire됩니다. onFinish eventhandler function을 작성하고 return 값으로 value를 설정하세요.
-   리턴값은  키:값으로 구성된 json object입니다.
+   리턴값은 키:값으로 구성된 json object입니다.
 
 2. onValuesChange: 자바스크립트의 onKeyPress와 같이 키입력과 동시에 리턴되는 이벤트핸들러로서 두개의 값을 리턴합니다.
    첫번째는 현재 클릭한 폼아이템의 키와 값으로 구성된 json object이고, 두번째는 onFinish와 같이 전체 키,값으로 구성된 오브젝트입니다.
 
-
 ```js
-const onFinish = val => {
-  console.log(val)
-}
+const onFinish = (val) => {
+  console.log(val);
+};
 const onValuesChange = (changedValues, allValues) => {
-  console.log(changedValues, allValues)
-}
+  console.log(changedValues, allValues);
+};
 ```
 
 ## Sample data(formArray)

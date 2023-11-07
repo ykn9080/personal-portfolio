@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import { localBlogList, localBlog } from "../../../lib/blogs.js";
 import { Locale } from "@/i18n.config";
 import MyDialog from "./Modal.jsx";
 import { BiWindowOpen } from "react-icons/bi";
+import Toc from "./Toc";
 
 type Props = {
   slug: string;
@@ -37,24 +38,27 @@ export default function SideLocalbar({ slug, lang, meta }: Props) {
     return <p className="mt-10 text-center">Sorry, no posts available.</p>;
   }
   return (
-    <aside className="flex flex-col  h-screen pt-4 overflow-hidden">
-      <div>
+    <aside className="flex flex-col pt-4 overflow-hidden h-auto">
+      <div className="text-right">
+        <MyDialog
+          data={blogs}
+          language={language}
+          icon={
+            <div className="flex text-red-600 hover:text-blue-600 hover:bg-slate-200 mt-1">
+              <BiWindowOpen
+                className={` h-4 w-4`}
+                aria-hidden="true"
+              ></BiWindowOpen>
+              <p className="text-xs ml-1 hover:underline">List</p>
+            </div>
+          }
+          list={null}
+        />
+      </div>
+      <Toc />
+      {/* <div>
         <div className="flex items-center justify-between">
           <h2 className="text-base font-semibold ">Other List</h2>
-          <MyDialog
-            data={blogs}
-            language={language}
-            icon={
-              <div className="flex text-red-600 hover:text-blue-600 hover:bg-slate-200 mt-1">
-                <BiWindowOpen
-                  className={` h-4 w-4`}
-                  aria-hidden="true"
-                ></BiWindowOpen>
-                <p className="text-xs ml-1 hover:underline">view all</p>
-              </div>
-            }
-            list={null}
-          />
         </div>
 
         <nav className="mt-4 -mx-3 space-y-3 ">
@@ -76,7 +80,7 @@ export default function SideLocalbar({ slug, lang, meta }: Props) {
             );
           })}
         </nav>
-      </div>
+      </div> */}
 
       <div>
         <div className="mt-3">

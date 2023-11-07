@@ -233,7 +233,7 @@ export function SearchShow({
   ) => {
     setLoading(true);
     if (!script) return;
-    let rtn = await winProcess1({ script });
+    let rtn = await winProcess({ script });
 
     hljs.registerLanguage("javascript", javascript);
 
@@ -251,15 +251,13 @@ export function SearchShow({
   const handleExecute = async () => {
     setToggle(false);
     if (hiddenscript) {
-      const rtn1 = await winProcess1({ script: hiddenscript });
-      console.log("ssssssss", hiddenscript, rtn1);
+      const rtn1 = await winProcess({ script: hiddenscript });
     }
-    //if (!executed) {
-
+    
     const rtn = await handleClick(exescript, ftype1);
-    console.log("HHHHHHHHHHHHHHHH", rtn);
+    
     setExecuted(rtn);
-    //}
+    
   };
 
   const btnClass =

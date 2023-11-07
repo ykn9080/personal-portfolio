@@ -3,6 +3,7 @@ import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeHighlight from "rehype-highlight";
 import rehypeSlug from "rehype-slug";
 import remarkGfm from "remark-gfm";
+import remarkToc from "remark-toc";
 
 /** @type {import('next').NextConfig} */
 
@@ -48,7 +49,7 @@ const nextConfig = {
 const withMDX = createMDX({
   // Add markdown plugins here, as desired
   options: {
-    remarkPlugins: [remarkGfm],
+    remarkPlugins: [remarkGfm, remarkToc],
     rehypePlugins: [rehypeAutolinkHeadings, rehypeHighlight, rehypeSlug],
   },
 });

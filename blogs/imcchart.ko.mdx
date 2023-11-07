@@ -1,6 +1,6 @@
 ---
 id: 13
-date:  2022-01-01
+date: 2022-01-01
 tags: ["works"]
 title: imcChart
 slug: imcchart
@@ -16,6 +16,8 @@ videoSourceURL: https://www.youtube.com/embed/FFfVrjAgoU8
 videoTitle: "고퀄리티 차트를 쉽게 만들수 있어요"
 excerpt: json 데이터를 입력하면 쉽게 만들수 있는 npm module.line,colume,area,pie chart를 사용할 수있다.imcdashboard의 모듈로 삽입하여 사용할 수 있다.
 ---
+
+### Contents
 
 <div align="center">
 
@@ -44,8 +46,8 @@ $ npm install imcchart
 ## 🔨 Usage
 
 ```js | pure
-import React from "react"
-import EasyChart from "imcchart"
+import React from "react";
+import EasyChart from "imcchart";
 
 const ChartDemo = () => {
   const sampledata = {
@@ -95,15 +97,15 @@ const ChartDemo = () => {
         Sales: 13320,
       },
     ],
-  }
+  };
 
   return (
     <div>
       <EasyChart authObj={sampledata} showmenu={true} />
     </div>
-  )
-}
-export default Page
+  );
+};
+export default Page;
 ```
 
 ### ✨ [Demo](http://imcmaster.iptime.org:5009)

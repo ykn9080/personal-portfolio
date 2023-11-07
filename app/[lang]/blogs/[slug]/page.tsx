@@ -3,12 +3,13 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import remarkGfm from "remark-gfm";
+import remarkToc from "remark-toc";
 import rehypeHighlight from "rehype-highlight";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeSlug from "rehype-slug";
 import Image from "next/image";
 import { MDXRemote } from "next-mdx-remote/rsc";
-import React from "react";
+import React, { useEffect } from "react";
 // import "@/styles/highlight-js/atom-one-light.css";
 import { serialize } from "next-mdx-remote/serialize";
 import notFound from "./not-found";
@@ -73,10 +74,11 @@ function getPost({ slug }: { slug: string }) {
 export default function Post({ params }: any, lang: Locale) {
   const props = getPost(params);
   const { frontMatter, content } = props;
-
+  // const headings = getHeadings(content);
+  // console.log(content, headings);
   const options = {
     mdxOptions: {
-      remarkPlugins: [remarkGfm],
+      remarkPlugins: [remarkGfm, remarkToc],
       rehypePlugins: [
         rehypeSlug,
         rehypeHighlight,

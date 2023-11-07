@@ -2,24 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 
-.prose .anchor {
-  @apply invisible absolute no-underline;
-
-  margin-left: -1em;
-  padding-right: 0.5em;
+#contents {
+  margin: 5px 0 5px 0;
+  font-weight: bold;
+}
+#dvToc {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  width: 100%;
+}
+#dvToc a {
+  font-size: 13px;
+}
+#dvToc a:hover {
   cursor: pointer;
+  font-weight: bold;
+  text-decoration: underline;
+}
+#dvToc li > ul > li {
+  text-indent: 1em;
+  display: list-item;
 }
 
-.prose .anchor:after {
-  @apply text-gray-300 dark:text-gray-700;
-  content: "#";
+#dvToc li > ul > li:before {
+  content: "- ";
 }
 
-.anchor:hover,
-.prose *:hover > .anchor {
-  @apply visible;
+#dvToc li:before {
+  content: "• ";
 }
-
 .btn {
   @apply font-bold py-2 px-4 rounded;
 }

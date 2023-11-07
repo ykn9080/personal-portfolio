@@ -1,6 +1,6 @@
 ---
 id: 13
-date:  2022-01-01
+date: 2022-01-01
 tags: ["works"]
 title: imcChart
 slug: imcchart
@@ -16,6 +16,8 @@ videoSourceURL: https://www.youtube.com/embed/4tpeBVwRjYw
 videoTitle: "Make a beautiful chart easily"
 excerpt: You can use npm module.line, column, area, pie chart, which can be easily created by entering json data. It can be used by inserting it as a module of imcdashboard.
 ---
+
+### Contents
 
 <div align="center">
 
@@ -44,8 +46,8 @@ $ npm install imcchart
 ## 🔨 Usage
 
 ```js | pure
-import React from "react"
-import EasyChart from "imcchart"
+import React from "react";
+import EasyChart from "imcchart";
 
 const ChartDemo = () => {
   const sampledata = {
@@ -95,15 +97,15 @@ const ChartDemo = () => {
         Sales: 13320,
       },
     ],
-  }
+  };
 
   return (
     <div>
       <EasyChart authObj={sampledata} showmenu={true} />
     </div>
-  )
-}
-export default Page
+  );
+};
+export default Page;
 ```
 
 ### ✨ [Demo](http://imcmaster.iptime.org:5009)

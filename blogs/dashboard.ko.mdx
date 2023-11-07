@@ -1,6 +1,6 @@
 ---
 id: 11
-date:  2022-01-01
+date: 2022-01-01
 tags: ["works"]
 title: Dashboard
 slug: dashboard
@@ -17,10 +17,14 @@ videoTitle: "대쉬보드를 쉽게 설치하여 사용가능합니다."
 excerpt: chart,table,html문서등의 요소를 drag and drop으로 화면에 배치할 수 있다. 주제와 목적에 따라 복수의 dashboard를 생성하여 리스트로 관리한다. 필요에 따라 Easy chart, Easy table, html 등 다양한 모듈을 plugin으로 추가하여 사용할수있다.
 ---
 
+### Contents
+
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/ykn9080/imcDashboard/LICENSE)
 
 > 대쉬보드기능을 제공하는 오픈소스. 차트,테이블,html문서 등을 drag & drop으로 배치할 수 있다. 각 오브젝트의 레이아웃과 사이즈변경을 할수 있으며. 각각의 오브젝트를 생성, 수정, 삭제할 수 있다.
 > 주제별로 여러개의 대쉬보드는 생성할 수 있고, 리스트로 관리할 수 있다.
+
+### Contents
 
 ## Install
 
@@ -61,22 +65,19 @@ docker run --name imcdashboard -p 7000:80 -d yknam/imcdashboard
 
 ## EventHandler
 
-
 1. onFinish: By clicking submit button, onFinish function returns a value as object.
    With this you can proceed other action, such as save to server or change state.
-  
+
 2. onValuesChange: returns two parameters, changedValues, allValues.
    First value return just changed key value object, last value returns all key value object.
 
-
-
 ```javascript
-const onFinish = val => {
-  console.log(val)
-}
+const onFinish = (val) => {
+  console.log(val);
+};
 const onValuesChange = (changedValues, allValues) => {
-  console.log(changedValues, allValues)
-}
+  console.log(changedValues, allValues);
+};
 ```
 
 ## Sample data(formArray)
