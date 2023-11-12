@@ -1,4 +1,4 @@
-// app/blog/[slug]/page.tsx
+//@ts-nocheck
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
@@ -106,7 +106,11 @@ export default function Post({ params }: any, lang: Locale) {
               <Image
                 src={props.frontMatter.featureImage}
                 width={400}
-                height={100}
+                height={160}
+                sizes="(max-width: 768px) 100vw,
+              (max-width: 1200px) 50vw,
+              50vw"
+                style={{ height: "100%", width: "100%" }}
                 alt="featureImage"
               />
             </div>
@@ -128,7 +132,7 @@ export default function Post({ params }: any, lang: Locale) {
               </div>
             )}
             <div className="leading-5 ">
-              {/* @ts-expect-error Server Component*/}
+              {/* @ts-expect-error Server Component */}
               <MDXRemote
                 source={props.content}
                 options={options}
