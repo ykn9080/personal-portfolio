@@ -32,6 +32,13 @@
 #dvToc li:before {
   content: "• ";
 }
+/* 
+#dvToc li > ul > li > a.is-active {
+  color: #00025e;
+  border-bottom: 2px solid #00025e;
+  transition: border-color 0.125s cubic-bezier(0.4, 0, 0.2, 1);
+} */
+
 .btn {
   @apply font-bold py-2 px-4 rounded;
 }
