@@ -13,14 +13,15 @@ github: https://github.com/ykn9080/childprocess
 demo:
 videoSourceURL:
 videoTitle:
-excerpt: event driven 방식으로 작동되는 nodejs에서 다수의 thread를 생성하여 작동하는 방식
+excerpt: single thread, event driven 방식으로 작동되는 nodejs에서 별도의 thread가 필요한 경우 child_process를 사용한다.
 ---
 
 ### Contents
 
 ## child_process
 
-> node실행 중 shell script를 실행하려고 할때, 새로운 프로세스 즉 child process를 생성하여 실행할 수 있다.
+> 아래의 예제 코드는 client에서 서버의 shell script를 실행하려는 예이다.
+> 이때 main nodejs의 thread 이외에 새로운 프로세스 즉 child process를 생성하여 실행할 수 있다.
 
 ### 기본 실행코드
 
@@ -90,7 +91,3 @@ export default function App() {
 Markdown in general is often paired with frontmatter, and normally this means adding some extra custom processing to the way markdown is handled. To address this, `next-mdx-remote` comes with optional parsing of frontmatter, which can be enabled by passing `parseFrontmatter: true` to `serialize`.
 
 </details>
-<Button text="hello1"/>
-<MyPopOver />
-<SearchLabel script="ls -la" port="7878" />
-<Search />

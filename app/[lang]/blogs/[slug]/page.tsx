@@ -28,6 +28,7 @@ import Search, {
   SearchSingle1,
   SearchHidden,
 } from "@/app/[lang]/testbed/search/page";
+import Toc from "@/app/[lang]/components/Toc";
 import Iframe from "react-iframe";
 import {
   Chipp,
@@ -38,7 +39,6 @@ import {
   Dividerr,
 } from "@/app/[lang]/components/nextui";
 import Diagram from "@/app/[lang]/components/Diagram";
-import Toc from "@/app/[lang]/components/Toc";
 
 export async function generateStaticParams() {
   const files = fs.readdirSync(path.join("blogs"));
