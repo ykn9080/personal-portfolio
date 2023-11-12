@@ -7,5 +7,5 @@ export default function Toc() {
   useEffect(() => {
     $("#dvToc").append($("#contents + ul")).prepend($("#contents"));
   }, []);
-  return <div id="dvToc" className="mb-1 sticky top-0"></div>;
+  return <div id="dvToc" className="mt-3 sticky top-0 bg-white"></div>;
 }

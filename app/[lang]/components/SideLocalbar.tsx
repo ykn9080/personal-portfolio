@@ -38,25 +38,26 @@ export default function SideLocalbar({ slug, lang, meta }: Props) {
     return <p className="mt-10 text-center">Sorry, no posts available.</p>;
   }
   return (
-    <aside className="flex flex-col pt-4 overflow-hidden h-auto">
-      <div className="text-right">
-        <MyDialog
-          data={blogs}
-          language={language}
-          icon={
-            <div className="flex text-red-600 hover:text-blue-600 hover:bg-slate-200 mt-1">
-              <BiWindowOpen
-                className={` h-4 w-4`}
-                aria-hidden="true"
-              ></BiWindowOpen>
-              <p className="text-xs ml-1 hover:underline">List</p>
-            </div>
-          }
-          list={null}
-        />
-      </div>
-      <Toc />
-      {/* <div>
+    <div>
+      <aside className="flex flex-col pt-4 overflow-hidden h-full">
+        <div className="text-right">
+          <MyDialog
+            data={blogs}
+            language={language}
+            icon={
+              <div className="flex text-red-600 hover:text-blue-600 hover:bg-slate-200 mt-1">
+                <BiWindowOpen
+                  className={` h-4 w-4`}
+                  aria-hidden="true"
+                ></BiWindowOpen>
+                <p className="text-xs ml-1 hover:underline">List</p>
+              </div>
+            }
+            list={null}
+          />
+        </div>
+
+        {/* <div>
         <div className="flex items-center justify-between">
           <h2 className="text-base font-semibold ">Other List</h2>
         </div>
@@ -82,33 +83,34 @@ export default function SideLocalbar({ slug, lang, meta }: Props) {
         </nav>
       </div> */}
 
-      <div>
-        <div className="mt-3">
-          <h2 className="text-base font-semibold ">Github</h2>
-          <div className="text-sm break-words px-1  hover:text-blue-500">
-            <a href={meta.github} target="blank" title="github">
-              {meta.github}
-            </a>
+        <div>
+          <div className="mt-3">
+            <h2 className="text-base font-semibold ">Github</h2>
+            <div className="text-sm break-words px-1  hover:text-blue-500">
+              <a href={meta.github} target="blank" title="github">
+                {meta.github}
+              </a>
+            </div>
           </div>
-        </div>
 
-        <div className="mt-3">
-          <h2 className="text-base font-semibold">npm</h2>
-          <div className="text-sm break-words  px-1 hover:text-blue-500">
-            <a href={meta.npmorg} target="blank" title="npm">
-              {meta.npmorg}
-            </a>
+          <div className="mt-3">
+            <h2 className="text-base font-semibold">npm</h2>
+            <div className="text-sm break-words  px-1 hover:text-blue-500">
+              <a href={meta.npmorg} target="blank" title="npm">
+                {meta.npmorg}
+              </a>
+            </div>
+          </div>
+          <div className="mt-3">
+            <h2 className="text-base font-semibold ">Demo</h2>
+            <div className="text-sm break-words px-1   hover:text-blue-500">
+              <a href={meta.demo} target="blank" title="demo">
+                {meta.demo}
+              </a>
+            </div>
           </div>
         </div>
-        <div className="mt-3">
-          <h2 className="text-base font-semibold ">Demo</h2>
-          <div className="text-sm break-words px-1   hover:text-blue-500">
-            <a href={meta.demo} target="blank" title="demo">
-              {meta.demo}
-            </a>
-          </div>
-        </div>
-      </div>
-    </aside>
+      </aside>
+    </div>
   );
 }

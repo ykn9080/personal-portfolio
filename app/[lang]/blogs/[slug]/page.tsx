@@ -38,6 +38,7 @@ import {
   Dividerr,
 } from "@/app/[lang]/components/nextui";
 import Diagram from "@/app/[lang]/components/Diagram";
+import Toc from "@/app/[lang]/components/Toc";
 
 export async function generateStaticParams() {
   const files = fs.readdirSync(path.join("blogs"));
@@ -163,6 +164,7 @@ export default function Post({ params }: any, lang: Locale) {
         <div className="pl-3">
           {/* @ts-expect-error Server Component */}
           <SideLocalbar slug={props.slug} lang={lang} meta={frontMatter} />
+          <Toc />
         </div>
       </div>
     </div>
