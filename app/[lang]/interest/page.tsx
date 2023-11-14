@@ -71,6 +71,7 @@ export default async function DetailPage({
   if (!blogs) {
     return <p className="mt-10 text-center">Sorry, no posts available.</p>;
   }
+
   return (
     <div className="container py-10">
       <h1 className="text-2xl font-semibold capitalize lg:text-3xl flex justify-between">

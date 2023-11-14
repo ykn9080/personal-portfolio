@@ -14,7 +14,7 @@ export default function Toc() {
         const tocHeadingEl = document.querySelector(
           `#dvToc a[href="#${enid}"]`
         );
-        console.log(id, enid, tocHeadingEl);
+
         if (!tocHeadingEl) return;
         if (entry.isIntersecting) {
           document
@@ -30,9 +30,8 @@ export default function Toc() {
     };
     const observer = new IntersectionObserver(setCurrent, observerOptions);
 
-    document.querySelectorAll("h2, h3, h4, h5, h6").forEach((heading) => {
-      console.log(heading);
-      observer.observe(heading);
+    document.querySelectorAll("h2, h3, h4, h5, h6").forEach((entries) => {
+      observer.observe(entries);
     });
   }, []);
   return <div id="dvToc" className="mt-3 sticky top-8 "></div>;
