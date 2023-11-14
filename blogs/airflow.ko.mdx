@@ -21,6 +21,7 @@ excerpt: 데이터 파이프라인을 관리하는 툴로 정교한 스케쥴기
 ## Why Airflow
 
 <SearchShow
+  id="dvair1"
   script=""
   script1="/home/yknam/airflow/command.sh 'airflow tasks list example_xcom'"
 />
@@ -39,11 +40,13 @@ excerpt: 데이터 파이프라인을 관리하는 툴로 정교한 스케쥴기
 ### dags list
 
 <SearchShow
+  id="dvair2"
   comment="airflow dags list"
   script1="/home/yknam/airflow/command.sh 'airflow dags list'"
 />
 ### task list
 <SearchShow
+  id="dvair3"
   comment="airflow tasks list my_first_dag"
   script1="/home/yknam/airflow/command.sh 'airflow tasks list my_first_dag'"
 />
@@ -51,12 +54,14 @@ excerpt: 데이터 파이프라인을 관리하는 툴로 정교한 스케쥴기
 ### task trigger
 
 <SearchShow
+  id="dvair4"
   comment="airflow dags trigger -e 2023-11-06 my_first_dag"
   script1="/home/yknam/airflow/command.sh 'airflow dags trigger -e 2023-11-06 my_first_dag'"
 />
 ### task clear
 
 <SearchShow
+  id="dvair5"
   comment="airflow tasks clear --start-date 2023-11-01T00:00:00+00:00 my_first_dag"
   script1="/home/yknam/airflow/command.sh 'airflow tasks clear --start-date 2023-11-01T00:00:00+00:00 my_first_dag'"
 />
@@ -66,6 +71,7 @@ excerpt: 데이터 파이프라인을 관리하는 툴로 정교한 스케쥴기
 > 이전 날짜 계획을 실행한다.
 
 <SearchShow
+  id="dvair6"
   script="airflow dags backfill \
     --start-date 2023-11-04T14:00:00 \
     --end-date 2023-11-06 \

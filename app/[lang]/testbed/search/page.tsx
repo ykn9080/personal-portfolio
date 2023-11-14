@@ -28,6 +28,7 @@ import "@/styles/jsonlite.css";
 import { ScrollShadow } from "@nextui-org/react";
 import { Tabs, Tab, Divider } from "@nextui-org/react";
 import { Stepp } from "@/app/[lang]/components/nextui";
+import $ from "jquery";
 
 interface LabelProps {
   script: string;
@@ -35,6 +36,7 @@ interface LabelProps {
   comment: string;
 }
 interface LabelProps1 extends LabelProps {
+  id: string;
   script1: string | null;
   script2: string | null;
   type1: string;
@@ -42,6 +44,7 @@ interface LabelProps1 extends LabelProps {
   buttonname: string | null;
 }
 interface LabelProps2 {
+  id: string;
   filename: keyof Ielasticscript;
   script1: string;
   type: string;
@@ -52,6 +55,7 @@ interface LabelProps2 {
 }
 
 interface LabelProps3 {
+  id: string;
   data: string;
   type: string | undefined;
   comment: string | undefined;
@@ -177,6 +181,7 @@ export function SearchLabel({ script }: LabelProps) {
 }
 
 export function SearchShow({
+  id,
   script,
   script1,
   script2,
@@ -288,6 +293,7 @@ export function SearchShow({
         )}
         <div className="clear-both" />
         <Display
+          id={id}
           data={toggle ? result : executed}
           type={toggle ? ftype : ftype1}
           comment={toggle ? cmt : cmt1}
@@ -300,6 +306,7 @@ export function SearchShow({
 }
 
 export function SearchShow1({
+  id,
   script,
   script1,
   script2,
@@ -311,6 +318,7 @@ export function SearchShow1({
 }: LabelProps1) {
   return (
     <SearchShow
+      id={id}
       script={script}
       script1={script1}
       script2={script2}
@@ -322,18 +330,50 @@ export function SearchShow1({
     />
   );
 }
-function Display({ data, type, comment }: LabelProps3) {
-  const [expand, setExpand] = useState(false);
+function Display({ id, data, type, comment }: LabelProps3) {
+  const [expand, setExpand] = useState("low");
+  const [ht, setHt] = useState<number>(399);
+  console.log(id);
+  useEffect(() => {
+    if (id !== "undefined") {
+      const htt = $("#" + id).height();
 
+      if (htt) {
+        console.log(htt);
+        setHt(htt);
+      }
+      console.log("im in", id, htt);
+    }
+  });
   const btnClass =
     "bg-gray-500 hover:bg-gray-300 text-gray-800 font-bold px-1 rounded inline-flex items-center mr-2 my-1";
-
+  const toggle = (current: string) => {
+    let status = "low";
+    switch (current) {
+      case "low":
+        status = "mid";
+        break;
+      case "mid":
+        status = "high";
+        break;
+      case "high":
+        status = "low";
+        break;
+    }
+    setExpand(status);
+  };
   return (
-    <div className="bg-[#011627]">
+    <div id={id} className="bg-[#011627]">
       <ScrollShadow
         hideScrollBar
         size={100}
-        className={expand ? "max-h-[650px]" : "max-h-[300px]"}
+        className={
+          expand === "low"
+            ? "max-h-[300px]"
+            : expand === "mid"
+            ? "max-h-[650px]"
+            : "h-full"
+        }
       >
         <div>{comment}</div>
         {type === "json" ? (
@@ -350,9 +390,14 @@ function Display({ data, type, comment }: LabelProps3) {
           />
         )}
       </ScrollShadow>
+
       <div className="sticky bottom-0 flex flex-col items-center pb-10">
-        <button onClick={() => setExpand(!expand)} className={btnClass}>
-          {expand ? "show less" : "show more"}
+        <button onClick={() => toggle(expand)} className={btnClass}>
+          {expand === "high"
+            ? "show less"
+            : expand === "mid"
+            ? "show all"
+            : "show more"}
         </button>
       </div>
     </div>
@@ -370,6 +415,7 @@ interface Ielasticscript {
 }
 
 export function SearchScript({
+  id,
   filename,
   type,
   script1,
@@ -457,6 +503,7 @@ export function SearchScript({
           </>
         )}
         <Display
+          id={id}
           data={toggle ? result : executed}
           type={toggle ? ftype : ftype1}
           comment={toggle ? cmt : cmt1}
@@ -468,13 +515,20 @@ export function SearchScript({
   );
 }
 interface LabelProps5 {
+  id: string;
   script: string | undefined;
   script2: string | undefined;
   type: string;
   comment: string;
 }
 
-export function SearchSingle({ script, script2, type, comment }: LabelProps5) {
+export function SearchSingle({
+  id,
+  script,
+  script2,
+  type,
+  comment,
+}: LabelProps5) {
   const [search, setSearch] = useState("");
   const [ftype, setFtype] = useState(type);
   const [cmt, setCmt] = useState(comment);
@@ -523,15 +577,22 @@ export function SearchSingle({ script, script2, type, comment }: LabelProps5) {
   return (
     <div className="w-full">
       <pre className="bg-[#011627]">
-        <Display data={result} type={ftype} comment={cmt} />
+        <Display id={id} data={result} type={ftype} comment={cmt} />
         {isLoading && <LoadingScreen />}
       </pre>
     </div>
   );
 }
-export function SearchSingle1({ script, script2, type, comment }: LabelProps5) {
+export function SearchSingle1({
+  id,
+  script,
+  script2,
+  type,
+  comment,
+}: LabelProps5) {
   return (
     <SearchSingle
+      id={id}
       script={script}
       script2={script2}
       type={type}

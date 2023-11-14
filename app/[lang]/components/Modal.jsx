@@ -61,7 +61,7 @@ export default function MyDialog({ data, language, icon, list }) {
         {/* Full-screen container to center the panel */}
         <div className="fixed inset-0 flex items-center justify-center p-4 min-h-fit">
           {/* The actual dialog panel  */}
-          <Dialog.Panel className="mx-auto max-w-lg rounded bg-white p-5  dark:bg-slate-700 dark:text-white">
+          <Dialog.Panel className="max-w-lg rounded bg-white p-5  dark:bg-slate-700 dark:text-white">
             <Dialog.Title className="flex justify-between">
               <p className="text-xl font-bold ">Interest List</p>
               {list}
@@ -77,7 +77,7 @@ export default function MyDialog({ data, language, icon, list }) {
                 </svg>
               </button>
             </Dialog.Title>
-            <div className="mt-4  flex flex-wrap">
+            <div className="mt-4  flex flex-wrap min-w-lg">
               {filteredData.map((k, i) => {
                 return (
                   // eslint-disable-next-line react/jsx-key

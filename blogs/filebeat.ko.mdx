@@ -1,7 +1,7 @@
 ---
 id: 125
 date: 2023-09-12
-tags: ["elk"]
+tags: ["elastic"]
 title: Filebeat
 slug: filebeat
 seq: 4
@@ -27,7 +27,7 @@ excerpt: 간편하게 메트릭 데이터를 수집.
       
       content: (
       <SearchSingle
-       
+       id="filebeat1"
         comment={
           <Diagram schema={{
               nodes: [
@@ -67,6 +67,7 @@ excerpt: 간편하게 메트릭 데이터를 수집.
         content: (
           <>
         <SearchShow
+          id="file2"
           script="ssh nam cat /home/yknam/sandbox/filebeat/conf/filebeat1_short.yml"
           script1="ssh nam /home/yknam/sandbox/filebeat/filebeat -c /home/yknam/sandbox/filebeat/conf/filebeat1.yml"
           type1="json"
@@ -99,6 +100,7 @@ excerpt: 간편하게 메트릭 데이터를 수집.
       title: "Elastic Search 조회",
         content: (
         <SearchShow1
+        id="file3"
           script="curl get http://imcmaster.iptime.org:9200/filebeat*/_search"
           script1="ssh nam rm -rf /home/yknam/sandbox/filebeat/data;ssh nam curl -X DELETE localhost:9200/filebeat\*"
           buttonname="view,reset"
@@ -130,7 +132,7 @@ excerpt: 간편하게 메트릭 데이터를 수집.
 
 #### filebeat.yml
 
-<SearchScript filename="filebeatyml" />
+<SearchScript id="file5" filename="filebeatyml" />
 
 💡 filebeat는 한번 실행한 데이터는 다시 읽지 않기 때문에 새로 데이터를 읽으려면 data디렉토리를 삭제한 후 실행해야함
 
@@ -143,6 +145,7 @@ excerpt: 간편하게 메트릭 데이터를 수집.
       label: "elasticsearch",
       content: (
         <SearchShow
+        id="file6"
           script="ssh nam cat /home/yknam/sandbox/filebeat/conf/filebeat1.yml"
           script1="curl get http://imcmaster.iptime.org:9200/filebeat*/_search"
           type1="json"
@@ -198,7 +201,9 @@ excerpt: 간편하게 메트릭 데이터를 수집.
     {
       id: "elasticsearch",
       label: "elasticsearch",
-      content: <SearchShow script="ls -la" script1="ls -la"></SearchShow>,
+      content: (
+        <SearchShow id="file9" script="ls -la" script1="ls -la"></SearchShow>
+      ),
     },
     {
       id: "logstash",

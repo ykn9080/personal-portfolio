@@ -31,11 +31,20 @@ const sortByFrequency = (tags) => {
     countArr.push({ name: k, count: num });
   });
   const orderObj = _.orderBy(countArr, "count", "desc");
-  return orderObj;
+  const finalObj = othersLast(orderObj);
+  return finalObj;
+};
+const othersLast = (tags) => {
+  let others;
+  tags.map((k, i) => {
+    if (k.name === "others") others = tags.splice(i, 1);
+  });
+  console.log(others);
+  if (others !== "undefined") tags.push(others);
+  return tags;
 };
 
 export default function MyListBox({ tags }) {
-  console.log(tags);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedTags, setSelectedTags] = useState([]);
   const [allTags, setAllTags] = useState(sortByFrequency(tags));
@@ -70,9 +79,9 @@ export default function MyListBox({ tags }) {
     dispatch(updateValue({ tags: selectedTagsUpdated }));
     setIsOpen(false);
   }
-  console.log("allTags", allTags);
+
   return (
-    <div className="flex w-72">
+    <div className="flex w-52">
       <div className="w-full max-w-lg mx-auto">
         <Listbox
           as="div"
@@ -146,12 +155,12 @@ export default function MyListBox({ tags }) {
                                 active
                                   ? "text-white bg-blue-600"
                                   : "text-gray-900"
-                              } cursor-default select-none relative pl-4 pr-4`}
+                              } cursor-default select-none relative pl-2 pr-4`}
                             >
                               <span
                                 className={`${
                                   selected ? "font-semibold" : "font-normal"
-                                } block truncate`}
+                                } ml-5 block truncate`}
                               >
                                 {`${tag.name}(${tag.count})`}
                               </span>

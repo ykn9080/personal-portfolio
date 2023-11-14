@@ -30,7 +30,7 @@ type searchblog = {
 type tagslist = {
   tag: string;
 };
-const uniqTags = (searchblogs: searchblog[]): string[] => {
+export const uniqTags = (searchblogs: searchblog[]): string[] => {
   let array: string[] = [];
   searchblogs.map((k, i) => {
     array = array.concat(k.tags);

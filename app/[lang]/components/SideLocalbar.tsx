@@ -4,7 +4,8 @@ import { localBlogList, localBlog } from "../../../lib/blogs.js";
 import { Locale } from "@/i18n.config";
 import MyDialog from "./Modal.jsx";
 import { BiWindowOpen } from "react-icons/bi";
-import Toc from "./Toc";
+import MyListBox from "@/app/[lang]/components/ListBox";
+import { uniqTags } from "@/app/[lang]/interest/page";
 
 type Props = {
   slug: string;
@@ -53,7 +54,7 @@ export default function SideLocalbar({ slug, lang, meta }: Props) {
                 <p className="text-xs ml-1 hover:underline">List</p>
               </div>
             }
-            list={null}
+            list={<MyListBox tags={uniqTags(blogs)} />}
           />
         </div>
 
