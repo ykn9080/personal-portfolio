@@ -253,11 +253,10 @@ export function SearchShow({
     if (hiddenscript) {
       const rtn1 = await winProcess({ script: hiddenscript });
     }
-    
+
     const rtn = await handleClick(exescript, ftype1);
-    
+
     setExecuted(rtn);
-    
   };
 
   const btnClass =
@@ -350,13 +349,12 @@ function Display({ data, type, comment }: LabelProps3) {
             }}
           />
         )}
-
-        <div className="sticky bottom-0 flex flex-col items-center pb-10">
-          <button onClick={() => setExpand(!expand)} className={btnClass}>
-            {expand ? "show less" : "show more"}
-          </button>
-        </div>
       </ScrollShadow>
+      <div className="sticky bottom-0 flex flex-col items-center pb-10">
+        <button onClick={() => setExpand(!expand)} className={btnClass}>
+          {expand ? "show less" : "show more"}
+        </button>
+      </div>
     </div>
   );
 }
