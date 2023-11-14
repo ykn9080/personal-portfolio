@@ -61,7 +61,7 @@ export default function MyDialog({ data, language, icon, list }) {
         {/* Full-screen container to center the panel */}
         <div className="fixed inset-0 flex items-center justify-center p-4 min-h-fit">
           {/* The actual dialog panel  */}
-          <Dialog.Panel className="max-w-lg rounded bg-white p-5  dark:bg-slate-700 dark:text-white">
+          <Dialog.Panel className="w-4/12 rounded bg-white p-5  dark:bg-slate-700 dark:text-white">
             <Dialog.Title className="flex justify-between">
               <p className="text-xl font-bold ">Interest List</p>
               {list}

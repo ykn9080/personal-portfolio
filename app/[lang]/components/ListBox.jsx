@@ -35,13 +35,16 @@ const sortByFrequency = (tags) => {
   return finalObj;
 };
 const othersLast = (tags) => {
-  let others;
+  let others, newtags;
+
   tags.map((k, i) => {
-    if (k.name === "others") others = tags.splice(i, 1);
+    if (k.name === "others") {
+      others = tags.splice(i, 1);
+      newtags = tags.concat(others);
+      return;
+    }
   });
-  console.log(others);
-  if (others !== "undefined") tags.push(others);
-  return tags;
+  return newtags;
 };
 
 export default function MyListBox({ tags }) {
@@ -110,7 +113,7 @@ export default function MyListBox({ tags }) {
                         </span>
                       )}
                       {selectedTags.length < 1
-                        ? "Select "
+                        ? "Select types "
                         : // : `Selected tags (${selectedTags.length})`
                           selectedTags.join(", ")}
                     </span>
@@ -143,7 +146,7 @@ export default function MyListBox({ tags }) {
                 >
                   <Listbox.Options
                     static
-                    className="max-h-60 rounded-md py-1 text-base leading-6 shadow-xs overflow-auto focus:outline-none sm:text-sm sm:leading-5 "
+                    className="max-h-60 rounded-md py-1 text-base leading-6 shadow-xs overflow-auto focus:outline-none sm:text-sm sm:leading-5 hover:bg-slate-200"
                   >
                     {allTags.map((tag) => {
                       const selected = isSelected(tag.name);
