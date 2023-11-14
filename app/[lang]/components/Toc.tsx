@@ -6,6 +6,33 @@ import $ from "jquery";
 export default function Toc() {
   useEffect(() => {
     $("#dvToc").append($("#contents + ul")).prepend($("#contents"));
+
+    const setCurrent: IntersectionObserverCallback = (entries) => {
+      for (let entry of entries) {
+        const { id } = entry.target;
+        const enid = encodeURI(id);
+        const tocHeadingEl = document.querySelector(
+          `#dvToc a[href="#${enid}"]`
+        );
+        console.log(id, enid, tocHeadingEl);
+        if (!tocHeadingEl) return;
+        if (entry.isIntersecting) {
+          document
+            .querySelectorAll("#dvToc a")
+            .forEach((e) => e.classList.remove("active"));
+          tocHeadingEl.classList.add("active");
+        }
+      }
+    };
+    const observerOptions = {
+      threshold: 1,
+      rootMargin: "0px 0px -66%",
+    };
+    const observer = new IntersectionObserver(setCurrent, observerOptions);
+
+    document.querySelectorAll("h2, h3, h4, h5, h6").forEach((heading) => {
+      observer.observe(heading);
+    });
   }, []);
-  return <div id="dvToc" className="mt-3 sticky top-0 bg-white"></div>;
+  return <div id="dvToc" className="mt-3 sticky top-8 "></div>;
 }

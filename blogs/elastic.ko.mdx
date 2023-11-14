@@ -44,13 +44,13 @@ excerpt: Apache Lucene기반의 검색 및 분석 엔진으로 방대한 데이�
     },
   ]}
 />
-## Elastic Search 구성
+## Elastic Search Tagging Process
 
-## index mappings 수정안
+## index mappings update
 
 > index의 file type은 자동으로 설정되는데, geo_point나, keyword, text등이 적절치 않게 추정된 경우가 있다. 이때 수작업으로 mapping정보를 변경하여 reindex해야 된다.
 
-### 1. index mappings 수정
+### 1. index mappings
 
 1. 수정하려는 index의 mappings정보를 다음과 같이 조회한다. => `GET nginxlog-2023.10.25/_mapping`
 2. mapping정보 수정를 복사한후 2번과 같이 수정한다.
@@ -60,7 +60,7 @@ excerpt: Apache Lucene기반의 검색 및 분석 엔진으로 방대한 데이�
   type="json"
 />
 
-### 2. nginxlog의 mappings를 재정의 한다.
+### 2. redefine mappings of nginxlog data
 
 > mapping데이터를 복사하여 filetype을 수정한다. 수정할 파일타입은 아래의 내용을 참조.
 
@@ -82,7 +82,7 @@ PUT nginxlogs
 { "mapping수정내용"}
 ```
 
-#### mapping 수정내용
+#### after mapping change
 
 <SearchScript filename="mappings_update" type="json" />
 
@@ -103,7 +103,7 @@ PUT nginxlogs
 
 <SearchScript filename="index_template" script1="ls -la" />
 
-### 5. reindex에 index template적용
+### 5. apply index template to reindex
 
 - 재정의된 nginxlog를 dest로 source를 \_reindex한다.
 - 하나의 index만 테스트해본다.
