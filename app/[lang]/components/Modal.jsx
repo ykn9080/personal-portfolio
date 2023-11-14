@@ -75,7 +75,7 @@ export default function MyDialog({ data, language, icon, list }) {
                 </svg>
               </button>
             </Dialog.Title>
-            <nav className="mt-4 -mx-3 space-y-3 flex flex-wrap">
+            <div className="mt-4  flex flex-wrap">
               {filteredData.map((k, i) => {
                 return (
                   // eslint-disable-next-line react/jsx-key
@@ -92,7 +92,7 @@ export default function MyDialog({ data, language, icon, list }) {
                   </Link>
                 );
               })}
-            </nav>
+            </div>
           </Dialog.Panel>
         </div>
       </Dialog>

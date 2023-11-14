@@ -25,12 +25,13 @@ export default function Toc() {
       }
     };
     const observerOptions = {
-      threshold: 1,
-      rootMargin: "0px 0px -66%",
+      threshold: 0.5,
+      rootMargin: "0px 0px -96%",
     };
     const observer = new IntersectionObserver(setCurrent, observerOptions);
 
     document.querySelectorAll("h2, h3, h4, h5, h6").forEach((heading) => {
+      console.log(heading);
       observer.observe(heading);
     });
   }, []);

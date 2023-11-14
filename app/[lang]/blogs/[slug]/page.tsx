@@ -12,7 +12,6 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import React, { useEffect } from "react";
 // import "@/styles/highlight-js/atom-one-light.css";
 import { serialize } from "next-mdx-remote/serialize";
-import notFound from "./not-found";
 import SideLocalbar from "@/app/[lang]/components/SideLocalbar";
 import { Locale } from "@/i18n.config";
 import { Button, MyPopOver } from "./components";
@@ -75,8 +74,7 @@ function getPost({ slug }: { slug: string }) {
 export default function Post({ params }: any, lang: Locale) {
   const props = getPost(params);
   const { frontMatter, content } = props;
-  // const headings = getHeadings(content);
-  // console.log(content, headings);
+
   const options = {
     mdxOptions: {
       remarkPlugins: [remarkGfm, remarkToc],
