@@ -35,6 +35,7 @@ const sortByFrequency = (tags) => {
 };
 
 export default function MyListBox({ tags }) {
+  console.log(tags);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedTags, setSelectedTags] = useState([]);
   const [allTags, setAllTags] = useState(sortByFrequency(tags));
@@ -69,7 +70,7 @@ export default function MyListBox({ tags }) {
     dispatch(updateValue({ tags: selectedTagsUpdated }));
     setIsOpen(false);
   }
-
+  console.log("allTags", allTags);
   return (
     <div className="flex w-72">
       <div className="w-full max-w-lg mx-auto">
@@ -145,7 +146,7 @@ export default function MyListBox({ tags }) {
                                 active
                                   ? "text-white bg-blue-600"
                                   : "text-gray-900"
-                              } cursor-default select-none relative py-2 pl-8 pr-4`}
+                              } cursor-default select-none relative pl-4 pr-4`}
                             >
                               <span
                                 className={`${

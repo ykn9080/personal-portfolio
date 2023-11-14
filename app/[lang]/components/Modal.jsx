@@ -24,11 +24,13 @@ export default function MyDialog({ data, language, icon, list }) {
   const taglist = useAppSelector((state) => state.global).tags;
 
   useEffect(() => {
+    // tags선택시 데이터 필터링
     const fil = filterTags(taglist, allData);
     setFilteredData(fil);
   }, [taglist]);
 
   useEffect(() => {
+    // tags 정보 초기화
     dispatch(updateValue({ tags: [] }));
   }, []);
   const bullet = "w-2 h-2 rounded-full ";
@@ -62,7 +64,7 @@ export default function MyDialog({ data, language, icon, list }) {
           <Dialog.Panel className="mx-auto max-w-lg rounded bg-white p-5  dark:bg-slate-700 dark:text-white">
             <Dialog.Title className="flex justify-between">
               <p className="text-xl font-bold ">Interest List</p>
-              {list && list}
+              {list}
               <button onClick={() => setIsOpen(false)}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
