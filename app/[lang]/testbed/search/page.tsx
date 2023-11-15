@@ -27,7 +27,7 @@ import {
 import "@/styles/jsonlite.css";
 import { ScrollShadow } from "@nextui-org/react";
 import { Tabs, Tab, Divider } from "@nextui-org/react";
-import { Stepp } from "@/app/[lang]/components/nextui";
+import { Stepp, Tabss } from "@/app/[lang]/components/nextui";
 import $ from "jquery";
 
 interface LabelProps {
@@ -664,7 +664,9 @@ interface ItemObj {
   label: string;
   content: string;
 }
-
+interface ItemObj1 extends ItemObj {
+  icon: string;
+}
 export function SearchTab({ arr }: any) {
   const [tabs, setTabs] = useState(arr);
   return (
@@ -675,6 +677,65 @@ export function SearchTab({ arr }: any) {
             <div className="mt-[-35px] ml-[-5px]">{item.content}</div>
           </Tab>
         )}
+      </Tabs>
+    </div>
+  );
+}
+
+export function SearchSubTab({ arr }: any) {
+  const [tabs, setTabs] = useState(arr);
+  return (
+    <div className="dark flex w-full flex-col">
+      <Tabs aria-label="Dynamic tabs" items={tabs}>
+        {(item: ItemObj) => (
+          <Tab key={item.id} title={item.label}>
+            {/* <Tabss> {item.content}</Tabss> */}
+
+            <Tabs
+              aria-label="subtabs"
+              variant="light"
+              radius="none"
+              items={item.content}
+            >
+              {(item: ItemObj1) => (
+                <Tab
+                  key={item.id}
+                  title={
+                    <div className="flex items-center space-x-2 mt-[-35px]">
+                      {item.icon}
+                      <span>{item.label}</span>
+                    </div>
+                  }
+                >
+                  <div className="mt-[-5px] ml-[-5px]">{item.content}</div>
+                </Tab>
+              )}
+            </Tabs>
+          </Tab>
+        )}
+      </Tabs>
+    </div>
+  );
+}
+
+export function SearchAntTab({ arr }: any) {
+  const [tabs, setTabs] = useState(arr);
+
+  return (
+    <div className="dark flex w-full flex-col">
+      <Tabs aria-label="Dynamic tabs" items={tabs}>
+        {(item: ItemObj) => {
+          console.log("item.content", typeof item.content);
+          return (
+            <Tab key={item.id} title={item.label}>
+              {Array.isArray(item.content) ? (
+                <Tabss data={item.content}> </Tabss>
+              ) : (
+                <div className="mt-[-35px] ml-[-5px]">{item.content}</div>
+              )}
+            </Tab>
+          );
+        }}
       </Tabs>
     </div>
   );

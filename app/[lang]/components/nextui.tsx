@@ -1,11 +1,19 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Chip, Snippet, Code, Tooltip, Divider } from "@nextui-org/react";
-import { Steps, Space, ConfigProvider, theme } from "antd";
+import {
+  Chip,
+  Snippet,
+  Code,
+  Tooltip,
+  Divider,
+  dataFocusVisibleClasses,
+} from "@nextui-org/react";
+import { Steps, Space, Tabs, ConfigProvider, theme } from "antd";
 //import { updateValue } from "@/redux/features/globalSlice";
 import { useAppSelector } from "@/redux/hooks";
 import { useTheme } from "next-themes";
+import $ from "jquery";
 
 export function Chipp({ children, color, variant }: any) {
   const [colorr, setColorr] = useState<
@@ -119,4 +127,50 @@ export function Spacee({ children }: any) {
 }
 export function Dividerr() {
   return <Divider />;
+}
+
+interface ItemObj {
+  id: string;
+  label: string;
+  content: string;
+}
+export function Tabss({ data }: any) {
+  const [dt, setDt] = useState(data);
+  const ctheme = useTheme();
+  useEffect(() => {
+    $(".ant-tabs-content-holder").css("margin-top", "-35px");
+    $(".ant-tabs-nav").css({ "margin-top": "-30px" });
+    $(".ant-tabs-nav-wrap").css("justify-content", "right");
+  }, []);
+  return (
+    <ConfigProvider
+      theme={{
+        algorithm:
+          ctheme.theme === "dark"
+            ? theme.darkAlgorithm
+            : theme.defaultAlgorithm,
+        components: {
+          Tabs: {
+            /* here is your component tokens */
+            cardGutter: 5,
+            cardHeight: 0,
+            horizontalItemMargin: "0",
+            horizontalItemPadding: "0",
+          },
+        },
+      }}
+    >
+      <Tabs
+        style={{ marginBottom: 0 }}
+        items={dt.map((k: ItemObj, i: number) => {
+          if (!k) return;
+          return {
+            label: k.label,
+            key: String(i + 1),
+            children: k.content,
+          };
+        })}
+      />
+    </ConfigProvider>
+  );
 }

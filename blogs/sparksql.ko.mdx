@@ -16,11 +16,70 @@ videoTitle:
 excerpt: spark rdd를 추상화하여 dataframe과 dataset, sql로 사용 편의성을 높혔다.
 ---
 
-### Contents
+### sql view 생성
 
-## Why Airflow
+<SearchAntTab
+  arr={[
+    {
+      id:"test",
+      label:"test",
+      content:<SearchShow
+  id="dvela3"
+  script="ssh yknam@namubuntu curl GET http://namubuntu:9200/nginx-2023.10.25/_mapping"
+  type="json"
+/>
+    },
+    {
+      id: "elasticsearch",
+      label: "elasticsearch",
+      content: [
+         {
+      id: "pyspark",
+      label: "pyspark",
+      icon:<img src="/images/interest/pyspark_icon.png" width="20px"/>,
+      content: (
+        <SearchScript
+          filename="mappings_update"
+          type="json"
+          script1="console.log('hi')"
+        ></SearchScript>
+      ),
+    },{
+       id: "scala",
+      label: "scala",
+      icon:<img src="/images/interest/scala_icon.png" width="20px"/>,
+      content: 
+      (
+        <SearchShow
+        id="file6"
+          script="ssh nam cat /home/yknam/sandbox/filebeat/conf/filebeat1.yml"
+          script1="curl get http://imcmaster.iptime.org:9200/filebeat*/_search"
+          type1="json"
+          comment1={
+            <>
+            <Chipp>filebeat → elasticsearch</Chipp>
+            <Codee>
 
-### ls
+              curl get http://localhost:9200/filebeat*/_search
+            </Codee>
+            </>
+          }
+        ></SearchShow>
+      ),
+    }
+      ]
+    },
+
+]}
+/>
+
+### data sources
+
+### hive
+
+### jdbc
+
+### dataset
 
 > Hdfs 파일 리스트 조회
 
