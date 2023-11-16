@@ -1,16 +1,8 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import {
-  Chip,
-  Snippet,
-  Code,
-  Tooltip,
-  Divider,
-  dataFocusVisibleClasses,
-} from "@nextui-org/react";
+import { Chip, Snippet, Code, Tooltip, Divider } from "@nextui-org/react";
 import { Steps, Space, Tabs, ConfigProvider, theme } from "antd";
-//import { updateValue } from "@/redux/features/globalSlice";
 import { useAppSelector } from "@/redux/hooks";
 import { useTheme } from "next-themes";
 import $ from "jquery";
@@ -139,7 +131,11 @@ export function Tabss({ data }: any) {
   const ctheme = useTheme();
   useEffect(() => {
     $(".ant-tabs-content-holder").css("margin-top", "-35px");
-    $(".ant-tabs-nav").css({ "margin-top": "-30px" });
+    $(".ant-tabs-nav").css({
+      "margin-top": "-35px",
+      width: "25%",
+      "margin-left": "75%",
+    });
     $(".ant-tabs-nav-wrap").css("justify-content", "right");
   }, []);
   return (
@@ -152,16 +148,19 @@ export function Tabss({ data }: any) {
         components: {
           Tabs: {
             /* here is your component tokens */
+            cardBg: "#FAFAFA",
             cardGutter: 5,
-            cardHeight: 0,
+            cardHeight: 10,
+            itemColor: "#a1a1aa",
+            itemActiveColor: "#000",
             horizontalItemMargin: "0",
-            horizontalItemPadding: "0",
+            horizontalItemPadding: "0 10px",
           },
         },
       }}
     >
       <Tabs
-        style={{ marginBottom: 0 }}
+        type="card"
         items={dt.map((k: ItemObj, i: number) => {
           if (!k) return;
           return {

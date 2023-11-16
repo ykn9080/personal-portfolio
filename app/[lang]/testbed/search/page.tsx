@@ -725,7 +725,6 @@ export function SearchAntTab({ arr }: any) {
     <div className="dark flex w-full flex-col">
       <Tabs aria-label="Dynamic tabs" items={tabs}>
         {(item: ItemObj) => {
-          console.log("item.content", typeof item.content);
           return (
             <Tab key={item.id} title={item.label}>
               {Array.isArray(item.content) ? (
