@@ -255,15 +255,15 @@ export function SearchShow({
   };
   const handleExecute = async () => {
     setToggle(false);
-    if (!executed) {
-      if (hiddenscript) {
-        const rtn1 = await winProcess({ script: hiddenscript });
-      }
-      if (executed) {
-        const rtn = await handleClick(exescript, ftype1);
+    console.log("executed", executed);
 
-        setExecuted(rtn);
-      }
+    if (hiddenscript) {
+      const rtn1 = await winProcess({ script: hiddenscript });
+    }
+    if (!executed) {
+      const rtn = await handleClick(exescript, ftype1);
+
+      setExecuted(rtn);
     }
   };
   const handleExecuteReload = async () => {
@@ -280,9 +280,14 @@ export function SearchShow({
       <pre className="bg-[#011627]">
         {exescript && (
           <>
-            {!toggle && (
+            {!toggle && executed && (
               <div className="float-left">
-                <button onClick={handleExecuteReload}>reload</button>
+                <button
+                  className={`${btnClass} bg-gray-300`}
+                  onClick={handleExecuteReload}
+                >
+                  🔄reload
+                </button>
               </div>
             )}
             <div className="float-right">
@@ -483,6 +488,12 @@ export function SearchScript({
       if (lastScript) await winProcess({ lastScript });
     }
   };
+  const handleExecuteReload = async () => {
+    const rtn = await handleClick(exescript, ftype1);
+
+    setExecuted(rtn);
+  };
+
   const readData = (content: string) => {
     const highlighted = hljs.highlight(content, {
       language: "json",
@@ -498,6 +509,11 @@ export function SearchScript({
       <pre className="bg-[#011627]">
         {exescript && (
           <>
+            {!toggle && (
+              <div className="float-left">
+                <button onClick={handleExecuteReload}>reload</button>
+              </div>
+            )}
             <button
               onClick={handleExecute}
               className={`${btnClass} ${
@@ -699,6 +715,7 @@ export function SearchTab({ arr }: any) {
 
 export function SearchSubTab({ arr }: any) {
   const [tabs, setTabs] = useState(arr);
+  K;
   return (
     <div className="dark flex w-full flex-col">
       <Tabs aria-label="Dynamic tabs" items={tabs}>
