@@ -1,7 +1,15 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Chip, Snippet, Code, Tooltip, Divider } from "@nextui-org/react";
+import {
+  Chip,
+  Snippet,
+  Code,
+  Tooltip,
+  Divider,
+  Card,
+  CardBody,
+} from "@nextui-org/react";
 import { Steps, Space, Tabs, ConfigProvider, theme } from "antd";
 import { useAppSelector } from "@/redux/hooks";
 import { useTheme } from "next-themes";
@@ -121,6 +129,14 @@ export function Dividerr() {
   return <Divider />;
 }
 
+export function Cardd({ children }: any) {
+  return (
+    <Card>
+      <CardBody className="text-white">{children}</CardBody>
+    </Card>
+  );
+}
+
 interface ItemObj {
   id: string;
   label: string;
@@ -135,9 +151,15 @@ export function Tabss({ data }: any) {
       "margin-top": "-35px",
       width: "25%",
       "margin-left": "75%",
+      "z-index": 10,
     });
     $(".ant-tabs-nav-wrap").css("justify-content", "right");
-  }, []);
+    $('[role="tabpanel"]').css({
+      "padding-left": "1px",
+      "padding-right": "1px",
+    });
+    $('[role="tablist"]').css("z-index", 11);
+  });
   return (
     <ConfigProvider
       theme={{

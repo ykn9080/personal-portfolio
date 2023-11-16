@@ -28,7 +28,12 @@ excerpt: spark rdd를 추상화하여 dataframe과 dataset, sql로 사용 편의
       content:<SearchShow
   id="dvela3"
   script="ssh yknam@namubuntu curl GET http://namubuntu:9200/nginx-2023.10.25/_mapping"
-  type="json"
+  comment={<Cardd  className="text-white">
+  <h1>Href Attribute Example</h1>
+    <p>
+      <a href="https://www.freecodecamp.org/contribute/">The freeCodeCamp Contribution Page</a> shows you how and where you can contribute to freeCodeCamp's community and growth.
+    </p>
+  </Cardd>}
 />
     },
     {
@@ -74,6 +79,25 @@ excerpt: spark rdd를 추상화하여 dataframe과 dataset, sql로 사용 편의
 
 ]}
 />
+
+<Cardd>
+### 💡 tip scala 실행
+
+```
+$SPARK_HOME/bin/spark-submit --class com.yknam.HelloWorld \
+/home/yknam/scalaproject/scala_spark/target/scala-2.12/scala_spark_2.12-0.1.0-SNAPSHOT.jar
+```
+
+1. spark-submit
+2. --class
+3. 패키지명.클래스명: com.yknam+ .HelloWorld
+4. jar파일: 디렉토리(/home/yknam/scalaproject/scala_spark/target/scala-2.12/)+jar파일(scala_spark_2.12-0.1.0-SNAPSHOT.jar)
+
+**intellij에서 sbt build**
+
+컴파일할 폴더root에서 sbt clean build
+
+</Cardd>
 
 ### data sources
 

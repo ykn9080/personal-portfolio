@@ -27,7 +27,7 @@ import {
 import "@/styles/jsonlite.css";
 import { ScrollShadow } from "@nextui-org/react";
 import { Tabs, Tab, Divider } from "@nextui-org/react";
-import { Stepp, Tabss } from "@/app/[lang]/components/nextui";
+import { Stepp, Tabss, Cardd } from "@/app/[lang]/components/nextui";
 import $ from "jquery";
 
 interface LabelProps {
@@ -255,10 +255,18 @@ export function SearchShow({
   };
   const handleExecute = async () => {
     setToggle(false);
-    if (hiddenscript) {
-      const rtn1 = await winProcess({ script: hiddenscript });
-    }
+    if (!executed) {
+      if (hiddenscript) {
+        const rtn1 = await winProcess({ script: hiddenscript });
+      }
+      if (executed) {
+        const rtn = await handleClick(exescript, ftype1);
 
+        setExecuted(rtn);
+      }
+    }
+  };
+  const handleExecuteReload = async () => {
     const rtn = await handleClick(exescript, ftype1);
 
     setExecuted(rtn);
@@ -271,25 +279,32 @@ export function SearchShow({
     <div className="w-full ">
       <pre className="bg-[#011627]">
         {exescript && (
-          <div className="float-right">
-            <button
-              onClick={handleExecute}
-              className={`${btnClass} ${
-                !toggle ? "bg-gray-300" : "bg-gray-600"
-              }`}
-            >
-              {custombtn[1]}
-            </button>
+          <>
+            {!toggle && (
+              <div className="float-left">
+                <button onClick={handleExecuteReload}>reload</button>
+              </div>
+            )}
+            <div className="float-right">
+              <button
+                onClick={handleExecute}
+                className={`${btnClass} ${
+                  !toggle ? "bg-gray-300" : "bg-gray-600"
+                }`}
+              >
+                {custombtn[1]}
+              </button>
 
-            <button
-              onClick={() => setToggle(true)}
-              className={`${btnClass} ${
-                toggle ? "bg-gray-300" : "bg-gray-600"
-              }`}
-            >
-              {custombtn[0]}
-            </button>
-          </div>
+              <button
+                onClick={() => setToggle(true)}
+                className={`${btnClass} ${
+                  toggle ? "bg-gray-300" : "bg-gray-600"
+                }`}
+              >
+                {custombtn[0]}
+              </button>
+            </div>
+          </>
         )}
         <div className="clear-both" />
         <Display
