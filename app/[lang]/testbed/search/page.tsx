@@ -27,8 +27,23 @@ import {
 import "@/styles/jsonlite.css";
 import { ScrollShadow } from "@nextui-org/react";
 import { Tabs, Tab, Divider } from "@nextui-org/react";
-import { Stepp, Tabss, Cardd } from "@/app/[lang]/components/nextui";
+import {
+  Stepp,
+  Tabss,
+  Cardd,
+  Modall,
+  Drawerr,
+} from "@/app/[lang]/components/nextui";
 import $ from "jquery";
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Button,
+  useDisclosure,
+} from "@nextui-org/react";
 
 interface LabelProps {
   script: string;
@@ -198,6 +213,7 @@ export function SearchShow({
   const [ftype1, setFtype1] = useState(type1);
   const [cmt, setCmt] = useState(comment);
   const [cmt1, setCmt1] = useState(comment1);
+  const [open, setOpen] = useState(false);
 
   const [result, setResult] = useState<any | null>();
   const [result1, setResult1] = useState<any | null>();
@@ -255,7 +271,6 @@ export function SearchShow({
   };
   const handleExecute = async () => {
     setToggle(false);
-    console.log("executed", executed);
 
     if (hiddenscript) {
       const rtn1 = await winProcess({ script: hiddenscript });
@@ -274,54 +289,89 @@ export function SearchShow({
 
   const btnClass =
     " float-right hover:bg-gray-400 text-gray-800 font-bold px-1 rounded inline-flex items-center mr-2 my-1";
-
+  const modalData = (
+    <div className="flex ">
+      <div className="flex-auto w-[800]">
+        <pre className="bg-[#011627]">
+          <Display id="sideLeft" data={result} type={ftype} comment={cmt} />
+        </pre>
+      </div>
+      <div className="flex-none w-5" />
+      <div className="w-[800] flex-auto w-full">
+        <pre className="bg-[#011627]">
+          <Display
+            id="sideRight"
+            data={executed}
+            type={ftype1}
+            comment={cmt1}
+          />
+        </pre>
+      </div>
+    </div>
+  );
+  const onChange = () => {
+    setOpen(false);
+  };
   return (
-    <div className="w-full ">
-      <pre className="bg-[#011627]">
-        {exescript && (
-          <>
-            {!toggle && executed && (
-              <div className="float-left">
+    <>
+      <div className="w-full ">
+        <pre className="bg-[#011627]">
+          {exescript && (
+            <>
+              {!toggle && executed && (
+                <div className="float-left">
+                  <button
+                    className={`${btnClass} bg-gray-300`}
+                    onClick={handleExecuteReload}
+                  >
+                    🔄reload
+                  </button>
+                  <button
+                    className={`${btnClass} bg-gray-300`}
+                    onClick={() => {
+                      setOpen(false);
+                      setOpen(true);
+                    }}
+                  >
+                    🧑🏻‍🤝‍🧑🏻sidebyside
+                  </button>
+                </div>
+              )}
+              <div className="float-right">
                 <button
-                  className={`${btnClass} bg-gray-300`}
-                  onClick={handleExecuteReload}
+                  onClick={handleExecute}
+                  className={`${btnClass} ${
+                    !toggle ? "bg-gray-300" : "bg-gray-600"
+                  }`}
                 >
-                  🔄reload
+                  {custombtn[1]}
+                </button>
+
+                <button
+                  onClick={() => setToggle(true)}
+                  className={`${btnClass} ${
+                    toggle ? "bg-gray-300" : "bg-gray-600"
+                  }`}
+                >
+                  {custombtn[0]}
                 </button>
               </div>
-            )}
-            <div className="float-right">
-              <button
-                onClick={handleExecute}
-                className={`${btnClass} ${
-                  !toggle ? "bg-gray-300" : "bg-gray-600"
-                }`}
-              >
-                {custombtn[1]}
-              </button>
+            </>
+          )}
+          <div className="clear-both" />
+          <Display
+            id={id}
+            data={toggle ? result : executed}
+            type={toggle ? ftype : ftype1}
+            comment={toggle ? cmt : cmt1}
+          />
 
-              <button
-                onClick={() => setToggle(true)}
-                className={`${btnClass} ${
-                  toggle ? "bg-gray-300" : "bg-gray-600"
-                }`}
-              >
-                {custombtn[0]}
-              </button>
-            </div>
-          </>
-        )}
-        <div className="clear-both" />
-        <Display
-          id={id}
-          data={toggle ? result : executed}
-          type={toggle ? ftype : ftype1}
-          comment={toggle ? cmt : cmt1}
-        />
-
-        {isLoading && <LoadingScreen />}
-      </pre>
-    </div>
+          {isLoading && <LoadingScreen />}
+        </pre>
+        <Modall open={open} data={modalData} onChange={onChange} />
+      </div>
+      {/* <HandleSidebyside data={modalData} open={open} onChange={onChange} /> */}
+    </>
   );
 }
 
@@ -715,7 +765,6 @@ export function SearchTab({ arr }: any) {
 
 export function SearchSubTab({ arr }: any) {
   const [tabs, setTabs] = useState(arr);
-  K;
   return (
     <div className="dark flex w-full flex-col">
       <Tabs aria-label="Dynamic tabs" items={tabs}>
@@ -775,3 +824,33 @@ export function SearchAntTab({ arr }: any) {
 export function SearchStep({ items }: any) {
   return <Stepp item={items} />;
 }
+
+const HandleSidebyside = ({ data, open, onChange }: any) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  return (
+    <Modal size={"full"} isOpen={open} onClose={onClose}>
+      <ModalContent>
+        {(onClose) => (
+          <>
+            <ModalHeader className="flex flex-col gap-1">
+              Code & Result
+            </ModalHeader>
+            <ModalBody>{data}</ModalBody>
+            <ModalFooter>
+              <Button
+                color="danger"
+                variant="light"
+                onPress={() => {
+                  onClose();
+                  onChange();
+                }}
+              >
+                Close
+              </Button>
+            </ModalFooter>
+          </>
+        )}
+      </ModalContent>
+    </Modal>
+  );
+};

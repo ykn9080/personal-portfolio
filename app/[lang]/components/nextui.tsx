@@ -10,7 +10,7 @@ import {
   Card,
   CardBody,
 } from "@nextui-org/react";
-import { Steps, Space, Tabs, ConfigProvider, theme } from "antd";
+import { Steps, Space, Tabs, Modal, Drawer, ConfigProvider, theme } from "antd";
 import { useAppSelector } from "@/redux/hooks";
 import { useTheme } from "next-themes";
 import $ from "jquery";
@@ -193,5 +193,50 @@ export function Tabss({ data }: any) {
         })}
       />
     </ConfigProvider>
+  );
+}
+
+export function Modall({ data, open, onChange }: any) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  useEffect(() => {
+    setIsModalOpen(open);
+  }, [open]);
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+    onChange();
+  };
+
+  return (
+    <>
+      <Modal
+        title="Basic Modal"
+        width={"100%"}
+        open={isModalOpen}
+        onCancel={handleCancel}
+      >
+        {data}
+      </Modal>
+    </>
+  );
+}
+
+export function Drawerr({ data, open, onChange }: any) {
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    setVisible(open);
+  }, [open]);
+
+  const handleCancel = () => {
+    setVisible(false);
+    onChange();
+  };
+
+  return (
+    <>
+      <Drawer visible={visible} onClose={handleCancel} width="100VW">
+        {data}
+      </Drawer>
+    </>
   );
 }

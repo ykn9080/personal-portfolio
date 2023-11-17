@@ -39,6 +39,8 @@ import {
   Spacee,
   Dividerr,
   Cardd,
+  Modall,
+  Drawerr,
 } from "@/app/[lang]/components/nextui";
 import Diagram from "@/app/[lang]/components/Diagram";
 
@@ -162,6 +164,8 @@ export default function Post({ params }: any, lang: Locale) {
                   Spacee,
                   Dividerr,
                   Cardd,
+                  Modall,
+                  Drawerr,
                   Iframe,
                 }}
               />

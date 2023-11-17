@@ -33,9 +33,17 @@
   text-indent: 1em;
   display: list-item;
 }
+#dvToc li > ul > li > ul > li {
+  text-indent: 2em;
+  display: list-item;
+}
 
 #dvToc li > ul > li:before {
   content: "- ";
+}
+
+#dvToc li > ul > li > ul > li:before {
+  content: ". ";
 }
 
 #dvToc li:before {

@@ -26,7 +26,7 @@ excerpt: 데이터 파이프라인을 관리하는 툴로 정교한 스케쥴기
   port="7878"
 />
 
-#### master설정
+## master설정
 
 <div style={{ float: "right", marginLeft: "20px" }}>
   <img src="/images/interest/spark-master.png" width="400" alt="master" />
@@ -37,7 +37,7 @@ excerpt: 데이터 파이프라인을 관리하는 툴로 정교한 스케쥴기
 - **multinode**: resource manager와 node manager를 yarn에 의존한다.
   <div style={{ clear: "both" }} />
 
-#### broadcast vs accumulator
+## broadcast vs accumulator
 
 <div style={{ float: "right", marginLeft: "20px" }}>
   <img
@@ -51,11 +51,16 @@ excerpt: 데이터 파이프라인을 관리하는 툴로 정교한 스케쥴기
 > accumulator변수는 각worker에서 공유되는 변수로 변수값이 합쳐진다.
 
 <div style={{ clear: "both" }} />
+### accumulator
+<SearchShow script="cat /home/yknam/pythonfiles/pyspark/sparkRddAccumulator.py" />
+### broadcast
+<SearchShow script="cat /home/yknam/pythonfiles/pyspark/sparkRddBroadcast.py" />
+
 <SearchShow
   script="cat /home/yknam/pythonfiles/pyspark/sparkRddToDF.py"
   port="7878"
 />
-#### map side join vs shuffle join
+## map side join vs shuffle join
 <div style={{ float: "right", marginLeft: "20px" }}>
   <img
     src="/images/interest/sparkcore-shufflejoin.png"
