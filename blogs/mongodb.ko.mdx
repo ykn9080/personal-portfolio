@@ -23,7 +23,8 @@ excerpt: mongodb, mongoose를 활용한 CRUD api. node model을 생성한 후 �
   아래의 예제는 CRUD를 위한 이에 대한 각각의 예제이다.
 </p>
 <br />
-<h3>Model</h3>
+
+## Model
 
 ```js
 var mongoose = require("mongoose");
@@ -43,7 +44,7 @@ models.Allpurpose = mongoose.model("Allpurpose", allpurposeSchema);
 module.exports = models;
 ```
 
-<h3>Router</h3>
+## Router
 
 ```js
 const crud = require("../controllers/reuseCRUD");//controller
@@ -53,7 +54,7 @@ module.exports = (app) => {
   app.use("/allpurpose", crud(model.Control));
 ```
 
-<h3>Controller</h3>
+## Controller
 
 ```js
 var mongoose = require("mongoose");

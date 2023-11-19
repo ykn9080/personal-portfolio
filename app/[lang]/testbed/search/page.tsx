@@ -33,6 +33,7 @@ import {
   Cardd,
   Modall,
   Drawerr,
+  Tooltipp,
 } from "@/app/[lang]/components/nextui";
 import $ from "jquery";
 import {
@@ -247,7 +248,10 @@ export function SearchShow({
     }
     if (script && script !== "") fetch();
   }, [script, type]);
-
+  useEffect(() => {
+    $("#sideLeft").css("padding-left", "5px");
+    $("#sideRight").css("padding-left", "5px");
+  });
   const handleClick = async (
     script: String | null | undefined,
     filetype: String
@@ -291,14 +295,16 @@ export function SearchShow({
     " float-right hover:bg-gray-400 text-gray-800 font-bold px-1 rounded inline-flex items-center mr-2 my-1";
   const modalData = (
     <div className="flex ">
-      <div className="flex-auto w-[800]">
-        <pre className="bg-[#011627]">
+      <div className="w-1/2 pl-10">
+        <p className="text-lg font-bold">Script</p>
+        <pre>
           <Display id="sideLeft" data={result} type={ftype} comment={cmt} />
         </pre>
       </div>
-      <div className="flex-none w-5" />
-      <div className="w-[800] flex-auto w-full">
-        <pre className="bg-[#011627]">
+      {/* <div className="flex-none w-0.5" /> */}
+      <div className="w-1/2 pl-10">
+        <p className="text-lg font-bold">Result</p>
+        <pre>
           <Display
             id="sideRight"
             data={executed}
@@ -308,6 +314,16 @@ export function SearchShow({
         </pre>
       </div>
     </div>
+  );
+  const extraButton = (
+    <Tooltipp title="Compare code">
+      <button
+        onClick={}
+        className="hover:bg-gray-100 font-semibold border rounded ml-2 mr-1"
+      >
+        🧑🏻‍🤝‍🧑🏻
+      </button>
+    </Tooltipp>
   );
   const onChange = () => {
     setOpen(false);
@@ -368,9 +384,8 @@ export function SearchShow({
 
           {isLoading && <LoadingScreen />}
         </pre>
-        <Modall open={open} data={modalData} onChange={onChange} />
+        <Modall width={1500} open={open} data={modalData} onChange={onChange} />
       </div>
-      {/* <HandleSidebyside data={modalData} open={open} onChange={onChange} /> */}
     </>
   );
 }
@@ -401,9 +416,22 @@ export function SearchShow1({
   );
 }
 function Display({ id, data, type, comment }: LabelProps3) {
+  const btnClass =
+    "bg-gray-500 hover:bg-gray-300 text-gray-800 font-bold px-1 rounded inline-flex items-center mr-2 my-1";
   const [expand, setExpand] = useState("low");
+  const [btn, setBtn] = useState(
+    <div className="sticky bottom-0 flex flex-col items-center pb-10">
+      <button onClick={() => toggle(expand)} className={btnClass}>
+        {expand === "high"
+          ? "show less"
+          : expand === "mid"
+          ? "show all"
+          : "show more"}
+      </button>
+    </div>
+  );
   const [ht, setHt] = useState<number>(399);
-  console.log(id);
+
   useEffect(() => {
     if (id !== "undefined") {
       const htt = $("#" + id).height();
@@ -415,8 +443,13 @@ function Display({ id, data, type, comment }: LabelProps3) {
       console.log("im in", id, htt);
     }
   });
-  const btnClass =
-    "bg-gray-500 hover:bg-gray-300 text-gray-800 font-bold px-1 rounded inline-flex items-center mr-2 my-1";
+  useEffect(() => {
+    if (id === "sideLeft" || id === "sideRight") {
+      setExpand("mid");
+      setBtn("");
+    }
+  }, [id]);
+
   const toggle = (current: string) => {
     let status = "low";
     switch (current) {
@@ -433,7 +466,12 @@ function Display({ id, data, type, comment }: LabelProps3) {
     setExpand(status);
   };
   return (
-    <div id={id} className="bg-[#011627]">
+    <div
+      id={id}
+      className={`bg-[#011627] ${
+        id === "sideLeft" || id === "sideRight" ? "p-5" : ""
+      }`}
+    >
       <ScrollShadow
         hideScrollBar
         size={100}
@@ -454,22 +492,14 @@ function Display({ id, data, type, comment }: LabelProps3) {
           />
         ) : (
           <code
+            className="text-white"
             dangerouslySetInnerHTML={{
               __html: data,
             }}
           />
         )}
       </ScrollShadow>
-
-      <div className="sticky bottom-0 flex flex-col items-center pb-10">
-        <button onClick={() => toggle(expand)} className={btnClass}>
-          {expand === "high"
-            ? "show less"
-            : expand === "mid"
-            ? "show all"
-            : "show more"}
-        </button>
-      </div>
+      {btn}
     </div>
   );
 }

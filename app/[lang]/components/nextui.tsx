@@ -5,12 +5,20 @@ import {
   Chip,
   Snippet,
   Code,
-  Tooltip,
   Divider,
   Card,
   CardBody,
 } from "@nextui-org/react";
-import { Steps, Space, Tabs, Modal, Drawer, ConfigProvider, theme } from "antd";
+import {
+  Steps,
+  Space,
+  Tabs,
+  Modal,
+  Drawer,
+  Tooltip,
+  ConfigProvider,
+  theme,
+} from "antd";
 import { useAppSelector } from "@/redux/hooks";
 import { useTheme } from "next-themes";
 import $ from "jquery";
@@ -142,7 +150,7 @@ interface ItemObj {
   label: string;
   content: string;
 }
-export function Tabss({ data }: any) {
+export function Tabss({ data, operations }: any) {
   const [dt, setDt] = useState(data);
   const ctheme = useTheme();
   useEffect(() => {
@@ -160,6 +168,7 @@ export function Tabss({ data }: any) {
     });
     $('[role="tablist"]').css("z-index", 11);
   });
+
   return (
     <ConfigProvider
       theme={{
@@ -183,6 +192,7 @@ export function Tabss({ data }: any) {
     >
       <Tabs
         type="card"
+        tabBarExtraContent={operations}
         items={dt.map((k: ItemObj, i: number) => {
           if (!k) return;
           return {
@@ -196,10 +206,14 @@ export function Tabss({ data }: any) {
   );
 }
 
-export function Modall({ data, open, onChange }: any) {
+export function Modall({ title, data, open, width, onChange }: any) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [name, setName] = useState("");
+  const [wth, setWth] = useState();
   useEffect(() => {
     setIsModalOpen(open);
+    if (title) setName(title);
+    if (width) setWth(width);
   }, [open]);
 
   const handleCancel = () => {
@@ -210,8 +224,8 @@ export function Modall({ data, open, onChange }: any) {
   return (
     <>
       <Modal
-        title="Basic Modal"
-        width={"100%"}
+        width={wth}
+        title={title}
         open={isModalOpen}
         onCancel={handleCancel}
       >

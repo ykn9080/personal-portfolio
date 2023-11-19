@@ -20,68 +20,67 @@ excerpt: spark rdd를 추상화하여 dataframe과 dataset, sql로 사용 편의
 
 ### sql view 생성
 
-<SearchAntTab
-  arr={[
-    {
-      id:"test",
-      label:"test",
-      content:<SearchShow
-  id="dvela3"
-  script="ssh yknam@namubuntu curl GET http://namubuntu:9200/nginx-2023.10.25/_mapping"
-  comment={<Cardd  className="text-white">
-  <h1>Href Attribute Example</h1>
-    <p>
-      <a href="https://www.freecodecamp.org/contribute/">The freeCodeCamp Contribution Page</a> shows you how and where you can contribute to freeCodeCamp's community and growth.
-    </p>
-  </Cardd>}
-/>
-    },
-    {
-      id: "elasticsearch",
-      label: "elasticsearch",
-      content: [
-         {
-      id: "pyspark",
-      label: "pyspark",
-      icon:<img src="/images/interest/pyspark_icon.png" width="20px"/>,
-      content: (
-        <SearchScript
-          filename="mappings_update"
-          type="json"
-          script1="console.log('hi')"
-        ></SearchScript>
-      ),
-    },{
-       id: "scala",
-      label: "scala",
-      icon:<img src="/images/interest/scala_icon.png" width="20px"/>,
-      content: 
-      (
-        <SearchShow
-        id="file6"
-          script="ssh nam cat /home/yknam/sandbox/filebeat/conf/filebeat1.yml"
-          script1="curl get http://imcmaster.iptime.org:9200/filebeat*/_search"
-          type1="json"
-          comment1={
-            <>
-            <Chipp>filebeat → elasticsearch</Chipp>
-            <Codee>
+    <SearchAntTab
+          arr={[
+            {
+              id: "test",
+              label: "test",
+              content: <SearchShow
+                id="dvela3"
+                script="ssh yknam@namubuntu curl GET http://namubuntu:9200/nginx-2023.10.25/_mapping"
+                comment={<Cardd className="text-white">
+                  <h1>Href Attribute Example</h1>
+                  <p>
+                    <a href="https://www.freecodecamp.org/contribute/">The freeCodeCamp Contribution Page</a> shows you how and where you can contribute to freeCodeCamp's community and growth.
+                  </p>
+                </Cardd>}
+              />
+            },
+            {
+              id: "mysql",
+              label: "mysql",
+              content: [
+                {
+                  id: "pyspark",
+                  label: "pyspark",
+                  icon: <img src="/images/interest/pyspark_icon.png" width="20px" />,
+                  content: (
+                    <SearchShow
+                      script="cat /home/yknam/pythonfiles/pyspark/sparkSqlMysql.py"
+                      script1="/home/yknam/pythonfiles/pyspark/sparkSqlMysql.py"
+                    ></SearchShow>
+                  ),
+                }, {
+                  id: "scala",
+                  label: "scala",
+                  icon: <img src="/images/interest/scala_icon.png" width="20px" />,
+                  content:
+                    (
+                      <SearchShow
+                        id="file6"
+                        script="ssh nam cat /home/yknam/sandbox/filebeat/conf/filebeat1.yml"
+                        script1="curl get http://imcmaster.iptime.org:9200/filebeat*/_search"
+                        type1="json"
+                        comment1={
+                          <>
+                            <Chipp>filebeat → elasticsearch</Chipp>
+                            <Codee>
 
-              curl get http://localhost:9200/filebeat*/_search
-            </Codee>
-            </>
-          }
-        ></SearchShow>
-      ),
-    }
-      ]
-    },
+                              curl get http://localhost:9200/filebeat*/_search
+                            </Codee>
+                          </>
+                        }
+                      ></SearchShow>
+                    ),
+                }
+              ]
+            },
 
-]}
-/>
+          ]}
+        />
 
-<Cardd>
-### 💡 tip scala 실행
+    <Cardd>
+                    ### 💡 tip scala 실행
 
 ```
 $SPARK_HOME/bin/spark-submit --class com.yknam.HelloWorld \
@@ -97,19 +96,54 @@ $SPARK_HOME/bin/spark-submit --class com.yknam.HelloWorld \
 
 컴파일할 폴더root에서 sbt clean build
 
-</Cardd>
+    </Cardd>
 
 ### sql
 
-<SearchShow
-  script="cat /home/yknam/pythonfiles/pyspark/sparkSql.py"
-  script1="/home/yknam/pythonfiles/pyspark/sparkSql.py"
-/>
+    <SearchShow
+          script="cat /home/yknam/pythonfiles/pyspark/sparkSql.py"
+          script1="/home/yknam/pythonfiles/pyspark/sparkSql.py"
+        />
+
 ### data sources
 
 ### hive
 
 ### jdbc
+>
+    <SearchAntTab
+          arr={[
+            {
+              id: "mysql read",
+              label: "mysql read",
+              content: [
+                {
+                  id: "pyspark",
+                  label: "pyspark",
+                  icon: <img src="/images/interest/pyspark_icon.png" width="20px" />,
+                  content: (
+                    <SearchShow
+                      script="cat /home/yknam/pythonfiles/pyspark/sparkSqlMysql.py"
+                      script1="/home/yknam/pythonfiles/pyspark/sparkSqlMysql.py"
+                    ></SearchShow>
+                  ),
+                }, {
+                  id: "scala",
+                  label: "scala",
+                  icon: <img src="/images/interest/scala_icon.png" width="20px" />,
+                  content:
+                    (
+                      <SearchShow
+                        script="cat /home/yknam/scalaproject/scala_spark/src/main/scala/sparkSqlMysql.scala"
+                        script1="spark-submit --master local[1] --class com.yknam.SparkSessionTest /home/yknam/scalaproject/scala_spark/target/scala-2.12/scala_spark_2.12-0.1.0-SNAPSHOT.jar"
+                      ></SearchShow>
+                    ),
+                }
+              ]
+            },
+
+          ]}
+        />
 
 ### dataset
 
@@ -133,8 +167,8 @@ df_mysql = spark.read.format("jdbc")
    .load()
 ```
 
-<SearchLabel
-  script="/home/yknam/pythonfiles/pyspark/sparkRdd.py"
-  txt="spark rdd example"
-  port="7878"
-/>
+    <SearchLabel
+          script="/home/yknam/pythonfiles/pyspark/sparkRdd.py"
+          txt="spark rdd example"
+          port="7878"
+        />
