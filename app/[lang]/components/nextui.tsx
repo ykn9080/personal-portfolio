@@ -22,6 +22,9 @@ import {
 import { useAppSelector } from "@/redux/hooks";
 import { useTheme } from "next-themes";
 import $ from "jquery";
+import { winProcess } from "@/lib/childprocess";
+import hljs from "highlight.js";
+import { Display } from "../testbed/search/page";
 
 export function Chipp({ children, color, variant }: any) {
   const [colorr, setColorr] = useState<
@@ -148,11 +151,64 @@ export function Cardd({ children }: any) {
 interface ItemObj {
   id: string;
   label: string;
-  content: string;
+  script: string;
+  content: any;
 }
-export function Tabss({ data, operations }: any) {
+const compareCodes = async (data) => {
+  let scriptArr: any = [];
+  data.map(async (k: ItemObj, i: number) => {
+    if (!k) return;
+
+    let rtn = await winProcess(k.script);
+    console.log(rtn);
+    const highlighted = hljs.highlight(rtn.result, {
+      language: "javascript",
+    }).value;
+    scriptArr.push(highlighted);
+  });
+
+  return scriptArr;
+};
+
+export function Tabss({ data }: any) {
   const [dt, setDt] = useState(data);
+  const [open, setOpen] = useState(false);
+  const [modalData, setModalData] = useState<JSX.Element>();
   const ctheme = useTheme();
+  const extraButton = (
+    <Tooltipp title="Compare code">
+      <button
+        onClick={async () => {
+          const rtn: any = await compareCodes(data);
+          console.log(rtn);
+          const modalDt = (
+            <div className="flex ">
+              <div className="w-1/2 pl-10">
+                <p className="text-lg font-bold">Script</p>
+                <pre>
+                  <Display id="sideLeft" data={rtn[0]} type="" comment="" />
+                </pre>
+              </div>
+              <div className="w-1/2 pl-10">
+                <p className="text-lg font-bold">Result</p>
+                <pre>
+                  <Display id="sideRight" data={rtn[1]} type="" comment="" />
+                </pre>
+              </div>
+            </div>
+          );
+          setModalData(modalDt);
+          setOpen(true);
+        }}
+        className="hover:bg-gray-100 font-semibold border rounded ml-2 mr-1"
+      >
+        🧑🏻‍🤝‍🧑🏻
+      </button>
+    </Tooltipp>
+  );
+  const onChange = () => {
+    setOpen(false);
+  };
   useEffect(() => {
     $(".ant-tabs-content-holder").css("margin-top", "-35px");
     $(".ant-tabs-nav").css({
@@ -192,7 +248,7 @@ export function Tabss({ data, operations }: any) {
     >
       <Tabs
         type="card"
-        tabBarExtraContent={operations}
+        tabBarExtraContent={extraButton}
         items={dt.map((k: ItemObj, i: number) => {
           if (!k) return;
           return {
@@ -202,6 +258,7 @@ export function Tabss({ data, operations }: any) {
           };
         })}
       />
+      <Modall width={1500} open={open} data={modalData} onChange={onChange} />
     </ConfigProvider>
   );
 }

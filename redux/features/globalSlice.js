@@ -6,6 +6,7 @@ export const initialState = {
   count: 0,
   tags: [],
   theme: "light",
+  compareScripts: [],
 };
 
 export const global = createSlice({

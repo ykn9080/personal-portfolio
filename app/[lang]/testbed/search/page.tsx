@@ -1,6 +1,11 @@
 "use client";
 
 import React, { useState, FormEvent, useEffect, useRef } from "react";
+
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { RootState } from "@/redux/store";
+import { updateValue } from "@/redux/features/globalSlice";
+
 import { useRouter } from "next/navigation";
 import { winProcess, winProcess1 } from "@/lib/childprocess";
 import hljs from "highlight.js/lib/core";
@@ -58,6 +63,7 @@ interface LabelProps1 extends LabelProps {
   type1: string;
   comment1: string;
   buttonname: string | null;
+  compare: string | null;
 }
 interface LabelProps2 {
   id: string;
@@ -206,6 +212,7 @@ export function SearchShow({
   comment,
   comment1,
   buttonname,
+  compoare,
 }: LabelProps1) {
   const [search, setSearch] = useState("");
   const [exescript, setExescript] = useState<string | null>();
@@ -222,6 +229,11 @@ export function SearchShow({
   const [isLoading, setLoading] = useState(false);
   const [toggle, setToggle] = useState(true);
   const [custombtn, setCustombtn] = useState<Array<string>>(["code", "result"]);
+
+  const dispatch = useAppDispatch();
+  const compareScripts = useAppSelector(
+    (state: RootState) => state.global
+  ).compareScripts;
 
   useEffect(() => {
     if (script) {
@@ -315,16 +327,7 @@ export function SearchShow({
       </div>
     </div>
   );
-  const extraButton = (
-    <Tooltipp title="Compare code">
-      <button
-        onClick={}
-        className="hover:bg-gray-100 font-semibold border rounded ml-2 mr-1"
-      >
-        🧑🏻‍🤝‍🧑🏻
-      </button>
-    </Tooltipp>
-  );
+
   const onChange = () => {
     setOpen(false);
   };
@@ -400,6 +403,7 @@ export function SearchShow1({
   comment,
   comment1,
   buttonname,
+  compare,
 }: LabelProps1) {
   return (
     <SearchShow
@@ -412,10 +416,11 @@ export function SearchShow1({
       comment={comment}
       comment1={comment1}
       buttonname={buttonname}
+      compare={compare}
     />
   );
 }
-function Display({ id, data, type, comment }: LabelProps3) {
+export function Display({ id, data, type, comment }: LabelProps3) {
   const btnClass =
     "bg-gray-500 hover:bg-gray-300 text-gray-800 font-bold px-1 rounded inline-flex items-center mr-2 my-1";
   const [expand, setExpand] = useState("low");
