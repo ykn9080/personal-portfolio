@@ -35,6 +35,7 @@ import { Tabs, Tab, Divider } from "@nextui-org/react";
 import {
   Stepp,
   Tabss,
+  TabssCompare,
   Cardd,
   Modall,
   Drawerr,
@@ -63,7 +64,6 @@ interface LabelProps1 extends LabelProps {
   type1: string;
   comment1: string;
   buttonname: string | null;
-  compare: string | null;
 }
 interface LabelProps2 {
   id: string;
@@ -160,7 +160,7 @@ export function SearchLabel({ script }: LabelProps) {
     }
   }, [script]);
 
-  const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  const fetchCommand = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setLoading(true);
     let rtn = await winProcess({ script: search });
@@ -182,7 +182,7 @@ export function SearchLabel({ script }: LabelProps) {
 
         <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-2 rounded grow-0"
-          onClick={handleClick}
+          onClick={fetchCommand}
         >
           Run
         </button>
@@ -201,7 +201,24 @@ export function SearchLabel({ script }: LabelProps) {
     </div>
   );
 }
+export const fetchCommand = async (
+  script: String | null | undefined,
+  filetype: String
+) => {
+  if (!script) return;
+  let rtn = await winProcess({ script });
 
+  hljs.registerLanguage("javascript", javascript);
+
+  if (filetype === "json") {
+    return JSON.parse(rtn.result);
+  }
+  const highlighted = hljs.highlight(rtn.result, {
+    language: "javascript",
+  }).value;
+
+  return highlighted;
+};
 export function SearchShow({
   id,
   script,
@@ -212,7 +229,6 @@ export function SearchShow({
   comment,
   comment1,
   buttonname,
-  compoare,
 }: LabelProps1) {
   const [search, setSearch] = useState("");
   const [exescript, setExescript] = useState<string | null>();
@@ -254,8 +270,10 @@ export function SearchShow({
       setCustombtn(btn1);
     }
     async function fetch() {
-      const rtn = await handleClick(script, type);
+      setLoading(true);
+      const rtn = await fetchCommand(script, type);
 
+      setLoading(false);
       setResult(rtn);
     }
     if (script && script !== "") fetch();
@@ -264,27 +282,7 @@ export function SearchShow({
     $("#sideLeft").css("padding-left", "5px");
     $("#sideRight").css("padding-left", "5px");
   });
-  const handleClick = async (
-    script: String | null | undefined,
-    filetype: String
-  ) => {
-    setLoading(true);
-    if (!script) return;
-    let rtn = await winProcess({ script });
 
-    hljs.registerLanguage("javascript", javascript);
-
-    setLoading(false);
-
-    if (filetype === "json") {
-      return JSON.parse(rtn.result);
-    }
-    const highlighted = hljs.highlight(rtn.result, {
-      language: "javascript",
-    }).value;
-
-    return highlighted;
-  };
   const handleExecute = async () => {
     setToggle(false);
 
@@ -292,13 +290,13 @@ export function SearchShow({
       const rtn1 = await winProcess({ script: hiddenscript });
     }
     if (!executed) {
-      const rtn = await handleClick(exescript, ftype1);
+      const rtn = await fetchCommand(exescript, ftype1);
 
       setExecuted(rtn);
     }
   };
   const handleExecuteReload = async () => {
-    const rtn = await handleClick(exescript, ftype1);
+    const rtn = await fetchCommand(exescript, ftype1);
 
     setExecuted(rtn);
   };
@@ -416,7 +414,6 @@ export function SearchShow1({
       comment={comment}
       comment1={comment1}
       buttonname={buttonname}
-      compare={compare}
     />
   );
 }
@@ -551,7 +548,7 @@ export function SearchScript({
     if (filename) fetch();
   }, []);
 
-  const handleClick = async (script: String | null | undefined) => {
+  const fetchCommand = async (script: String | null | undefined) => {
     setLoading(true);
     if (!script) return;
 
@@ -568,13 +565,13 @@ export function SearchScript({
   const handleExecute = async () => {
     setToggle(false);
     if (!executed) {
-      const rtn = await handleClick(exescript);
+      const rtn = await fetchCommand(exescript);
       setExecuted(rtn);
       if (lastScript) await winProcess({ lastScript });
     }
   };
   const handleExecuteReload = async () => {
-    const rtn = await handleClick(exescript, ftype1);
+    const rtn = await fetchCommand(exescript, ftype1);
 
     setExecuted(rtn);
   };
@@ -662,7 +659,7 @@ export function SearchSingle({
       executeHidden(script2);
     }
     async function fetch() {
-      const rtn = await handleClick(script, type);
+      const rtn = await fetchCommand(script, type);
       setLoading(false);
       console.log(script, type);
       setResult(rtn);
@@ -670,7 +667,7 @@ export function SearchSingle({
     if (script && script !== "") fetch();
   }, []);
 
-  const handleClick = async (
+  const fetchCommand = async (
     script: String | null | undefined,
     filetype: String
   ) => {
@@ -844,7 +841,7 @@ export function SearchAntTab({ arr }: any) {
           return (
             <Tab key={item.id} title={item.label}>
               {Array.isArray(item.content) ? (
-                <Tabss data={item.content}> </Tabss>
+                <TabssCompare data={item.content}> </TabssCompare>
               ) : (
                 <div className="mt-[-35px] ml-[-5px]">{item.content}</div>
               )}
@@ -859,33 +856,3 @@ export function SearchAntTab({ arr }: any) {
 export function SearchStep({ items }: any) {
   return <Stepp item={items} />;
 }
-
-const HandleSidebyside = ({ data, open, onChange }: any) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  return (
-    <Modal size={"full"} isOpen={open} onClose={onClose}>
-      <ModalContent>
-        {(onClose) => (
-          <>
-            <ModalHeader className="flex flex-col gap-1">
-              Code & Result
-            </ModalHeader>
-            <ModalBody>{data}</ModalBody>
-            <ModalFooter>
-              <Button
-                color="danger"
-                variant="light"
-                onPress={() => {
-                  onClose();
-                  onChange();
-                }}
-              >
-                Close
-              </Button>
-            </ModalFooter>
-          </>
-        )}
-      </ModalContent>
-    </Modal>
-  );
-};

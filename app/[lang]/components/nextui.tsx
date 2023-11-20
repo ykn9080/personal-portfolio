@@ -15,16 +15,20 @@ import {
   Tabs,
   Modal,
   Drawer,
+  Button,
   Tooltip,
   ConfigProvider,
   theme,
 } from "antd";
-import { useAppSelector } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { RootState } from "@/redux/store";
+import { updateValue } from "@/redux/features/globalSlice";
+
 import { useTheme } from "next-themes";
 import $ from "jquery";
 import { winProcess } from "@/lib/childprocess";
 import hljs from "highlight.js";
-import { Display } from "../testbed/search/page";
+import { Display, fetchCommand } from "../testbed/search/page";
 
 export function Chipp({ children, color, variant }: any) {
   const [colorr, setColorr] = useState<
@@ -154,61 +158,9 @@ interface ItemObj {
   script: string;
   content: any;
 }
-const compareCodes = async (data) => {
-  let scriptArr: any = [];
-  data.map(async (k: ItemObj, i: number) => {
-    if (!k) return;
-
-    let rtn = await winProcess(k.script);
-    console.log(rtn);
-    const highlighted = hljs.highlight(rtn.result, {
-      language: "javascript",
-    }).value;
-    scriptArr.push(highlighted);
-  });
-
-  return scriptArr;
-};
-
-export function Tabss({ data }: any) {
+export function Tabss({ data, extraButton }: any) {
   const [dt, setDt] = useState(data);
-  const [open, setOpen] = useState(false);
-  const [modalData, setModalData] = useState<JSX.Element>();
   const ctheme = useTheme();
-  const extraButton = (
-    <Tooltipp title="Compare code">
-      <button
-        onClick={async () => {
-          const rtn: any = await compareCodes(data);
-          console.log(rtn);
-          const modalDt = (
-            <div className="flex ">
-              <div className="w-1/2 pl-10">
-                <p className="text-lg font-bold">Script</p>
-                <pre>
-                  <Display id="sideLeft" data={rtn[0]} type="" comment="" />
-                </pre>
-              </div>
-              <div className="w-1/2 pl-10">
-                <p className="text-lg font-bold">Result</p>
-                <pre>
-                  <Display id="sideRight" data={rtn[1]} type="" comment="" />
-                </pre>
-              </div>
-            </div>
-          );
-          setModalData(modalDt);
-          setOpen(true);
-        }}
-        className="hover:bg-gray-100 font-semibold border rounded ml-2 mr-1"
-      >
-        🧑🏻‍🤝‍🧑🏻
-      </button>
-    </Tooltipp>
-  );
-  const onChange = () => {
-    setOpen(false);
-  };
   useEffect(() => {
     $(".ant-tabs-content-holder").css("margin-top", "-35px");
     $(".ant-tabs-nav").css({
@@ -258,11 +210,79 @@ export function Tabss({ data }: any) {
           };
         })}
       />
-      <Modall width={1500} open={open} data={modalData} onChange={onChange} />
     </ConfigProvider>
   );
 }
 
+export function TabssCompare({ data }: any) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modal, setModal] = useState<JSX.Element>();
+
+  const fetchAll = async (data: any) => {
+    return await Promise.all(
+      data.map(async (k: ItemObj) => {
+        return fetchCommand(k.script, "js");
+      })
+    );
+  };
+  useEffect(() => {
+    async function fetchCode(data: any) {
+      const rtn = await fetchAll(data);
+      const modalDt = (
+        <div className="flex ">
+          <div className="w-1/2 pl-10">
+            <p className="text-lg font-bold">Pyspark</p>
+            <pre>
+              <Display id="sideLeft" data={rtn[0]} type="" comment="" />
+            </pre>
+          </div>
+          <div className="w-1/2 pl-10">
+            <p className="text-lg font-bold">Scala</p>
+            <pre>
+              <Display id="sideRight" data={rtn[1]} type="" comment="" />
+            </pre>
+          </div>
+        </div>
+      );
+      setModal(modalDt);
+    }
+
+    fetchCode(data);
+  }, []);
+  const extraButton = (
+    <Tooltip title="Compare code">
+      <button
+        onClick={() => {
+          setIsModalOpen(true);
+        }}
+        className="hover:bg-gray-100 font-semibold border rounded ml-2 mr-1"
+      >
+        🧑🏻‍🤝‍🧑🏻
+      </button>
+    </Tooltip>
+  );
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+  return (
+    <>
+      <Tabss data={data} extraButton={extraButton} />
+      <Modal
+        width={1500}
+        open={isModalOpen}
+        onCancel={handleCancel}
+        footer={[
+          <Button key="back" onClick={handleCancel}>
+            Close
+          </Button>,
+        ]}
+      >
+        {modal}
+      </Modal>
+    </>
+  );
+}
 export function Modall({ title, data, open, width, onChange }: any) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [name, setName] = useState("");
@@ -285,6 +305,11 @@ export function Modall({ title, data, open, width, onChange }: any) {
         title={title}
         open={isModalOpen}
         onCancel={handleCancel}
+        footer={[
+          <Button key="back" onClick={handleCancel}>
+            Close
+          </Button>,
+        ]}
       >
         {data}
       </Modal>

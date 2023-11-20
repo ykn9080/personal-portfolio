@@ -80,7 +80,7 @@ excerpt: spark rdd를 추상화하여 dataframe과 dataset, sql로 사용 편의
         />
 
     <Cardd>
-                        ### 💡 tip scala 실행
+                                ### 💡 tip scala 실행
 
 ```
 $SPARK_HOME/bin/spark-submit --class com.yknam.HelloWorld \
@@ -109,7 +109,7 @@ $SPARK_HOME/bin/spark-submit --class com.yknam.HelloWorld \
 
 ### hive
 
-### jdbc
+### mysql jdbc
 >
     <SearchAntTab
           arr={[
@@ -143,7 +143,36 @@ $SPARK_HOME/bin/spark-submit --class com.yknam.HelloWorld \
                 }
               ]
             },
-
+            {
+              id: "read",
+              label: "read",
+              content: [
+                {
+                  id: "pyspark",
+                  label: "pyspark",
+                  script: "cat /home/yknam/pythonfiles/pyspark/sparkSqlMysqlWrite.py",
+                  content: (
+                    <SearchShow
+                      script="cat /home/yknam/pythonfiles/pyspark/sparkSqlMysqlWrite.py"
+                      script1="/home/yknam/pythonfiles/pyspark/sparkSqlMysqlWrite.py"
+                      compare="pyspark"
+                    ></SearchShow>
+                  ),
+                }, {
+                  id: "scala",
+                  label: "scala",
+                  script: "cat /home/yknam/scalaproject/scala_spark/src/main/scala/sparkSqlMysqlWrite.scala",
+                  content:
+                    (
+                      <SearchShow
+                        script="cat /home/yknam/scalaproject/scala_spark/src/main/scala/sparkSqlMysqlWrite.scala"
+                        script1="spark-submit --master local[1] --class com.yknam.SparkSessionTest /home/yknam/scalaproject/scala_spark/target/scala-2.12/scala_spark_2.12-0.1.0-SNAPSHOT.jar"
+                        compare="scala"
+                      ></SearchShow>
+                    ),
+                }
+              ]
+            },
           ]}
         />
 
