@@ -1,13 +1,9 @@
 "use client";
 
-import React, { useState, FormEvent, useEffect, useRef } from "react";
-
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { RootState } from "@/redux/store";
-import { updateValue } from "@/redux/features/globalSlice";
+import React, { useState, FormEvent, useEffect } from "react";
 
 import { useRouter } from "next/navigation";
-import { winProcess, winProcess1 } from "@/lib/childprocess";
+import { winProcess } from "@/lib/childprocess";
 import hljs from "highlight.js/lib/core";
 import javascript from "highlight.js/lib/languages/javascript";
 //import "@/styles/highlight-js/github-dark.css";
@@ -23,35 +19,27 @@ import javascript from "highlight.js/lib/languages/javascript";
 import { LoadingScreen } from "@/app/[lang]/LoadingScreen";
 import "@/styles/cover-spin.css";
 import { elasticscript } from "./data";
-import {
-  JsonView,
-  allExpanded,
-  darkStyles,
-  defaultStyles,
-} from "react-json-view-lite";
+import { JsonView, allExpanded, darkStyles } from "react-json-view-lite";
 import "@/styles/jsonlite.css";
 import { ScrollShadow } from "@nextui-org/react";
-import { Tabs, Tab, Divider } from "@nextui-org/react";
+import {
+  Tabs,
+  Tab,
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownItem,
+} from "@nextui-org/react";
+
 import {
   Stepp,
   Tabss,
   TabssCompare,
-  Cardd,
   Modall,
-  Drawerr,
-  Tooltipp,
 } from "@/app/[lang]/components/nextui";
 import $ from "jquery";
-import {
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Button,
-  useDisclosure,
-} from "@nextui-org/react";
-import { FaLaptopHouse } from "react-icons/fa";
+
+import { GrMore } from "react-icons/gr";
 
 interface LabelProps {
   script: string;
@@ -329,32 +317,54 @@ export function SearchShow({
   const onChange = () => {
     setOpen(false);
   };
+  const dropdownAction = (key: string) => {
+    switch (key) {
+      case "reload":
+        handleExecuteReload();
+        break;
+      case "sideby":
+        setOpen(false);
+        setOpen(true);
+        break;
+      default:
+        return;
+    }
+  };
+
   return (
     <>
       <div className="w-full ">
         <pre className="bg-[#011627]">
           {exescript && (
             <>
-              {!toggle && executed && (
-                <div className="float-left">
-                  <button
-                    className={`${btnClass} bg-gray-300`}
-                    onClick={handleExecuteReload}
-                  >
-                    🔄reload
-                  </button>
-                  <button
-                    className={`${btnClass} bg-gray-300`}
-                    onClick={() => {
-                      setOpen(false);
-                      setOpen(true);
-                    }}
-                  >
-                    🧑🏻‍🤝‍🧑🏻sidebyside
-                  </button>
-                </div>
-              )}
               <div className="float-right">
+                {!toggle && executed && (
+                  <Dropdown>
+                    <DropdownTrigger>
+                      <button
+                        className={`${btnClass} ${
+                          !toggle ? "bg-gray-300" : "bg-gray-600"
+                        } py-[4.5px]`}
+                      >
+                        <GrMore />
+                      </button>
+                    </DropdownTrigger>
+                    <DropdownMenu aria-label="Static Actions">
+                      <DropdownItem
+                        key={1}
+                        onClick={() => dropdownAction("reload")}
+                      >
+                        🔄reload
+                      </DropdownItem>
+                      <DropdownItem
+                        key={2}
+                        onClick={() => dropdownAction("sideby")}
+                      >
+                        🧑🏻‍🤝‍🧑🏻code vs output
+                      </DropdownItem>
+                    </DropdownMenu>
+                  </Dropdown>
+                )}
                 <button
                   onClick={handleExecute}
                   className={`${btnClass} ${
@@ -401,7 +411,6 @@ export function SearchShow1({
   comment,
   comment1,
   buttonname,
-  compare,
 }: LabelProps1) {
   return (
     <SearchShow
@@ -421,7 +430,7 @@ export function Display({ id, data, type, comment }: LabelProps3) {
   const btnClass =
     "bg-gray-500 hover:bg-gray-300 text-gray-800 font-bold px-1 rounded inline-flex items-center mr-2 my-1";
   const [expand, setExpand] = useState("low");
-  const [btn, setBtn] = useState(
+  const [btn, setBtn] = useState<any | null>(
     <div className="sticky bottom-0 flex flex-col items-center pb-10">
       <button onClick={() => toggle(expand)} className={btnClass}>
         {expand === "high"
@@ -448,7 +457,7 @@ export function Display({ id, data, type, comment }: LabelProps3) {
   useEffect(() => {
     if (id === "sideLeft" || id === "sideRight") {
       setExpand("mid");
-      setBtn("");
+      setBtn(null);
     }
   }, [id]);
 
@@ -548,7 +557,10 @@ export function SearchScript({
     if (filename) fetch();
   }, []);
 
-  const fetchCommand = async (script: String | null | undefined) => {
+  const fetchCommand = async (
+    script: String | null | undefined,
+    ftype1: string | null | undefined
+  ) => {
     setLoading(true);
     if (!script) return;
 
@@ -566,7 +578,7 @@ export function SearchScript({
     setToggle(false);
     if (!executed) {
       setLoading(true);
-      const rtn = await fetchCommand(exescript);
+      const rtn = await fetchCommand(exescript, ftype1);
       setLoading(false);
       setExecuted(rtn);
       if (lastScript) await winProcess({ lastScript });
@@ -778,18 +790,20 @@ const Radiobtn = ({ onChange }: any) => {
 interface ItemObj {
   id: string;
   label: string;
-  content: string;
+  content: Iterable<ItemObj1>;
 }
 interface ItemObj1 extends ItemObj {
   icon: string;
 }
+
 export function SearchTab({ arr }: any) {
   const [tabs, setTabs] = useState(arr);
   return (
     <div className="dark flex w-full flex-col">
       <Tabs aria-label="Dynamic tabs" items={tabs}>
-        {(item: ItemObj) => (
+        {(item: ItemObj1) => (
           <Tab key={item.id} title={item.label}>
+            {/* @ts-ignore */}
             <div className="mt-[-35px] ml-[-5px]">{item.content}</div>
           </Tab>
         )}
@@ -805,12 +819,11 @@ export function SearchSubTab({ arr }: any) {
       <Tabs aria-label="Dynamic tabs" items={tabs}>
         {(item: ItemObj) => (
           <Tab key={item.id} title={item.label}>
-            {/* <Tabss> {item.content}</Tabss> */}
-
             <Tabs
               aria-label="subtabs"
               variant="light"
               radius="none"
+              // @ts-ignore
               items={item.content}
             >
               {(item: ItemObj1) => (
@@ -823,6 +836,7 @@ export function SearchSubTab({ arr }: any) {
                     </div>
                   }
                 >
+                  {/* @ts-ignore */}
                   <div className="mt-[-5px] ml-[-5px]">{item.content}</div>
                 </Tab>
               )}
@@ -846,6 +860,7 @@ export function SearchAntTab({ arr }: any) {
               {Array.isArray(item.content) ? (
                 <TabssCompare data={item.content}> </TabssCompare>
               ) : (
+                // @ts-ignore
                 <div className="mt-[-35px] ml-[-5px]">{item.content}</div>
               )}
             </Tab>

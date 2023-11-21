@@ -17,9 +17,12 @@ import {
   Drawer,
   Button,
   Tooltip,
+  Dropdown,
   ConfigProvider,
   theme,
 } from "antd";
+import { MoreOutlined } from "@ant-design/icons";
+import { MdOutlineMoreHoriz } from "react-icons/md";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { RootState } from "@/redux/store";
 import { updateValue } from "@/redux/features/globalSlice";
@@ -83,7 +86,7 @@ export function Codee({
 export function Tooltipp({ children, content }: any) {
   return (
     <div>
-      <Tooltip content={content}>{children}</Tooltip>
+      <Tooltip title={content}>{children}</Tooltip>
     </div>
   );
 }
