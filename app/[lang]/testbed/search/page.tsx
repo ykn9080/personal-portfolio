@@ -51,6 +51,7 @@ import {
   Button,
   useDisclosure,
 } from "@nextui-org/react";
+import { FaLaptopHouse } from "react-icons/fa";
 
 interface LabelProps {
   script: string;
@@ -206,6 +207,7 @@ export const fetchCommand = async (
   filetype: String
 ) => {
   if (!script) return;
+
   let rtn = await winProcess({ script });
 
   hljs.registerLanguage("javascript", javascript);
@@ -246,11 +248,6 @@ export function SearchShow({
   const [toggle, setToggle] = useState(true);
   const [custombtn, setCustombtn] = useState<Array<string>>(["code", "result"]);
 
-  const dispatch = useAppDispatch();
-  const compareScripts = useAppSelector(
-    (state: RootState) => state.global
-  ).compareScripts;
-
   useEffect(() => {
     if (script) {
       setSearch(script);
@@ -278,6 +275,7 @@ export function SearchShow({
     }
     if (script && script !== "") fetch();
   }, [script, type]);
+
   useEffect(() => {
     $("#sideLeft").css("padding-left", "5px");
     $("#sideRight").css("padding-left", "5px");
@@ -290,14 +288,16 @@ export function SearchShow({
       const rtn1 = await winProcess({ script: hiddenscript });
     }
     if (!executed) {
+      setLoading(true);
       const rtn = await fetchCommand(exescript, ftype1);
-
+      setLoading(false);
       setExecuted(rtn);
     }
   };
   const handleExecuteReload = async () => {
+    setLoading(true);
     const rtn = await fetchCommand(exescript, ftype1);
-
+    setLoading(false);
     setExecuted(rtn);
   };
 
@@ -565,14 +565,17 @@ export function SearchScript({
   const handleExecute = async () => {
     setToggle(false);
     if (!executed) {
+      setLoading(true);
       const rtn = await fetchCommand(exescript);
+      setLoading(false);
       setExecuted(rtn);
       if (lastScript) await winProcess({ lastScript });
     }
   };
   const handleExecuteReload = async () => {
+    setLoading(true);
     const rtn = await fetchCommand(exescript, ftype1);
-
+    setLoading(false);
     setExecuted(rtn);
   };
 
@@ -659,6 +662,7 @@ export function SearchSingle({
       executeHidden(script2);
     }
     async function fetch() {
+      setLoading(true);
       const rtn = await fetchCommand(script, type);
       setLoading(false);
       console.log(script, type);
@@ -671,7 +675,6 @@ export function SearchSingle({
     script: String | null | undefined,
     filetype: String
   ) => {
-    setLoading(true);
     if (!script) return;
     let rtn = await winProcess({ script });
 
