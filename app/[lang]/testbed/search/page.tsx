@@ -429,40 +429,46 @@ export function SearchShow1({
 export function Display({ id, data, type, comment }: LabelProps3) {
   const btnClass =
     "bg-gray-500 hover:bg-gray-300 text-gray-800 font-bold px-1 rounded inline-flex items-center mr-2 my-1";
+  const ExpandBtn = ({ expand }: { expand: string }) => {
+    return (
+      <div className="sticky bottom-0 flex flex-col items-center pb-10">
+        <button onClick={() => toggle(expand)} className={btnClass}>
+          {expand === "high"
+            ? "show less"
+            : expand === "mid"
+            ? "show all"
+            : "show more"}
+        </button>
+      </div>
+    );
+  };
   const [expand, setExpand] = useState("low");
-  const [btn, setBtn] = useState<any | null>(
-    <div className="sticky bottom-0 flex flex-col items-center pb-10">
-      <button onClick={() => toggle(expand)} className={btnClass}>
-        {expand === "high"
-          ? "show less"
-          : expand === "mid"
-          ? "show all"
-          : "show more"}
-      </button>
-    </div>
+  const [btn, setBtn] = useState<JSX.Element | null>(
+    <ExpandBtn expand="low" />
   );
   const [ht, setHt] = useState<number>(399);
 
-  useEffect(() => {
-    if (id !== "undefined") {
-      const htt = $("#" + id).height();
+  // useEffect(() => {
+  //   if (id !== "undefined") {
+  //     const htt = $("#" + id).height();
 
-      if (htt) {
-        console.log(htt);
-        setHt(htt);
-      }
-      console.log("im in", id, htt);
-    }
-  });
+  //     if (htt) {
+  //       setHt(htt);
+  //     }
+  //     console.log("im in", id, htt);
+  //   }
+  // });
   useEffect(() => {
     if (id === "sideLeft" || id === "sideRight") {
       setExpand("mid");
+      setBtn(<ExpandBtn expand="mid" />);
       setBtn(null);
     }
   }, [id]);
 
   const toggle = (current: string) => {
     let status = "low";
+    console.log("current", current);
     switch (current) {
       case "low":
         status = "mid";
@@ -475,7 +481,9 @@ export function Display({ id, data, type, comment }: LabelProps3) {
         break;
     }
     setExpand(status);
+    setBtn(<ExpandBtn expand={status} />);
   };
+  console.log(expand);
   return (
     <div
       id={id}
