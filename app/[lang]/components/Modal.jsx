@@ -63,7 +63,7 @@ export default function MyDialog({ data, language, icon, list }) {
           {/* The actual dialog panel  */}
           <Dialog.Panel className="w-4/12 rounded bg-white p-5  dark:bg-slate-700 dark:text-white">
             <Dialog.Title className="flex justify-between">
-              <p className="text-xl font-bold ">Interest List</p>
+              {/* <p className="text-xl font-bold ">Interest List</p> */}
               {list}
               <button onClick={() => setIsOpen(false)}>
                 <svg

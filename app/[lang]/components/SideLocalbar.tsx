@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
-import Link from "next/link";
+
 import { localBlogList, localBlog } from "../../../lib/blogs.js";
 import { Locale } from "@/i18n.config";
 import MyDialog from "./Modal.jsx";
 import { BiWindowOpen } from "react-icons/bi";
-import MyListBox from "@/app/[lang]/components/ListBox";
+import MyListBox, { Tags } from "@/app/[lang]/components/ListBox";
 import { uniqTags } from "@/app/[lang]/interest/page";
+import { Space } from "antd";
 
 type Props = {
   slug: string;
@@ -38,6 +39,7 @@ export default function SideLocalbar({ slug, lang, meta }: Props) {
   if (!blogs) {
     return <p className="mt-10 text-center">Sorry, no posts available.</p>;
   }
+
   return (
     <div>
       <aside className="flex flex-col pt-4 overflow-hidden h-full">
@@ -51,10 +53,15 @@ export default function SideLocalbar({ slug, lang, meta }: Props) {
                   className={` h-4 w-4`}
                   aria-hidden="true"
                 ></BiWindowOpen>
-                <p className="text-xs ml-1 hover:underline">List</p>
+                {/* <p className="text-xs ml-1 hover:underline">List</p> */}
               </div>
             }
-            list={<MyListBox tags={uniqTags(blogs)} />}
+            list={
+              <Space>
+                <Tags />
+                <MyListBox tags={uniqTags(blogs)} />
+              </Space>
+            }
           />
         </div>
 

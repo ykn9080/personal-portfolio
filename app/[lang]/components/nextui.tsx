@@ -32,6 +32,7 @@ import $ from "jquery";
 import { winProcess } from "@/lib/childprocess";
 import hljs from "highlight.js";
 import { Display, fetchCommand } from "../testbed/search/page";
+import Alert from "antd/es/alert/Alert";
 
 export function Chipp({ children, color, variant }: any) {
   const [colorr, setColorr] = useState<
@@ -150,7 +151,7 @@ export function Dividerr() {
 export function Cardd({ children }: any) {
   return (
     <Card>
-      <CardBody className="text-white">{children}</CardBody>
+      <CardBody>{children}</CardBody>
     </Card>
   );
 }
@@ -220,6 +221,7 @@ export function Tabss({ data, extraButton }: any) {
 export function TabssCompare({ data }: any) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modal, setModal] = useState<JSX.Element>();
+  const ctheme = useTheme();
 
   const fetchAll = async (data: any) => {
     return await Promise.all(
@@ -258,7 +260,7 @@ export function TabssCompare({ data }: any) {
         onClick={() => {
           setIsModalOpen(true);
         }}
-        className="hover:bg-gray-100 font-semibold border rounded ml-2 mr-1"
+        className="hover:bg-gray-100 font-semibold border border-slate-300 dark:border-none rounded ml-2 mr-1"
       >
         🧑🏻‍🤝‍🧑🏻
       </button>
@@ -269,21 +271,30 @@ export function TabssCompare({ data }: any) {
     setIsModalOpen(false);
   };
   return (
-    <>
-      <Tabss data={data} extraButton={extraButton} />
-      <Modal
-        width={1500}
-        open={isModalOpen}
-        onCancel={handleCancel}
-        footer={[
-          <Button key="back" onClick={handleCancel}>
-            Close
-          </Button>,
-        ]}
+    <div className="-mb-3">
+      <ConfigProvider
+        theme={{
+          algorithm:
+            ctheme.theme === "dark"
+              ? theme.darkAlgorithm
+              : theme.defaultAlgorithm,
+        }}
       >
-        {modal}
-      </Modal>
-    </>
+        <Tabss data={data} extraButton={extraButton} />
+        <Modal
+          width={1500}
+          open={isModalOpen}
+          onCancel={handleCancel}
+          footer={[
+            <Button key="back" onClick={handleCancel}>
+              Close
+            </Button>,
+          ]}
+        >
+          {modal}
+        </Modal>
+      </ConfigProvider>
+    </div>
   );
 }
 export function Modall({ title, data, open, width, onChange }: any) {
@@ -337,5 +348,27 @@ export function Drawerr({ data, open, onChange }: any) {
         {data}
       </Drawer>
     </>
+  );
+}
+
+export function Alertt({ title, shortmsg, longmsg }: any) {
+  const [info, setInfo] = useState(shortmsg);
+  const [detaill, setDetaill] = useState(false);
+  const showDetail = () => {
+    if (detaill) setInfo(shortmsg);
+    else setInfo(longmsg);
+    setDetaill(!detaill);
+  };
+  return (
+    <Alert
+      message={title}
+      description={info}
+      action={
+        <Button size="small" type="text" onClick={showDetail}>
+          {detaill ? "⬆️short" : "⬇️more"}
+        </Button>
+      }
+      type="info"
+    />
   );
 }

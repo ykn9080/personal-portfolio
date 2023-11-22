@@ -6,6 +6,7 @@ import _ from "lodash";
 import { GrFormClose } from "react-icons/gr";
 import { updateValue } from "@/redux/features/globalSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { Tag, Space } from "antd";
 
 const people = [
   "Wade Cooper",
@@ -46,6 +47,54 @@ const othersLast = (tags) => {
   });
   return newtags;
 };
+export const Tags = () => {
+  const [cl, setCl] = useState(["#2db7f5", "#2db7f5", "#2db7f5", "#2db7f5"]);
+  const [selected, setSelected] = useState();
+  const dispatch = useAppDispatch();
+  const tags = useAppSelector((state) => state.global).tags;
+  const taglist = ["elastic", "hadoop", "kafka", "spark"];
+  useEffect(() => {
+    if (tags.length === 0) {
+      setCl(["#2db7f5", "#2db7f5", "#2db7f5", "#2db7f5"]);
+      setSelected(false);
+    }
+  }, [tags]);
+  const tag = (index) => {
+    if (selected === index) {
+      dispatch(updateValue({ tags: [] }));
+      setSelected(false);
+      cl[index] = "#2db7f5";
+      setCl(cl);
+    } else {
+      dispatch(updateValue({ tags: [taglist[index]] }));
+      setSelected(index);
+
+      cl[0] = "#2db7f5";
+      cl[1] = "#2db7f5";
+      cl[2] = "#2db7f5";
+      cl[3] = "#2db7f5";
+      cl[index] = "#f50";
+      setCl(cl);
+    }
+  };
+  return (
+    <Space size={[0, 2]} wrap>
+      {taglist.map((tagname, i) => {
+        return (
+          <Tag
+            className="cursor-pointer"
+            onClick={() => {
+              tag(i);
+            }}
+            color={cl[i]}
+          >
+            {tagname}
+          </Tag>
+        );
+      })}
+    </Space>
+  );
+};
 
 export default function MyListBox({ tags }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -63,6 +112,7 @@ export default function MyListBox({ tags }) {
   }, [taglist]);
 
   function handleSelect(value) {
+    console.log(value);
     if (!isSelected(value)) {
       const findTag = allTags.find((el) => el.name === value);
       if (Object.keys(findTag).length > 0) {
@@ -84,7 +134,7 @@ export default function MyListBox({ tags }) {
   }
 
   return (
-    <div className="flex w-52">
+    <div className="flex w-42">
       <div className="w-full max-w-lg mx-auto">
         <Listbox
           as="div"

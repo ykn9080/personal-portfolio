@@ -21,8 +21,8 @@ import "@/styles/cover-spin.css";
 import { elasticscript } from "./data";
 import { JsonView, allExpanded, darkStyles } from "react-json-view-lite";
 import "@/styles/jsonlite.css";
-import { ScrollShadow } from "@nextui-org/react";
 import {
+  ScrollShadow,
   Tabs,
   Tab,
   Dropdown,
@@ -483,7 +483,7 @@ export function Display({ id, data, type, comment }: LabelProps3) {
     setExpand(status);
     setBtn(<ExpandBtn expand={status} />);
   };
-  console.log(expand);
+
   return (
     <div
       id={id}
@@ -493,7 +493,7 @@ export function Display({ id, data, type, comment }: LabelProps3) {
     >
       <ScrollShadow
         hideScrollBar
-        size={100}
+        size={10}
         className={
           expand === "low"
             ? "max-h-[300px]"
