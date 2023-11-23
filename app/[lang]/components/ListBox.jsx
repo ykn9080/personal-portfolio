@@ -109,6 +109,7 @@ export default function MyListBox({ tags }) {
   }
   useEffect(() => {
     if (taglist.length === 0) setIsOpen(false);
+    setSelectedTags(taglist);
   }, [taglist]);
 
   function handleSelect(value) {
@@ -117,7 +118,7 @@ export default function MyListBox({ tags }) {
       const findTag = allTags.find((el) => el.name === value);
       if (Object.keys(findTag).length > 0) {
         const newtags = [...selectedTags, findTag.name];
-        setSelectedTags(newtags);
+        //setSelectedTags(newtags);
         dispatch(updateValue({ tags: newtags }));
       }
     } else {
