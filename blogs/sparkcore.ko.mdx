@@ -21,8 +21,8 @@ excerpt: 데이터 파이프라인을 관리하는 툴로 정교한 스케쥴기
 ## spark rdd 기본
 
     <SearchShow
-          script="cat /home/yknam/pythonfiles/pyspark/sparkRdd1.py"
-          script1="/home/yknam/pythonfiles/pyspark/sparkRdd1.py"
+          script="cat /home/yknam/pythonfiles/pyspark/sparkRdd.py"
+          script1="/home/yknam/pythonfiles/pyspark/sparkRdd.py"
 
         />
 
@@ -38,6 +38,13 @@ excerpt: 데이터 파이프라인을 관리하는 툴로 정교한 스케쥴기
     <SearchShow
           script="cat /home/yknam/pythonfiles/pyspark/sparkDataframe.py"
           script1="/home/yknam/pythonfiles/pyspark/sparkDataframe.py"
+
+        />
+## spark rdd WordCount
+
+    <SearchShow
+          script="cat /home/yknam/pythonfiles/pyspark/sparkRddWordCount.py | grep '##'"
+          script1="/home/yknam/pythonfiles/pyspark/sparkRddWordCount.py"
 
         />
 ## master설정
@@ -66,24 +73,22 @@ excerpt: 데이터 파이프라인을 관리하는 툴로 정교한 스케쥴기
 
     <div style={{ clear: "both" }} />
 ### accumulator
-    <SearchShow script="cat /home/yknam/pythonfiles/pyspark/sparkRddAccumulator.py" />
+    <SearchShow script="cat /home/yknam/pythonfiles/pyspark/sparkRddAccumulator.py"
+          script1="/home/yknam/pythonfiles/pyspark/sparkRddAccumulator.py" />
 ### broadcast
-    <SearchShow script="cat /home/yknam/pythonfiles/pyspark/sparkRddBroadcast.py" />
+    <SearchShow script="cat /home/yknam/pythonfiles/pyspark/sparkRddBroadcast.py"
+          script1="/home/yknam/pythonfiles/pyspark/sparkRddBroadcast.py" />
 
-    <SearchShow
-          script="cat /home/yknam/pythonfiles/pyspark/sparkRddToDF.py"
-          port="7878"
-        />
 ## map side join vs shuffle join
-    <div style={{ float: "right", marginLeft: "20px" }}>
-          <img
+  <div style={{ float: "right", marginLeft: "20px" }}>
+        <img
               src="/images/interest/sparkcore-shufflejoin.png"
               width="400"
               alt="shufflejoin"
             />
           </div>
 
-> worker 내에서 조인이 발생되는 경우와 worker간에 shuffle이 발생하여
-> 조인이 일어나는 경우
+> map side join : worker 내에서 조인이 발생되는 경우
+> shuffle join: worker간에 shuffle이 발생하여 조인이 일어나는 경우
 
     <div style={{ clear: "both" }} />

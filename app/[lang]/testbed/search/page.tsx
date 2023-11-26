@@ -197,7 +197,7 @@ export const fetchCommand = async (
   if (!script) return;
 
   let rtn = await winProcess({ script });
-
+  console.log(rtn);
   hljs.registerLanguage("javascript", javascript);
 
   if (filetype === "json") {
@@ -326,11 +326,18 @@ export function SearchShow({
         setOpen(false);
         setOpen(true);
         break;
+      case "master":
+        window.open("http://imcmaster.iptime.org:8181/", "_blank");
+        break;
       default:
         return;
     }
   };
-
+  const ddmap = [
+    { id: "reload", name: "reload", emoji: "🔄" },
+    { id: "sideby", name: "code vs result", emoji: "🧑🏻‍🤝‍🧑🏻" },
+    { id: "master", name: "spark master web", emoji: "🧑🏻‍🤝‍🧑🏻" },
+  ];
   return (
     <>
       <div className="w-full ">
@@ -350,7 +357,18 @@ export function SearchShow({
                       </button>
                     </DropdownTrigger>
                     <DropdownMenu aria-label="Static Actions">
-                      <DropdownItem
+                      {ddmap.map((item, indexedDB) => {
+                        return (
+                          <DropdownItem
+                            key={indexedDB}
+                            onClick={() => dropdownAction(item.name)}
+                          >
+                            {item.emoji}
+                            {item.name}
+                          </DropdownItem>
+                        );
+                      })}
+                      {/* <DropdownItem
                         key={1}
                         onClick={() => dropdownAction("reload")}
                       >
@@ -361,7 +379,7 @@ export function SearchShow({
                         onClick={() => dropdownAction("sideby")}
                       >
                         🧑🏻‍🤝‍🧑🏻code vs output
-                      </DropdownItem>
+                      </DropdownItem> */}
                     </DropdownMenu>
                   </Dropdown>
                 )}
