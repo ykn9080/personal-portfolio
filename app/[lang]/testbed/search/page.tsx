@@ -228,6 +228,7 @@ export function SearchShow({
   const [cmt, setCmt] = useState(comment);
   const [cmt1, setCmt1] = useState(comment1);
   const [open, setOpen] = useState(false);
+  const [extraMap, setExtraMap] = useState<any | null>([]);
 
   const [result, setResult] = useState<any | null>();
   const [result1, setResult1] = useState<any | null>();
@@ -264,6 +265,10 @@ export function SearchShow({
     if (script && script !== "") fetch();
   }, [script, type]);
 
+  useEffect(() => {
+    if (id.startsWith("spark")) setExtraMap(ddmap.concat(sparkmap));
+    else setExtraMap(ddmap);
+  }, []);
   useEffect(() => {
     $("#sideLeft").css("padding-left", "5px");
     $("#sideRight").css("padding-left", "5px");
@@ -327,7 +332,16 @@ export function SearchShow({
         setOpen(true);
         break;
       case "master":
-        window.open("http://imcmaster.iptime.org:8181/", "_blank");
+        window.open("http://imcmaster.iptime.org:8181/", "PopupWin", "_blank");
+        break;
+      case "worker":
+        window.open("http://imcmaster.iptime.org:8081/", "PopupWin", "_blank");
+        break;
+      case "driver":
+        window.open("http://winubuntu:4040/", "PopupWin", "_blank");
+        break;
+      case "history":
+        window.open("http://winubuntu:18080/", "PopupWin", "_blank");
         break;
       default:
         return;
@@ -335,8 +349,13 @@ export function SearchShow({
   };
   const ddmap = [
     { id: "reload", name: "reload", emoji: "🔄" },
-    { id: "sideby", name: "code vs result", emoji: "🧑🏻‍🤝‍🧑🏻" },
-    { id: "master", name: "spark master web", emoji: "🧑🏻‍🤝‍🧑🏻" },
+    { id: "sideby", name: "code vs result", emoji: "👬🏻" },
+  ];
+  const sparkmap = [
+    { id: "master", name: "spark master", emoji: "👑" },
+    { id: "worker", name: "spark worker", emoji: "👨🏽‍🔧" },
+    { id: "driver", name: "spark driver", emoji: "🏚️" },
+    { id: "history", name: "spark history", emoji: "📜" },
   ];
   return (
     <>
@@ -357,29 +376,17 @@ export function SearchShow({
                       </button>
                     </DropdownTrigger>
                     <DropdownMenu aria-label="Static Actions">
-                      {ddmap.map((item, indexedDB) => {
+                      {extraMap.map((item, indexedDB) => {
                         return (
                           <DropdownItem
                             key={indexedDB}
-                            onClick={() => dropdownAction(item.name)}
+                            onClick={() => dropdownAction(item.id)}
                           >
                             {item.emoji}
                             {item.name}
                           </DropdownItem>
                         );
                       })}
-                      {/* <DropdownItem
-                        key={1}
-                        onClick={() => dropdownAction("reload")}
-                      >
-                        🔄reload
-                      </DropdownItem>
-                      <DropdownItem
-                        key={2}
-                        onClick={() => dropdownAction("sideby")}
-                      >
-                        🧑🏻‍🤝‍🧑🏻code vs output
-                      </DropdownItem> */}
                     </DropdownMenu>
                   </Dropdown>
                 )}

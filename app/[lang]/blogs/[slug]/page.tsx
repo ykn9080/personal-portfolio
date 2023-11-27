@@ -30,7 +30,7 @@ import Search, {
   SearchHidden,
 } from "@/app/[lang]/testbed/search/page";
 import Toc from "@/app/[lang]/components/Toc";
-import Iframe from "react-iframe";
+
 import {
   Chipp,
   Snippett,
@@ -167,7 +167,6 @@ export default function Post({ params }: any, lang: Locale) {
                   Cardd,
                   Modall,
                   Drawerr,
-                  Iframe,
                   Alertt,
                 }}
               />

@@ -23,23 +23,23 @@ excerpt: spark rdd를 추상화하여 dataframe과 dataset, sql로 사용 편의
     <SearchAntTab
           arr={[
             {
-              id: "test",
+              id: "spark_test",
               label: "test",
               content: <SearchShow
                 id="dvela3"
                 script="ssh yknam@namubuntu curl GET http://namubuntu:9200/nginx-2023.10.25/_mapping"
                 comment={<Cardd >
                   <div className="text-white">
-                  <h1>Href Attribute Example</h1>
-                  <p>
-                    <a href="https://www.freecodecamp.org/contribute/">The freeCodeCamp Contribution Page</a> shows you how and where you can contribute to freeCodeCamp's community and growth.
-                  </p>
+                    <h1>Href Attribute Example</h1>
+                    <p>
+                      <a href="https://www.freecodecamp.org/contribute/">The freeCodeCamp Contribution Page</a> shows you how and where you can contribute to freeCodeCamp's community and growth.
+                    </p>
                   </div>
                 </Cardd>}
               />
             },
             {
-              id: "mysql",
+              id: "spark_mysql",
               label: "mysql",
               content: [
                 {
@@ -53,7 +53,7 @@ excerpt: spark rdd를 추상화하여 dataframe과 dataset, sql로 사용 편의
                     ></SearchShow>
                   ),
                 }, {
-                  id: "scala",
+                  id: "spark_scala",
                   label: "scala",
                   script: "ssh nam cat /home/yknam/sandbox/filebeat/conf/filebeat1.yml",
                   content:
@@ -83,10 +83,11 @@ excerpt: spark rdd를 추상화하여 dataframe과 dataset, sql로 사용 편의
 
 ### csv data
 
-<SearchShow
-  script="cat /home/yknam/pythonfiles/pyspark/sparkSqlCsv.py"
-  script1="/home/yknam/pythonfiles/pyspark/sparkSqlCsv.py"
-/>
+    <SearchShow
+          id="spark_dvela3"
+          script="cat /home/yknam/pythonfiles/pyspark/sparkSqlCsv.py"
+          script1="/home/yknam/pythonfiles/pyspark/sparkSqlCsv.py"
+        />
 
 ### data sources
 
@@ -99,7 +100,7 @@ excerpt: spark rdd를 추상화하여 dataframe과 dataset, sql로 사용 편의
     <SearchAntTab
           arr={[
             {
-              id: "read",
+              id: "spark_read",
               label: "read",
               content: [
                 {
@@ -114,7 +115,7 @@ excerpt: spark rdd를 추상화하여 dataframe과 dataset, sql로 사용 편의
                     ></SearchShow>
                   ),
                 }, {
-                  id: "scala",
+                  id: "spark_scala",
                   label: "scala",
                   script: "cat /home/yknam/scalaproject/scala_spark/src/main/scala/sparkSqlMysql.scala",
                   content:
@@ -129,11 +130,11 @@ excerpt: spark rdd를 추상화하여 dataframe과 dataset, sql로 사용 편의
               ]
             },
             {
-              id: "write",
+              id: "spark_write",
               label: "write",
               content: [
                 {
-                  id: "pyspark",
+                  id: "spark_pyspark",
                   label: "pyspark",
                   script: "cat /home/yknam/pythonfiles/pyspark/sparkSqlMysqlWrite.py",
                   content: (
@@ -144,12 +145,13 @@ excerpt: spark rdd를 추상화하여 dataframe과 dataset, sql로 사용 편의
                     ></SearchShow>
                   ),
                 }, {
-                  id: "scala",
+                  id: "spark_scala",
                   label: "scala",
                   script: "cat /home/yknam/scalaproject/scala_spark/src/main/scala/sparkSqlMysqlWrite.scala",
                   content:
                     (
                       <SearchShow
+                        id="spark_scala_write"
                         script="cat /home/yknam/scalaproject/scala_spark/src/main/scala/sparkSqlMysqlWrite.scala"
                         script1="spark-submit --master local[1] --class com.yknam.SparkSessionTest /home/yknam/scalaproject/scala_spark/target/scala-2.12/scala_spark_2.12-0.1.0-SNAPSHOT.jar"
                         compare="scala"
@@ -161,35 +163,35 @@ excerpt: spark rdd를 추상화하여 dataframe과 dataset, sql로 사용 편의
           ]}
         />
 
-<Alertt
-  title="💡 scala 실행"
-  shortmsg={
-    <h4>
-      $SPARK_HOME/bin/spark-submit --class com.yknam.HelloWorld \
-      /home/yknam/scalaproject/scala_spark/target/scala-2.12/scala_spark_2.12-0.1.0-SNAPSHOT.jar
-    </h4>
-  }
-  longmsg={
-    <>
-      <h4>
-        $SPARK_HOME/bin/spark-submit --class com.yknam.HelloWorld \
-        /home/yknam/scalaproject/scala_spark/target/scala-2.12/scala_spark_2.12-0.1.0-SNAPSHOT.jar
-      </h4>
-      <ul>
-        <p>1. spark-submit</p>
-        <p>2. --class</p>
-        <p>3. 패키지명.클래스명: com.yknam+ .HelloWorld</p>
-        <p>
-          4. jar파일:
-          디렉토리(/home/yknam/scalaproject/scala_spark/target/scala-2.12/)+jar파일(scala_spark_2.12-0.1.0-SNAPSHOT.jar)
-        </p>
-      </ul>
-      <h4>intellij에서 sbt build</h4>
-      <p>컴파일할 폴더root에서 </p>
-      <code>sbt clean build</code>
-    </>
-  }
-/>
+    <Alertt
+          title="💡 scala 실행"
+          shortmsg={
+            <h4>
+              $SPARK_HOME/bin/spark-submit --class com.yknam.HelloWorld \
+              /home/yknam/scalaproject/scala_spark/target/scala-2.12/scala_spark_2.12-0.1.0-SNAPSHOT.jar
+            </h4>
+          }
+          longmsg={
+            <>
+              <h4>
+                $SPARK_HOME/bin/spark-submit --class com.yknam.HelloWorld \
+                /home/yknam/scalaproject/scala_spark/target/scala-2.12/scala_spark_2.12-0.1.0-SNAPSHOT.jar
+              </h4>
+              <ul>
+                <p>1. spark-submit</p>
+                <p>2. --class</p>
+                <p>3. 패키지명.클래스명: com.yknam+ .HelloWorld</p>
+                <p>
+                  4. jar파일:
+                  디렉토리(/home/yknam/scalaproject/scala_spark/target/scala-2.12/)+jar파일(scala_spark_2.12-0.1.0-SNAPSHOT.jar)
+                </p>
+              </ul>
+              <h4>intellij에서 sbt build</h4>
+              <p>컴파일할 폴더root에서 </p>
+              <code>sbt clean build</code>
+            </>
+          }
+        />
 ### dataset
 
 > Hdfs 파일 리스트 조회
@@ -212,8 +214,3 @@ df_mysql = spark.read.format("jdbc")
    .load()
 ```
 
-    <SearchLabel
-          script="/home/yknam/pythonfiles/pyspark/sparkRdd.py"
-          txt="spark rdd example"
-          port="7878"
-        />
