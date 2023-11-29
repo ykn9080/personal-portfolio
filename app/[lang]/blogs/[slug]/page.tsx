@@ -42,6 +42,7 @@ import {
   Modall,
   Drawerr,
   Alertt,
+  TabssCompare,
 } from "@/app/[lang]/components/nextui";
 import Diagram from "@/app/[lang]/components/Diagram";
 
@@ -168,6 +169,7 @@ export default function Post({ params }: any, lang: Locale) {
                   Modall,
                   Drawerr,
                   Alertt,
+                  TabssCompare,
                 }}
               />
             </div>
