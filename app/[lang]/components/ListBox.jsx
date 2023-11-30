@@ -82,6 +82,7 @@ export const Tags = () => {
       {taglist.map((tagname, i) => {
         return (
           <Tag
+            key={i}
             className="cursor-pointer"
             onClick={() => {
               tag(i);

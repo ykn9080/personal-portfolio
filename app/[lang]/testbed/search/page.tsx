@@ -376,7 +376,7 @@ export function SearchShow({
                       </button>
                     </DropdownTrigger>
                     <DropdownMenu aria-label="Static Actions">
-                      {extraMap.map((item, indexedDB) => {
+                      {extraMap.map((item: any, indexedDB: number) => {
                         return (
                           <DropdownItem
                             key={indexedDB}
