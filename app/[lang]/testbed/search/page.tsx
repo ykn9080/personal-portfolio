@@ -903,6 +903,9 @@ export function SearchAntTab({ arr }: any) {
     </div>
   );
 }
+export function SearchAntTab1({ arr }: any) {
+  return <SearchAntTab arr={arr} />;
+}
 
 export function SearchStep({ items }: any) {
   return <Stepp item={items} />;

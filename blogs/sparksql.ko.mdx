@@ -20,23 +20,30 @@ excerpt: spark rdd를 추상화하여 dataframe과 dataset, sql로 사용 편의
 
 ### sql view 생성
 
+
     <SearchAntTab
           arr={[
             {
               id: "spark_test",
               label: "test",
-              content: <SearchShow
-                id="dvela3"
-                script="ssh yknam@namubuntu curl GET http://namubuntu:9200/nginx-2023.10.25/_mapping"
-                comment={<Cardd >
-                  <div className="text-white">
-                    <h1>Href Attribute Example</h1>
-                    <p>
-                      <a href="https://www.freecodecamp.org/contribute/">The freeCodeCamp Contribution Page</a> shows you how and where you can contribute to freeCodeCamp's community and growth.
-                    </p>
-                  </div>
-                </Cardd>}
-              />
+              content: [
+                {
+                  id: "pyspark",
+                  label: "pyspark",
+                  script: "cat /home/yknam/pythonfiles/pyspark/sparkSqlMysql.py",
+                  content: <SearchShow
+                    id="dvela3"
+                    script="ssh yknam@namubuntu curl GET http://namubuntu:9200/nginx-2023.10.25/_mapping"
+                    comment={<Cardd >
+                      <div className="text-white">
+                        <h1>Href Attribute Example</h1>
+                        <p>
+                          <a href="https://www.freecodecamp.org/contribute/">The freeCodeCamp Contribution Page</a> shows you how and where you can contribute to freeCodeCamp's community and growth.
+                        </p>
+                      </div>
+                    </Cardd>}
+                  />
+                }]
             },
             {
               id: "spark_mysql",
@@ -48,6 +55,7 @@ excerpt: spark rdd를 추상화하여 dataframe과 dataset, sql로 사용 편의
                   script: "cat /home/yknam/pythonfiles/pyspark/sparkSqlMysql.py",
                   content: (
                     <SearchShow
+                      id="spark_dvela3"
                       script="cat /home/yknam/pythonfiles/pyspark/sparkSqlMysql.py"
                       script1="/home/yknam/pythonfiles/pyspark/sparkSqlMysql.py"
                     ></SearchShow>
@@ -59,7 +67,7 @@ excerpt: spark rdd를 추상화하여 dataframe과 dataset, sql로 사용 편의
                   content:
                     (
                       <SearchShow
-                        id="file6"
+                        id="spark_file6"
                         script="ssh nam cat /home/yknam/sandbox/filebeat/conf/filebeat1.yml"
                         script1="curl get http://imcmaster.iptime.org:9200/filebeat*/_search"
                         type1="json"
@@ -95,73 +103,77 @@ excerpt: spark rdd를 추상화하여 dataframe과 dataset, sql로 사용 편의
 
 ### mysql jdbc
 
->
 
-    <SearchAntTab
-          arr={[
-            {
-              id: "spark_read",
-              label: "read",
-              content: [
-                {
-                  id: "pyspark",
-                  label: "pyspark",
-                  script: "cat /home/yknam/pythonfiles/pyspark/sparkSqlMysql.py",
-                  content: (
-                    <SearchShow
-                      script="cat /home/yknam/pythonfiles/pyspark/sparkSqlMysql.py"
-                      script1="/home/yknam/pythonfiles/pyspark/sparkSqlMysql.py"
-                      compare="pyspark"
-                    ></SearchShow>
-                  ),
-                }, {
-                  id: "spark_scala",
-                  label: "scala",
-                  script: "cat /home/yknam/scalaproject/scala_spark/src/main/scala/sparkSqlMysql.scala",
-                  content:
-                    (
-                      <SearchShow
-                        script="cat /home/yknam/scalaproject/scala_spark/src/main/scala/sparkSqlMysql.scala"
-                        script1="spark-submit --master local[1] --class com.yknam.SparkSessionTest /home/yknam/scalaproject/scala_spark/target/scala-2.12/scala_spark_2.12-0.1.0-SNAPSHOT.jar"
-                        compare="scala"
-                      ></SearchShow>
-                    ),
-                }
-              ]
-            },
-            {
-              id: "spark_write",
-              label: "write",
-              content: [
-                {
-                  id: "spark_pyspark",
-                  label: "pyspark",
-                  script: "cat /home/yknam/pythonfiles/pyspark/sparkSqlMysqlWrite.py",
-                  content: (
-                    <SearchShow
-                      script="cat /home/yknam/pythonfiles/pyspark/sparkSqlMysqlWrite.py"
-                      script1="/home/yknam/pythonfiles/pyspark/sparkSqlMysqlWrite.py"
-                      compare="pyspark"
-                    ></SearchShow>
-                  ),
-                }, {
-                  id: "spark_scala",
-                  label: "scala",
-                  script: "cat /home/yknam/scalaproject/scala_spark/src/main/scala/sparkSqlMysqlWrite.scala",
-                  content:
-                    (
-                      <SearchShow
-                        id="spark_scala_write"
-                        script="cat /home/yknam/scalaproject/scala_spark/src/main/scala/sparkSqlMysqlWrite.scala"
-                        script1="spark-submit --master local[1] --class com.yknam.SparkSessionTest /home/yknam/scalaproject/scala_spark/target/scala-2.12/scala_spark_2.12-0.1.0-SNAPSHOT.jar"
-                        compare="scala"
-                      ></SearchShow>
-                    ),
-                }
-              ]
-            },
-          ]}
-        />
+     <SearchAntTab1
+           key="spark_mysql"
+           arr={[
+             {
+               id: "spark_read",
+               label: "read",
+               content: [
+                 {
+                   id: "pyspark",
+                   label: "pyspark",
+                   script: "cat /home/yknam/pythonfiles/pyspark/sparkSqlMysql.py",
+                   content: (
+                     <SearchShow
+                       id="spark_pyspark_read"
+                       script="cat /home/yknam/pythonfiles/pyspark/sparkSqlMysql.py"
+                       script1="/home/yknam/pythonfiles/pyspark/sparkSqlMysql.py"
+                       compare="pyspark"
+                     ></SearchShow>
+                   ),
+                 }, {
+                   id: "spark_scala",
+                   label: "scala",
+                   script: "cat /home/yknam/scalaproject/scala_spark/src/main/scala/sparkSqlMysql.scala",
+                   content:
+                     (
+                       <SearchShow
+                         id="spark_scala_read"
+                         script="cat /home/yknam/scalaproject/scala_spark/src/main/scala/sparkSqlMysql.scala"
+                         script1="spark-submit --master local[1] --class com.yknam.SparkSessionTest /home/yknam/scalaproject/scala_spark/target/scala-2.12/scala_spark_2.12-0.1.0-SNAPSHOT.jar"
+                         compare="scala"
+                       ></SearchShow>
+                     ),
+                 }
+               ]
+             },
+             {
+               id: "spark_write",
+               label: "write",
+               content: [
+                 {
+                   id: "spark_pyspark",
+                   label: "pyspark",
+                   script: "cat /home/yknam/pythonfiles/pyspark/sparkSqlMysqlWrite.py",
+                   content: (
+                     <SearchShow
+                       id="spark_pyspark_write"
+                       script="cat /home/yknam/pythonfiles/pyspark/sparkSqlMysqlWrite.py"
+                       script1="/home/yknam/pythonfiles/pyspark/sparkSqlMysqlWrite.py"
+                       compare="pyspark"
+                     ></SearchShow>
+                   ),
+                 }, {
+                   id: "spark_scala",
+                   label: "scala",
+                   script: "cat /home/yknam/scalaproject/scala_spark/src/main/scala/sparkSqlMysqlWrite.scala",
+                   content:
+                     (
+                       <SearchShow
+                         id="spark_scala_write"
+                         script="cat /home/yknam/scalaproject/scala_spark/src/main/scala/sparkSqlMysqlWrite.scala"
+                         script1="spark-submit --master local[1] --class com.yknam.SparkSessionTest /home/yknam/scalaproject/scala_spark/target/scala-2.12/scala_spark_2.12-0.1.0-SNAPSHOT.jar"
+                         compare="scala"
+                       ></SearchShow>
+                     ),
+                 }
+               ]
+             },
+           ]}
+         />
+
 
     <Alertt
           title="💡 scala 실행"
