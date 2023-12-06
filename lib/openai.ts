@@ -41,9 +41,7 @@ export async function dalliCall(script: any) {
 }
 
 export async function chatCall(messages: any) {
-  const response = await fetch(
-  "https://api.openai.com/v1/chat/completions",
-  {
+  const response = await fetch("https://api.openai.com/v1/chat/completions", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -52,9 +50,8 @@ export async function chatCall(messages: any) {
     body: JSON.stringify({
       model: "gpt-3.5-turbo",
       // We'll later replace the content with user input
-      messages: [...messages, { "role": "user", "content": "This is a test!" }],
+      messages: [...messages, { role: "user", content: "This is a test!" }],
       temperature: 0.7,
     }),
-  }
-);
-
+  });
+}
