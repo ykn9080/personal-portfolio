@@ -30,7 +30,7 @@ import Search, {
   SearchSingle1,
   SearchHidden,
 } from "@/app/[lang]/testbed/search/page";
-import OpenAIPage from "@/app/[lang]/testbed/openai/page";
+import OpenAIPage, { Dalli, Chatbot } from "@/app/[lang]/testbed/openai/page";
 import Toc from "@/app/[lang]/components/Toc";
 
 import {
@@ -174,6 +174,8 @@ export default function Post({ params }: any, lang: Locale) {
                   Alertt,
                   TabssCompare,
                   OpenAIPage,
+                  Dalli,
+                  Chatbot,
                 }}
               />
             </div>
