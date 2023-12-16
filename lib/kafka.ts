@@ -6,11 +6,13 @@ interface OptionType {
   };
   cache: string;
 }
+// const siteurl = "http://imcmaster.iptime.org:9111/";
+const siteurl = "https://imcmaster.duckdns.org/kafka";
 export async function getKafkaGet(
   apiUrl: string,
   method: string
 ): Promise<any[] | undefined> {
-  const res = await fetch(`http://imcmaster.iptime.org:9111/${apiUrl}`, {
+  const res = await fetch(`${siteurl}/${apiUrl}`, {
     method: method,
     headers: {
       Accept: "application/json",
@@ -28,7 +30,7 @@ export async function getKafkaPost(
   method: string,
   body: object
 ): Promise<any[] | undefined> {
-  const res = await fetch(`http://imcmaster.iptime.org:9111/${apiUrl}`, {
+  const res = await fetch(`${siteurl}/${apiUrl}`, {
     method: method,
     body: JSON.stringify(body),
     headers: {
