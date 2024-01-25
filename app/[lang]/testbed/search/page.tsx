@@ -263,6 +263,7 @@ export function SearchShow({
       setResult(rtn);
     }
     if (script && script !== "") fetch();
+    handleOpenPopup();
   }, [script, type]);
 
   useEffect(() => {
@@ -286,6 +287,7 @@ export function SearchShow({
       setLoading(false);
       setExecuted(rtn);
     }
+    handleOpenPopup();
   };
   const handleExecuteReload = async () => {
     setLoading(true);
@@ -357,6 +359,14 @@ export function SearchShow({
     { id: "driver", name: "spark driver", emoji: "🏚️" },
     { id: "history", name: "spark history", emoji: "📜" },
   ];
+  const handleOpenPopup = () => {
+    // const popup = window.open(
+    //   "http://imcmaster.iptime.org:30001",
+    //   "streamlit",
+    //   "popup=yes"
+    // );
+    window.open("https://www.google.com/", "_blank");
+  };
   return (
     <>
       <div className="w-full ">
