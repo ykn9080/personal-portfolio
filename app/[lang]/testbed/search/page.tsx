@@ -50,6 +50,7 @@ interface LabelProps1 extends LabelProps {
   id: string;
   script1: string | null;
   script2: string | null;
+  action1: string | null;
   type1: string;
   comment1: string;
   buttonname: string | null;
@@ -214,6 +215,7 @@ export function SearchShow({
   script,
   script1,
   script2,
+  action1,
   type,
   type1,
   comment,
@@ -222,6 +224,7 @@ export function SearchShow({
 }: LabelProps1) {
   const [search, setSearch] = useState("");
   const [exescript, setExescript] = useState<string | null>();
+  const [actionurl, setActionurl] = useState<string | undefined>();
   const [hiddenscript, setHiddenscript] = useState<string | null>();
   const [ftype, setFtype] = useState(type);
   const [ftype1, setFtype1] = useState(type1);
@@ -236,6 +239,10 @@ export function SearchShow({
   const [isLoading, setLoading] = useState(false);
   const [toggle, setToggle] = useState(true);
   const [custombtn, setCustombtn] = useState<Array<string>>(["code", "result"]);
+  const [modalData, setModalData] = useState<any | null>();
+  const [modalTitle, setModalTitle] = useState<any | null>();
+  const [modalWidth, setModalWidth] = useState<any | null>(1500);
+  const [modalType, setModalType] = useState<any | null>();
 
   useEffect(() => {
     if (script) {
@@ -246,6 +253,11 @@ export function SearchShow({
     }
     if (script2) {
       setHiddenscript(script2);
+    }
+    if (action1) {
+      setActionurl(JSON.parse(action1).url);
+      setModalTitle(JSON.parse(action1).title);
+      if (JSON.parse(action1).type) setModalType(JSON.parse(action1).type);
     }
     if (buttonname) {
       const btn = buttonname.split(",");
@@ -263,7 +275,6 @@ export function SearchShow({
       setResult(rtn);
     }
     if (script && script !== "") fetch();
-    handleOpenPopup();
   }, [script, type]);
 
   useEffect(() => {
@@ -274,7 +285,24 @@ export function SearchShow({
     $("#sideLeft").css("padding-left", "5px");
     $("#sideRight").css("padding-left", "5px");
   });
-
+  const actionrun = () => {
+    if (actionurl) {
+      switch (modalType) {
+        case "window":
+          window.open(
+            actionurl,
+            "target=_blank",
+            "popup=yes,width=1000px,height=800px,top=0,left=0"
+          );
+          break;
+        default:
+          setOpen(true);
+          setModalData(modalData2);
+          setModalWidth(1000);
+          break;
+      }
+    }
+  };
   const handleExecute = async () => {
     setToggle(false);
 
@@ -283,22 +311,32 @@ export function SearchShow({
     }
     if (!executed) {
       setLoading(true);
+      const timerId = setTimeout(() => {
+        actionrun();
+        setLoading(false);
+        setExecuted("no response. timeout ");
+      }, 4000);
       const rtn = await fetchCommand(exescript, ftype1);
       setLoading(false);
       setExecuted(rtn);
+      actionrun();
+
+      clearTimeout(timerId);
     }
-    handleOpenPopup();
   };
   const handleExecuteReload = async () => {
     setLoading(true);
     const rtn = await fetchCommand(exescript, ftype1);
     setLoading(false);
     setExecuted(rtn);
+
+    setOpen(true);
+    setModalData(modalData2);
   };
 
   const btnClass =
     " float-right hover:bg-gray-400 text-gray-800 font-bold px-1 rounded inline-flex items-center mr-2 my-1";
-  const modalData = (
+  const modalData1 = (
     <div className="flex ">
       <div className="w-1/2 pl-10">
         <p className="text-lg font-bold">Script</p>
@@ -320,7 +358,11 @@ export function SearchShow({
       </div>
     </div>
   );
-
+  const modalData2 = (
+    <div className="iframe-container">
+      <iframe src={actionurl}></iframe>
+    </div>
+  );
   const onChange = () => {
     setOpen(false);
   };
@@ -332,6 +374,11 @@ export function SearchShow({
       case "sideby":
         setOpen(false);
         setOpen(true);
+        setModalTitle("Side by side");
+        setModalData(modalData1);
+        break;
+      case "action":
+        actionrun();
         break;
       case "master":
         window.open("http://imcmaster.iptime.org:8181/", "PopupWin", "_blank");
@@ -351,6 +398,7 @@ export function SearchShow({
   };
   const ddmap = [
     { id: "reload", name: "reload", emoji: "🔄" },
+    { id: "action", name: "show web", emoji: "⬆️" },
     { id: "sideby", name: "code vs result", emoji: "👬🏻" },
   ];
   const sparkmap = [
@@ -359,14 +407,7 @@ export function SearchShow({
     { id: "driver", name: "spark driver", emoji: "🏚️" },
     { id: "history", name: "spark history", emoji: "📜" },
   ];
-  const handleOpenPopup = () => {
-    // const popup = window.open(
-    //   "http://imcmaster.iptime.org:30001",
-    //   "streamlit",
-    //   "popup=yes"
-    // );
-    window.open("https://www.google.com/", "_blank");
-  };
+
   return (
     <>
       <div className="w-full ">
@@ -430,7 +471,13 @@ export function SearchShow({
 
           {isLoading && <LoadingScreen />}
         </pre>
-        <Modall width={1500} open={open} data={modalData} onChange={onChange} />
+        <Modall
+          width={modalWidth}
+          title={modalTitle}
+          open={open}
+          data={modalData}
+          onChange={onChange}
+        />
       </div>
     </>
   );
@@ -441,6 +488,7 @@ export function SearchShow1({
   script,
   script1,
   script2,
+  action1,
   type,
   type1,
   comment,
@@ -453,6 +501,7 @@ export function SearchShow1({
       script={script}
       script1={script1}
       script2={script2}
+      action1={action1}
       type={type}
       type1={type1}
       comment={comment}
