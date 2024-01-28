@@ -312,14 +312,14 @@ export function SearchShow({
     if (!executed) {
       setLoading(true);
       const timerId = setTimeout(() => {
-        actionrun();
+        //actionrun();
         setLoading(false);
         setExecuted("no response. timeout ");
       }, 4000);
       const rtn = await fetchCommand(exescript, ftype1);
       setLoading(false);
       setExecuted(rtn);
-      actionrun();
+      //actionrun();
 
       clearTimeout(timerId);
     }
