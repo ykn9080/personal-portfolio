@@ -336,6 +336,8 @@ export function SearchShow({
 
   const btnClass =
     " float-right hover:bg-gray-400 text-gray-800 font-bold px-1 rounded inline-flex items-center mr-2 my-1";
+  const btnClassLarge =
+    "absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 hover:bg-gray-400 text-gray-800 font-bold px-1 rounded inline-flex items-center mr-2 my-1 text-2xl";
   const modalData1 = (
     <div className="flex ">
       <div className="w-1/2 pl-10">
@@ -441,6 +443,7 @@ export function SearchShow({
                     </DropdownMenu>
                   </Dropdown>
                 )}
+
                 <button
                   onClick={handleExecute}
                   className={`${btnClass} ${
@@ -449,7 +452,6 @@ export function SearchShow({
                 >
                   {custombtn[1]}
                 </button>
-
                 <button
                   onClick={() => setToggle(true)}
                   className={`${btnClass} ${
@@ -462,6 +464,16 @@ export function SearchShow({
             </>
           )}
           <div className="clear-both" />
+          {!toggle && executed && actionurl && (
+            <div className="relative">
+              <button
+                onClick={actionrun}
+                className={`${btnClassLarge} bg-gray-300 alerts-border`}
+              >
+                show web
+              </button>
+            </div>
+          )}
           <Display
             id={id}
             data={toggle ? result : executed}
