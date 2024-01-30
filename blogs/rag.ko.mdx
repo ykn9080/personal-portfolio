@@ -23,6 +23,12 @@ excerpt: LLM 중 이미 학습되었거나 fine tune된 이외의 사용자 별 
 문서 로더 여러 소스에서 문서를 로드합니다.
 모든 유형의 위치 (개인 S3 버킷, 공용 웹 사이트)에서 모든 유형의 문서 (HTML, PDF, 코드)를로드 할 수있는 통합을 제공합니다.
 
+<SearchShow
+  id="rag_loader"
+  script="cat /home/yknam/ipykernel/rag_textsplit2.py"
+  script1="conda activate langchain;python /home/yknam/ipykernel/rag_textsplit2.py"
+/>
+
 ### Text splitting
 
 검색의 핵심 부분은 문서의 관련 부분 만 가져 오는 것입니다. 여기에는 문서를 검색 할 수 있도록 준비하기위한 몇 가지 변환 단계가 포함됩니다. 여기서 주요한 것 중 하나는 큰 문서를 작은 덩어리로 나누는 것입니다. LangChain은이를 수행하기위한 몇 가지 변환 알고리즘과 특정 문서 유형 (코드, 마크 다운 등)에 최적화 된 로직을 제공합니다.
@@ -31,12 +37,86 @@ excerpt: LLM 중 이미 학습되었거나 fine tune된 이외의 사용자 별 
 
 검색의 또 다른 주요 부분은 문서에 대한 임베딩을 만드는 것입니다. 임베딩은 텍스트의 의미 적 의미를 포착하여 빠르고 비슷한 다른 텍스트를 효율적으로 찾으십시오. LangChain은 25 가지가 넘는 임베딩 제공 업체 및 방법과 통합을 제공합니다, 오픈 소스에서 독점 API에 이르기까지, 필요에 가장 적합한 것을 선택할 수 있습니다. LangChain은 표준 인터페이스를 제공하여 모델간에 쉽게 교체 할 수 있습니다.
 
+<SearchTab
+  arr={[
+    {
+      id: "embed1",
+      label: "Embedding",
+      content: (
+        <SearchShow
+          id="rag_embedding1"
+          script="cat /home/yknam/ipykernel/rag_embedding.py"
+          script1="conda activate langchain;python /home/yknam/ipykernel/rag_embedding.py"
+        />
+      ),
+    },
+    {
+      id: "embed2",
+      label: "HuggingFace",
+      content: (
+        <SearchShow
+          id="rag_embedding2"
+          script="cat /home/yknam/ipykernel/rag_embedding_hf1.py"
+          script1="conda activate langchain;python /home/yknam/ipykernel/rag_embedding_hf1.py"
+        />
+      ),
+    },
+    {
+      id: "embed3",
+      label: "HuggingFace2",
+      content: (
+        <SearchShow
+          id="rag_embedding2"
+          script="cat /home/yknam/ipykernel/rag_embedding_hf2.py"
+          script1="conda activate langchain;python /home/yknam/ipykernel/rag_embedding_hf2.py"
+        />
+      ),
+    },
+  ]}
+/>
 ### Vector stores
 
 임베딩이 증가함에 따라 데이터베이스가 이러한 임베딩의 효율적인 저장 및 검색을 지원할 필요성이 대두되었습니다.
 LangChain은 오픈 소스 로컬에서 클라우드 호스팅 독점 벡터에 이르기까지 50 가지가 넘는 벡터 스토어와의 통합을 제공합니다,
 필요에 가장 적합한 것을 선택할 수 있습니다. LangChain은 표준 인터페이스를 공개하여 벡터 저장소간에 쉽게 교체 할 수 있습니다.
 
+<SearchTab
+  arr={[
+    {
+      id: "vector1",
+      label: "VectorStore1",
+      content: (
+        <SearchShow
+          id="rag_vector1"
+          script="cat /home/yknam/ipykernel/rag_vectorstore1.py"
+          script1="conda activate langchain;python /home/yknam/ipykernel/rag_vectorstore1.py"
+        />
+      ),
+    },
+    {
+      id: "vector2",
+      label: "VectorStore2",
+      content: (
+        <SearchShow
+          id="rag_vector2"
+          script="cat /home/yknam/ipykernel/rag_vectorstore2.py"
+          script1="conda activate langchain;python /home/yknam/ipykernel/rag_vectorstore2.py"
+        />
+      ),
+    },
+    {
+      id: "vector3",
+      label: "VectorStore3",
+      content: (
+        <SearchShow
+          id="rag_vector3"
+          script="cat /home/yknam/ipykernel/rag_vectorstore3.py"
+          script1="conda activate langchain;python /home/yknam/ipykernel/rag_vectorstore3.py"
+        />
+      ),
+    },
+  ]}
+/>
 ### Retrievers
 
 지금까지 만든 데이터베이스를 검색하는것. LangChain은 다양한 검색 알고리즘을 지원하며 가장 가치있는 곳 중 하나입니다.
@@ -46,6 +126,32 @@ LangChain은 오픈 소스 로컬에서 클라우드 호스팅 독점 벡터에 
 셀프 쿼리 리트리버: 사용자 질문에는 종종 의미 론적 일뿐만 아니라 메타 데이터 필터로 가장 잘 표현 될 수있는 논리를 표현하는 것에 대한 참조가 포함됩니다. 자체 쿼리를 사용하면 의미 론적 다른 쿼리의 일부 메타 데이터 필터 쿼리에 존재합니다.
 앙상블 리트리버: 때로는 여러 다른 소스에서 문서를 검색하거나 여러 다른 알고리즘을 사용할 수 있습니다. 앙상블 리트리버를 사용하면 쉽게 할 수 있습니다.
 
+<SearchTab
+  arr={[
+    {
+      id: "retrieve1",
+      label: "Retrieval1",
+      content: (
+        <SearchShow
+          id="rag_retrieval1"
+          script="cat /home/yknam/ipykernel/rag_retrieval.py"
+          script1="conda activate langchain;python /home/yknam/ipykernel/rag_retrieval.py"
+        />
+      ),
+    },
+    {
+      id: "Retrieval2",
+      label: "Retrieval2",
+      content: (
+        <SearchShow
+          id="rag_retrieval2"
+          script="cat /home/yknam/ipykernel/rag_retrieval2.py"
+          script1="conda activate langchain;python /home/yknam/ipykernel/rag_retrieval2.py"
+        />
+      ),
+    },
+  ]}
+/>
 ### Indexing
 
 랭 체인 인덱싱 API 모든 소스의 데이터를 벡터 저장소로 동기화합니다, 당신을 돕기:
