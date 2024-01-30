@@ -322,7 +322,7 @@ export function SearchShow({
       //actionrun();
 
       clearTimeout(timerId);
-    }
+    } else if (actionurl) actionrun();
   };
   const handleExecuteReload = async () => {
     setLoading(true);
@@ -448,9 +448,9 @@ export function SearchShow({
                   onClick={handleExecute}
                   className={`${btnClass} ${
                     !toggle ? "bg-gray-300" : "bg-gray-600"
-                  }`}
+                  } ${!toggle && executed && actionurl && "alerts-border"}`}
                 >
-                  {custombtn[1]}
+                  {!toggle && executed && actionurl ? "show web" : custombtn[1]}
                 </button>
                 <button
                   onClick={() => setToggle(true)}
@@ -464,16 +464,7 @@ export function SearchShow({
             </>
           )}
           <div className="clear-both" />
-          {!toggle && executed && actionurl && (
-            <div className="relative">
-              <button
-                onClick={actionrun}
-                className={`${btnClassLarge} bg-gray-300 alerts-border`}
-              >
-                show web
-              </button>
-            </div>
-          )}
+
           <Display
             id={id}
             data={toggle ? result : executed}
