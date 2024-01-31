@@ -315,7 +315,7 @@ export function SearchShow({
         //actionrun();
         setLoading(false);
         setExecuted("no response. timeout ");
-      }, 4000);
+      }, 14000);
       const rtn = await fetchCommand(exescript, ftype1);
       setLoading(false);
       setExecuted(rtn);
