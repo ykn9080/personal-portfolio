@@ -110,19 +110,18 @@ export default function Post({ params }: any, lang: Locale) {
             <h1 className="text-4xl font-bold mb-3">
               {props.frontMatter.title}
             </h1>
-            <div className="lg:float-right ml-10 bg-white p-5">
+            <div className="flex flex-row bg-white ">
+              <p>{props.frontMatter.excerpt}</p>
               <Image
                 src={props.frontMatter.featureImage}
-                width={400}
-                height={160}
-                sizes="(max-width: 768px) 100vw,
-              (max-width: 1200px) 50vw,
-              50vw"
-                style={{ height: "100%", width: "100%" }}
-                alt="featureImage"
+                width={600}
+                height={400}
+                sizes="(min-width:480px) 50vw,
+                (min-width:728px) 33vw,
+                (min-width:976px) 25vw,
+                100vw"
               />
             </div>
-            <p>{props.frontMatter.excerpt}</p>
 
             <div className="clear-both" />
             {props.frontMatter.videoSourceURL && (

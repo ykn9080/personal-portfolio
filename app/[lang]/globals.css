@@ -195,3 +195,9 @@ Dark style from softwaremaniacs.org (c) Ivan Sagalaev <Maniac@SoftwareManiacs.Or
     color: red;
   }
 }
+.featured-image-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+  margin: 2rem auto;
+}
