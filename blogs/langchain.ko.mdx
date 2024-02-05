@@ -23,7 +23,8 @@ excerpt: 언어 모델과 애플리케이션의 통합을 간소화하는 SDK이
 <SearchShow
   id="langchain1"
   script="cat /home/yknam/ipykernel/langchain_agent_serpapi.py"
-  script1="conda activate langchain;python /home/yknam/ipykernel/langchain_agent_serpapi.py"
+  script1="~/condastreamlit.sh ~/ipykernel/streamlit/langchain_agent_serpapi.py --theme.base=light --server.port=30001"
+  action1='{"url":"http://imcmaster.iptime.org:30001","title":"agent serpapi", "type":"window"}'
 />
 
 ### sql agent
@@ -31,7 +32,7 @@ excerpt: 언어 모델과 애플리케이션의 통합을 간소화하는 SDK이
 <SearchShow
     id="agent2"
     script="cat /home/yknam/ipykernel/langchain_agent_sql.py"
-    script1="conda activate langchain;python /home/yknam/ipykernel/langchain_agent_sql.py"
+    script1="~/condaremote.sh langchain_agent_sql.py"
     action1='{"url":"http://imcmaster.iptime.org:30001","title":"streamlit demo", "type":"window"}'
 
 />
@@ -41,7 +42,7 @@ excerpt: 언어 모델과 애플리케이션의 통합을 간소화하는 SDK이
 <SearchShow
     id="memory"
     script="cat /home/yknam/ipykernel/langchain_memory1.py"
-    script1="conda activate langchain;python /home/yknam/ipykernel/langchain_memory1.py"
+    script1="/home/yknam/condaremote.sh langchain_memory1.py"
     action1='{"url":"https://colab.research.google.com/drive/1v_Xiqf-dCvSJNk0B2RdXCr9TQ4gdhv5g#scrollTo=1hm5fOBxqred","title":"llm memory", "type":"window"}'
 
 />
@@ -50,8 +51,8 @@ excerpt: 언어 모델과 애플리케이션의 통합을 간소화하는 SDK이
 
 <SearchShow
     id="sql"
-    script="cat /home/yknam/ipykernel/langchain_sql.py"
-    script1="conda activate langchain;python /home/yknam/ipykernel/langchain_sql.py"
+    script="cat ~/ipykernel/langchain_sql.py"
+    script1="~/condaremote.sh langchain_sql.py"
     action1='{"url":"https://colab.research.google.com/drive/1v_Xiqf-dCvSJNk0B2RdXCr9TQ4gdhv5g#scrollTo=1hm5fOBxqred","title":"llm memory", "type":"window"}'
 
 />
