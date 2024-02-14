@@ -40,7 +40,7 @@ export default async function DetailPage({
                     <div className="flex flex-col justify-between lg:mx-6">
                       <Link
                         className=" hover:text-black/170 dark:hover:text-grey "
-                        href={`${lang}/blogs/${blog.slug}`}
+                        href={`blogs/${blog.slug}`}
                       >
                         <div className="text-xl hover:underline">
                           {blog.meta.title}

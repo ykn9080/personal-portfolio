@@ -55,7 +55,7 @@ excerpt: Apache Lucene기반의 검색 및 분석 엔진으로 방대한 데이�
 
 ### 1. index mappings
 
-1. 수정하려는 index의 mappings정보를 다음과 같이 조회한다. => `GET nginxlog-2023.10.25/_mapping`
+1. 수정하려는 index의 mappings정보를 다음과 같이 조회한다. => GET nginxlog-2023.10.25/\_mapping
 2. mapping정보 수정를 복사한후 2번과 같이 수정한다.
 
 <SearchShow
@@ -90,7 +90,7 @@ PUT nginxlogs
 
 <SearchScript id="dvela4" filename="mappings_update" type="json" />
 
-### 3. `_reindex`
+### 3. reindex
 
 > source는 원본 index이고, dest는 reindex적용후의 index(nginxlog)를 나타낸다. 아래의 예제는 날짜별로 구분된 여러 index중 하나의 index를 갖고 테스트해본다.
 
@@ -110,7 +110,7 @@ PUT nginxlogs
 
 ### 5. apply index template to reindex
 
-- 재정의된 nginxlog를 dest로 source를 \_reindex한다.
+- 재정의된 nginxlog를 dest로 source를 reindex한다.
 - 하나의 index만 테스트해본다.
 
 <SearchScript id="dvela7" filename="reindex_template" script1="ls -la" />
@@ -118,7 +118,7 @@ PUT nginxlogs
 ### 6. painless script
 
 - 날짜로 구분된 동일 mapping을 가진 복수의 index를 수정하기 위한 script작성
-- nginxlog-날짜 형태의 index를 loop돌면서 nginxlog mappings로 \_reindex한다.
+- nginxlog-날짜 형태의 index를 loop돌면서 nginxlog mappings로 reindex한다.
 - ctx.\_index는 nginxlogs를 가리킨다. nginxlog-2023.10.23.substring(9,19)로 2023.10.23을 잘라내 결합
 
 <SearchScript
