@@ -12,6 +12,7 @@ const nextConfig = {
   swcMinify: true,
   experimental: {
     appDir: true,
+    outputStandalone: true,
   },
 
   // output: "export",
