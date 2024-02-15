@@ -10,12 +10,12 @@ import Image from "next/image";
 import { localBlog } from "@/lib/blogs.js";
 
 interface PageProps {
-  lang: Locale;
+  params: { lang: Locale };
   part: string | undefined;
 }
 // app/page.tsx
-async function Blog({ lang, part }: PageProps) {
-  const { page } = await getDictionary(lang);
+async function Blog({ params, part }: PageProps) {
+  const { page } = await getDictionary(params.lang);
   const blogs = localBlog();
 
   return (
@@ -29,15 +29,15 @@ async function Blog({ lang, part }: PageProps) {
         </p>
         <div className="gap-4 flex flex-row flex-wrap">
           {blogs.map((blog) => {
-            if (blog.slug.endsWith(lang) && blog.meta.type === part)
+            if (blog.slug.endsWith(params.lang) && blog.meta.type === part)
               return (
                 <div className="box-border md:box-content w-full lg:w-64 md:w-80">
                   <Link
                     className=" hover:text-black/170 dark:hover:text-grey"
                     passHref
                     href={{
-                      pathname: `${lang}/blogs/${blog.slug}`,
-                      query: { part, lang: lang },
+                      pathname: `${params.lang}/blogs/${blog.slug}`,
+                      query: { part, lang: params.lang },
                     }}
                   >
                     <div className="overflow-hidden border-2 block border-indigo-500/50 bg-white rounded-lg shadow-lg mb-4">

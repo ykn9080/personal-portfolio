@@ -13,7 +13,7 @@ const nextConfig = {
   // experimental: {
   //   appDir: true,
   // },
-  output: "export",
+  // output: "export",
   //output: "standalone",
   eslint: {
     ignoreDuringBuilds: true,
