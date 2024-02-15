@@ -32,7 +32,9 @@
     "lib/blogs.js",
     "lib/childprocess.js",
     "app/[lang]/components/Modal.jsx",
-    "app/[lang]/mdxComponents/kafkajs"
+    "app/[lang]/mdxComponents/kafkajs",
+    "app/[lang]/blog/page.js",
+    "app/[lang]/layout.jsx"
   ],
   "exclude": ["node_modules"]
 }

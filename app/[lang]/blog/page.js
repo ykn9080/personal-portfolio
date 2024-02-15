@@ -1,4 +1,3 @@
-// app/page.tsx
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
@@ -9,14 +8,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { localBlog } from "@/lib/blogs.js";
 
-// app/page.tsx
-export default async function Blog({
-  params,
-  part,
-}: {
-  params: { lang: Locale };
-  part: string;
-}) {
+export default async function Blog({ params, part }) {
   const { page } = await getDictionary(params.lang);
   const blogs = localBlog();
 
