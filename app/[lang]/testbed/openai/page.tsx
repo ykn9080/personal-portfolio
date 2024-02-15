@@ -15,7 +15,6 @@ export default function Page({ tags }: any) {
   const sendData = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const rtn = await openaiCall({ script: currentMsg });
-    console.log(rtn);
     setRspMsg(rtn.content);
   };
   return (

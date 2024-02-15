@@ -39,7 +39,6 @@ export default function FileInput({ onChange }: any) {
   const { register, handleSubmit, setValue } = useForm<HookFormTypes>();
 
   const onValid = (data: HookFormTypes) => {
-    console.log(data);
     getKafkaPost("mysql/users", "post", data);
     onChange(true);
   };

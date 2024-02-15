@@ -9,9 +9,9 @@ export default function Home({ params }: { params: { lang: Locale } }) {
     <div className="container mx-auto">
       <MyProfilePic params={params} />
 
-      <Blog params={params} part="work" />
+      <Blog lang={params.lang} part="work" />
 
-      <Blog params={params} part="interest" />
+      <Blog lang={params.lang} part="interest" />
     </div>
   );
 }

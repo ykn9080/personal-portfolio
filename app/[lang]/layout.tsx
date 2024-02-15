@@ -18,13 +18,11 @@ export const metadata = {
 export async function generateStaticParams() {
   return i18n.locales.map((locale) => ({ lang: locale }));
 }
-
-export default function RootLayout({ children, params }) {
-  // : {
-  //   children: React.ReactNode;
-  //   // params: { lang: Locale };
-  //   params: { lang: Locale } | never;
-  // }
+interface PageType {
+  children: React.ReactNode;
+  params: { lang: Locale } | any;
+}
+export default function RootLayout({ children, params }: PageType) {
   return (
     <html lang={params.lang}>
       <body className={inter.className}>

@@ -21,7 +21,6 @@ export const TableWithData = ({ apiUrl, method, reload }) => {
     Object.keys(rtn[0]).map((k, i) => {
       arr.push({ key: k, label: k });
     });
-    console.log(rtn, arr);
     setColumn(arr);
   };
   return (

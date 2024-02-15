@@ -102,7 +102,6 @@ export default function Search({ script }: LabelProps) {
   };
   const onChange = (svr: string) => {
     setServerName(svr);
-    console.log(svr);
   };
   return (
     <div>
@@ -198,7 +197,6 @@ export const fetchCommand = async (
   if (!script) return;
 
   let rtn = await winProcess({ script });
-  console.log(rtn);
   hljs.registerLanguage("javascript", javascript);
 
   if (filetype === "json") {
@@ -555,7 +553,6 @@ export function Display({ id, data, type, comment }: LabelProps3) {
 
   const toggle = (current: string) => {
     let status = "low";
-    console.log("current", current);
     switch (current) {
       case "low":
         status = "mid";
@@ -772,7 +769,6 @@ export function SearchSingle({
       setLoading(true);
       const rtn = await fetchCommand(script, type);
       setLoading(false);
-      console.log(script, type);
       setResult(rtn);
     }
     if (script && script !== "") fetch();

@@ -1,0 +1,89 @@
+---
+id: 29
+date: 2021-12-31
+tags: ["documentation"]
+title: Swagger
+slug: swagger
+seq: 9
+type: interest
+language: en
+featureImage: /images/interest/swagger_logo.png
+thumb: /images/interest/swagger_logo.png
+github: https://github.com/ykn9080/imcnode
+demo: http://imcmaster.iptime.org:9006/swagger
+excerpt: With this library, you can document your express endpoints using swagger OpenAPI 3 Specification without writing YAML or JSON. You can write jsdoc comments on each endpoint, and the library is going to create the swagger UI.
+---
+
+### Contents
+
+### swagger setting
+
+```js
+const swaggerJsDoc = require("swagger-jsdoc");
+const swaggerUi = require("swagger-ui-express");
+
+module.exports = (app) => {
+  // Extended: https://swagger.io/specification/#infoObject
+  const swaggerOptions = {
+    swaggerDefinition: {
+      info: {
+        version: "1.0.0",
+        title: "Customer API",
+        description: "Customer API Information",
+        contact: {
+          name: "Amazing Developer",
+        },
+        servers: [`${process.env.HOST}:${process.env.PORT}`],
+      },
+    },
+    // ['.routes/*.js']
+    apis: ["./router/*.js", "./controllers/*.js"],
+  };
+
+  const swaggerDocs = swaggerJsDoc(swaggerOptions);
+  app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+};
+```
+
+specify server url and directories that contains swagger tagged document, as in apis above.
+create route for swagger document like "/swagger" as above...
+
+### swagger jsdocs tag
+
+```js
+/**
+ * @swagger
+ * /customers:
+ *  get:
+ *    description: Use to request all customers
+ *    responses:
+ *      '200':
+ *        description: A successful response
+ */
+app.get("/customers", (req, res) => {
+  res.status(200).send("Customer results");
+});
+/**
+ * @swagger
+ * /customers:
+ *    put:
+ *      description: Use to return all customers
+ *    parameters:
+ *      - name: customer
+ *        in: query
+ *        description: Name of our customer
+ *        required: false
+ *        schema:
+ *          type: string
+ *          format: string
+ *    responses:
+ *      '201':
+ *        description: Successfully created user
+ */
+app.put("/customer", (req, res) => {
+  res.status(200).send("Successfully updated customer");
+});
+```
+
+It's very convenient and inituitive to tag and edit later.
+Just add comment above each apis or create seperate documents for comments.

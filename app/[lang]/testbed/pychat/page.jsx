@@ -71,7 +71,6 @@ export default function Page() {
       </p>
       <div className="overflow-y-auto m-3 p-5 flex flex-col h-96 border-solid border-2 border-sky-500">
         {messages.map((message, index) => {
-          console.log(message, index);
           return <Message message={message} key={index} />;
         })}
       </div>

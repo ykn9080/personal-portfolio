@@ -82,7 +82,6 @@ function getPost({ slug }: { slug: string }) {
 
 export default function Post({ params }: any, lang: Locale) {
   const props = getPost(params);
-  console.log(props);
   const { frontMatter, content } = props;
 
   const options = {

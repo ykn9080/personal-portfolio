@@ -114,7 +114,6 @@ export default function MyListBox({ tags }) {
   }, [taglist]);
 
   function handleSelect(value) {
-    console.log(value);
     if (!isSelected(value)) {
       const findTag = allTags.find((el) => el.name === value);
       if (Object.keys(findTag).length > 0) {
