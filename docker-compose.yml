@@ -8,7 +8,7 @@ services:
       dockerfile: Dockerfile2
       # args:
       #   GITHUB_TOKEN: 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
-      target: runner
+      # target: runner
     env_file:
       - ./.env.local
     volumes:
