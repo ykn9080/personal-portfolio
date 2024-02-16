@@ -83,8 +83,8 @@ export default function MyDialog({ data, language, icon, list }) {
                   // eslint-disable-next-line react/jsx-key
                   <Link
                     className=" hover:text-black/170 dark:hover:text-grey max-w-[33%] min-w-[33%] truncate"
-                    // href={`${language}/blogs/${k.slug}.${language}`}
-                    href={`${k.slug}.${language}`}
+                    href={`${language}/blogs/${k.slug}.${language}`}
+                    //href={`${k.slug}.${language}`}
                   >
                     <button className="flex items-center justify-between w-full px-3 py-2 text-xs font-medium  transition-colors duration-300 transform rounded-lg  hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700">
                       <div className="flex items-center gap-x-2 ">

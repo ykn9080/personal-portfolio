@@ -1,6 +1,6 @@
 import "./globals.css";
 import Navbar from "./components/Navbar";
-// import type { Metadata } from "next";
+import type { Metadata } from "next";
 import { Locale, i18n } from "@/i18n.config";
 import ThemeProviders from "@/app/[lang]/themeProvider";
 import { ReduxProviders } from "@/redux/reduxProvider";
@@ -10,19 +10,21 @@ import NextUIProvider from "./NextUIProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
-// export const metadata: Metadata = {
-export const metadata = {
+export const metadata: Metadata = {
   title: "Youngki Nam's Blog",
 };
 
 export async function generateStaticParams() {
   return i18n.locales.map((locale) => ({ lang: locale }));
 }
-interface PageType {
+
+export default function RootLayout({
+  children,
+  params,
+}: {
   children: React.ReactNode;
-  params: { lang: Locale } | any;
-}
-export default function RootLayout({ children, params }: PageType) {
+  params: { lang: Locale };
+}) {
   return (
     <html lang={params.lang}>
       <body className={inter.className}>
