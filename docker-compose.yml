@@ -5,7 +5,7 @@ services:
     restart: "on-failure"
     build:
       context: ./
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile2
       # args:
       #   GITHUB_TOKEN: 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
       target: runner
