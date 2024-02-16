@@ -18,4 +18,4 @@ services:
       - "/usr/src/next/.next"
 
     ports:
-      - "3003:3000"
+      - "3000:3000"
