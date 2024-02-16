@@ -47,7 +47,7 @@ export default function LocaleSwitcher() {
           alt="Korean"
           width={language === "ko" ? 32 : 25}
           height={10}
-          src="https://cdn.ipregistry.co/flags/noto/kr.png"
+          src="/images/kr.webp"
         />
       </Link>
       <Link
@@ -58,7 +58,7 @@ export default function LocaleSwitcher() {
           alt="United States"
           width={language === "en" ? 32 : 25}
           height={30}
-          src="https://cdn.ipregistry.co/flags/noto/us.png"
+          src="/images/us.png"
         />
       </Link>
     </div>
