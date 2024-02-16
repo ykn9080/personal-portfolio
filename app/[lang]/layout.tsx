@@ -31,9 +31,11 @@ export default function RootLayout({
         <NextUIProvider>
           <ReduxProviders>
             <ThemeProviders>
+              {/* @ts-expect-error async server component */}
               <Navbar lang={params.lang} />
 
               <main>{children}</main>
+              {/* @ts-expect-error async server component */}
               <Footer lang={params.lang} />
             </ThemeProviders>
           </ReduxProviders>
