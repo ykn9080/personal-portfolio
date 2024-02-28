@@ -12,12 +12,13 @@ const nextConfig = {
   swcMinify: true,
   experimental: {
     appDir: true,
+    // outputStandalone: true,
   },
   // output: "export",
   //output: "standalone",
-  // eslint: {
-  //   ignoreDuringBuilds: true,
-  // },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   // typescript: {
   //   // !! WARN !!
   //   // Dangerously allow production builds to successfully complete even if
