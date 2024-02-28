@@ -313,7 +313,7 @@ export function SearchShow({
         //actionrun();
         setLoading(false);
         setExecuted("no response. timeout ");
-      }, 14000);
+      }, 300);
       const rtn = await fetchCommand(exescript, ftype1);
       setLoading(false);
       setExecuted(rtn);

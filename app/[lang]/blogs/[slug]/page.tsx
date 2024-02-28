@@ -29,7 +29,7 @@ import Search, {
   SearchSingle,
   SearchSingle1,
   SearchHidden,
-} from "@/app/[lang]/testbed/search/page";
+} from "@/app/[lang]/search/page";
 import OpenAIPage from "@/app/[lang]/testbed/openai/page";
 import Toc from "@/app/[lang]/components/Toc";
 
@@ -146,10 +146,10 @@ export default function Post({ params }: any, lang: Locale) {
                 components={{
                   Button,
                   MyPopOver,
-                   SearchLabel,
-                   SearchShow,
-                   SearchShow1,
-                   SearchScript,
+                  SearchLabel,
+                  SearchShow,
+                  SearchShow1,
+                  SearchScript,
                   Search,
                   SearchTab,
                   SearchSubTab,

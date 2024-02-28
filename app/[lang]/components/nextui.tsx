@@ -31,7 +31,7 @@ import { useTheme } from "next-themes";
 import $ from "jquery";
 import { winProcess } from "@/lib/childprocess";
 import hljs from "highlight.js";
-import { Display, fetchCommand } from "../testbed/search/page";
+import { Display, fetchCommand } from "../search/page";
 import Alert from "antd/es/alert/Alert";
 
 export function Chipp({ children, color, variant }: any) {
