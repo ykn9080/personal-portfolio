@@ -21,3 +21,26 @@ excerpt: openai api를 활용한 여러가지 데.
 ### OpenAI API
 
     {/* <OpenAIPage /> */}
+
+### FineTune
+
+#### data
+
+카카오 서비스의 춘식에 대한 보완설명을 아래와 같이 영문으로 입력했다.
+
+```
+{"messages": [
+    {"role": "system", "content": "Kakao Friends Assistant Bot."},
+    {"role": "user", "content": "Who is Chunshik in Kakao Friends?"},
+    {"role": "assistant", "content": "Chunshik is Ryan's pet cat.
+    But, instead of just a pet, Chunshik is treated like a member of
+    the Kakao Friends and can speak and behave like a human."}]}
+```
+
+<SearchShow
+    id="sql"
+    script="cat ~/ipykernel/langchain_sql.py"
+    script1="~/condaremote.sh langchain_sql.py"
+    action1='{"url":"https://colab.research.google.com/drive/1EaK5VYU-bpad1MojH0xWgTzERXTt_3CS?usp=sharing","title":"openai finetune", "type":"window"}'
+
+/>
