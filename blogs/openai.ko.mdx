@@ -7,24 +7,22 @@ slug: openai
 seq: 4
 type: interest
 language: kr
-featureImage: /images/interest/openai.png
+featureImage: /images/interest/finetuning1.png
 thumb: /images/interest/openai.png
 github:
 demo:
 videoSourceURL:
 videoTitle:
-excerpt: openai api를 활용한 여러가지 데.
+excerpt: openai api의 fine tuning과정
 ---
 
 ### Contents
 
-### OpenAI API
-
-    {/* <OpenAIPage /> */}
-
 ### FineTune
 
-#### data
+카카오 서비스 중 춘식에 대한 내용을 보완하여 finetune하고자함.
+
+#### 1. Data 준비
 
 카카오 서비스의 춘식에 대한 보완설명을 아래와 같이 영문으로 입력했다.
 
@@ -37,10 +35,55 @@ excerpt: openai api를 활용한 여러가지 데.
     the Kakao Friends and can speak and behave like a human."}]}
 ```
 
+#### 2. Data Upload
+
+openai로 jsonl 포맷의 데이터를 업로드하고 데이터 id를 획득한다.
+
+```python
+with open("./data/finetune_data.jsonl", "rb") as file_data:
+
+    upload_response = client.files.create(
+    file=file_data,
+    purpose='fine-tune'
+    )
+
+    file_id = upload_response.id
+    print(f"File uploaded successfully. ID: {file_id}")
+
+```
+
+#### 3. Finetuning job실행
+
+training_file id로 업로드한 file id를 입력한후 openai에 작업을 실행함.
+[storage files](https://platform.openai.com/storage/files)에서 파일 id 복사
+
+```python
+client.FineTuningJob.create(training_file="file-NHmo4FQx1R4e5PrlbBizLnDd",model="gpt-3.5-turbo")
+
+```
+
+#### 4. 결과 확인
+
+finetune된 모델id를 입력하여 chat 결과를 확인한다.
+[openai finetune](https://platform.openai.com/finetune)
+
+```python
+model_id="ft:gpt-3.5-turbo-0125:personal::8zcYGtZ3"
+completion = client.chat.completions.create(
+    model = model_id,
+    messages = [
+        {"role":"system", "content":"Kakao Friends Assistant Bot"},
+        {"role":"user","content":"Who is chunshik in Kakao Friends"}
+    ]
+)
+```
+
+### 코드보기
+
 <SearchShow
     id="sql"
-    script="cat ~/ipykernel/langchain_sql.py"
-    script1="~/condaremote.sh langchain_sql.py"
+    script="cat ~/ipykernel/finetune_openai.py"
+    script1="~/condaremote.sh finetune_openai.py"
     action1='{"url":"https://colab.research.google.com/drive/1EaK5VYU-bpad1MojH0xWgTzERXTt_3CS?usp=sharing","title":"openai finetune", "type":"window"}'
 
 />
