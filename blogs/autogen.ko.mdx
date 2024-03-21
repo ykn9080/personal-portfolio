@@ -27,12 +27,45 @@ excerpt: openai api의 fine tuning과정
 litellm은 100가지가 넘는 llm의 LLM API 를 통합하고,프록시를 제공합니다.
 python과 결합하여 작성시 OpenAI의 API형식을 따릅니다.
 
+litellm으로 ollama model을 api로 생성함
+
+```
+conda activate langchain
+litellm --model ollama/codellama --port 30002
+```
+
 <SearchShow
     id="sql"
     script="cat ~/ipykernel/openai_chat.py"
-    script1="~/scripts/condaremote.sh openai_chat.py"
+    script1="~/script/condaremote.sh openai_chat.py"
     action1='{"url":"https://colab.research.google.com/drive/1EaK5VYU-bpad1MojH0xWgTzERXTt_3CS?usp=sharing","title":"openai finetune", "type":"window"}'
 
 />
 
+#### collaboration agent
+
+여러 agent간에 역할을 부여하고 임무를 수행하도록 하는 예
+
     {/* script1="~/litellmremote.sh tinyllm 3004;condaremote.sh openai_chat.py" */}
+
+#### chatbot mistral
+
+<SearchShow
+    id="sql"
+    script="cat ~/ipykernel/autogen1.py"
+    script1="~/script/condaremote.sh autogen1.py"
+    action1='{"url":"https://colab.research.google.com/drive/1EaK5VYU-bpad1MojH0xWgTzERXTt_3CS?usp=sharing","title":"openai finetune", "type":"window"}'
+
+/>
+
+#### Autogen with Panel
+
+web interface로 그룹챗을 표현함
+
+<SearchShow
+    id="autogen_panel"
+    script="cat ~/ipykernel/autogen_panel1.py"
+    script1="~/script/condapanel.sh autogen_panel1.py"
+    action1='{"url":"http://winubuntu:5006","title":"Autogen GroupChat show by Panel", "type":"web"}'
+
+/>
